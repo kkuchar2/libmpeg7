@@ -1,14 +1,11 @@
 #!/bin/bash
 
-# define some colors
-
 COLOR_CYAN="\e[96m"
 COLOR_GREEN="\e[92m"
 COLOR_RED="\e[91m"
 COLOR_YELLOW="\e[93m"
 COLOR_RESET="\e[0m"
 
-PROJECT_PATH=
 BUILD_PATH="build"
 
 MACHINE_TYPE=`uname -m`
@@ -29,6 +26,7 @@ build_debug() {
     echo
 
     cd $DEBUG_PATH
+
     cmake -DCMAKE_BUILD_TYPE=Debug "../../.."
 
     echo
@@ -36,6 +34,7 @@ build_debug() {
     echo
     
     make -j 4
+
     cd "../../.."
 }
 
@@ -54,6 +53,7 @@ build_release() {
     echo
 
     make -j 4
+
     cd "../../.."
 }
 

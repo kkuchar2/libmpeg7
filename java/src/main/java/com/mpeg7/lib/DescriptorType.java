@@ -1,4 +1,4 @@
-package com.ztv.mpeg7.lib;
+package com.mpeg7.lib;
 
 public class DescriptorType {
     public static final int DOMINANT_COLOR_D      = 1;
@@ -8,7 +8,7 @@ public class DescriptorType {
     public static final int CT_BROWSING_D         = 5;
     public static final int HOMOGENEOUS_TEXTURE_D = 6;
     public static final int TEXTURE_BROWSING_D    = 7;
-    public static final int EDGE_HISTOGRAM_D      = 8;  
+    public static final int EDGE_HISTOGRAM_D      = 8;
     public static final int REGION_SHAPE_D        = 9;
     public static final int CONTOUR_SHAPE_D       = 10;
 }

@@ -1,4 +1,6 @@
-package com.ztv.mpeg7.lib;
+package com.mpeg7.lib;
+
+import com.mpeg7.mpeg7.libmpeg7;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,10 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-import com.ztv.mpeg7.libmpeg7pw;
-
-public class javampeg7pw {
-	private static libmpeg7pw lib = new libmpeg7pw();
+public class mpeg7 {
+	private static final libmpeg7 lib = new libmpeg7();
 
 	private static HashMap<Integer, String> libraryErrorCodesMap = new HashMap<>();
 
@@ -40,7 +40,7 @@ public class javampeg7pw {
 			parseMainErrors(result);
 		}
 
-		return result;   
+		return result;
 	}
 
 	public static double calculateDistance(String xml1, String xml2, String[] params) throws LibraryException {
@@ -98,13 +98,13 @@ public class javampeg7pw {
 	}
 
 	private static boolean isInteger(String result) {
-		return result.matches(integerPattern);	 
+		return result.matches(integerPattern);
 	}
 
 
 	private static void parseMainErrors(String result) throws LibraryException {
       int res = Integer.parseInt(result);
-      
+
       if (res >= 1 && res <= 106) {
           throw new LibraryException(result + " " + libraryErrorCodesMap.get(res));
       }
