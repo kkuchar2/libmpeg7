@@ -8,6 +8,8 @@ services:
       context: ""
       dockerfile: Dockerfile
     command: ./scripts/fire_up_build.sh
+    ports:
+      - 5000:5000
     restart: always
     volumes:
       - ./build:/project/build

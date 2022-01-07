@@ -9,10 +9,10 @@ if(NOT WIN32)
 endif()
 
 # ------ Create library makefile  -------------------------------------------------
-message("${Yellow} libmpeg7pw library - Krzysztof Kucharski ${ColourReset}")
+message("${Yellow} libmpeg7 library - Krzysztof Kucharski ${ColourReset}")
 
 # ------ Set project -------------------------------------------------
-project (LIBMPEG7PW_PROJECT)
+project (LIBMPEG7_PROJECT)
 cmake_minimum_required (VERSION 2.8)
 # ------ Set compilation flags -------------------------------------------------
 set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
@@ -45,8 +45,8 @@ file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/sources/*.cpp)
 
 SET(CMAKE_DEBUG_POSTFIX _d)
 
-add_library(mpeg7pw SHARED ${SRC_FILES})
-add_library(mpeg7pw_s STATIC ${SRC_FILES})
+add_library(mpeg7 SHARED ${SRC_FILES})
+add_library(mpeg7_s STATIC ${SRC_FILES})
 
-target_link_libraries(mpeg7pw ${OpenCV_LIBS})
+target_link_libraries(mpeg7 ${OpenCV_LIBS})
 

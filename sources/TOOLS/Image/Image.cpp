@@ -7,7 +7,11 @@ Image::Image() {
 void Image::load(unsigned char * data, int size, LoadMode decode_mode) {
     std::vector<unsigned char> imageData;
 
+    std::cout << "Loading image of size: " << size << std::endl;
+
     imageData.assign(data, data + size);
+
+    std::cout << "Image data size: " << imageData.size() << std::endl;
 
     switch (decode_mode) {
         case IMAGE_UNCHANGED:
@@ -30,6 +34,7 @@ void Image::load(unsigned char * data, int size, LoadMode decode_mode) {
 
     // Check, if image was opened properly
     if (mat.empty()) {
+        std::cout << "Mat is empty" << std::endl;
         throw CANNOT_OPEN_IMAGE; 
     }
 

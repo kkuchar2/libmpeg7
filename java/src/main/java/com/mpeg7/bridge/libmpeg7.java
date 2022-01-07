@@ -1,9 +1,9 @@
-package com.mpeg7.mpeg7;
+package com.mpeg7.bridge;
 
 public class libmpeg7 {
     static {
         System.loadLibrary("opencv_core");
-        System.loadLibrary("mpeg7pw");
+        System.loadLibrary("mpeg7");
     }
     public native String extractDescriptor(int desType, String imgPath, String[] params);
     public native String extractDescriptorFromData(int desType, byte[] data, String[] params);

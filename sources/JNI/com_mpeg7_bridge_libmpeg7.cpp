@@ -17,13 +17,13 @@
  * 5. Unneeded memory release
  * 6. Returning result as jstring
  * 
- *  @author Krzysztof Lech Kucharski
+ *  @author Krzysztof Kucharski
  *  @bug    No bugs detected. */
  /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 #include <jni.h>
 
 #include "../Mpeg7.h"
-#include "com_ztv_mpeg7_libmpeg7pw.h"
+#include "com_mpeg7_bridge_libmpeg7.h"
 
 /** @brief
  * Creates jstring message from const char *
@@ -68,7 +68,7 @@ unsigned char * getImageBuffer(JNIEnv * env, jbyteArray data, int size);
 * @param imgURL - local image path
 * @param parameters - additional extraction parameters array
 * @return jstring - XML result of extraction */
-JNIEXPORT jstring JNICALL Java_com_ztv_mpeg7_libmpeg7pw_extractDescriptor
+JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
 (JNIEnv * env, jobject, jint descriptorType, jstring imgURL, jobjectArray parameters) {
     /* ---------------- 1. Declare C data for extraction: ----------------- */
  
@@ -152,7 +152,7 @@ JNIEXPORT jstring JNICALL Java_com_ztv_mpeg7_libmpeg7pw_extractDescriptor
 * @param data - image file data stored in byte array
 * @param parameters - additional extraction parameters array
 * @return jstring - XML result of extraction */
-JNIEXPORT jstring JNICALL Java_com_ztv_mpeg7_libmpeg7pw_extractDescriptorFromData
+JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromData
 (JNIEnv * env, jobject, jint descriptorType, jbyteArray data, jobjectArray parameters) {
     /* ---------------- 1. Declare C data for extraction: ----------------- */
 
@@ -229,7 +229,7 @@ JNIEXPORT jstring JNICALL Java_com_ztv_mpeg7_libmpeg7pw_extractDescriptorFromDat
 * @param xml2 - second xml string
 * @param parameters - additional extraction parameters array
 * @return jstring - floating point number (double) converted to jstring as result of comparison (distance) */
-JNIEXPORT jstring JNICALL Java_com_ztv_mpeg7_libmpeg7pw_calculateDistance
+JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
 (JNIEnv * env, jobject, jstring xml1, jstring xml2, jobjectArray parameters) {
     /* ---------------- 1. Declare C data for distance calculation: ----------------- */
 
