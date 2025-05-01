@@ -16,19 +16,19 @@ void Image::load(unsigned char * data, int size, LoadMode decode_mode) {
     switch (decode_mode) {
         case IMAGE_UNCHANGED:
             // Load image as it is
-            mat = cv::imdecode(imageData, CV_LOAD_IMAGE_UNCHANGED);
+            mat = cv::imdecode(imageData, IMAGE_UNCHANGED);
             break;
         case IMAGE_COLOR:
             // Load image as RGB discarding its original channel count
-            mat = cv::imdecode(imageData, CV_LOAD_IMAGE_COLOR);
+            mat = cv::imdecode(imageData, IMAGE_COLOR);
             break;
         case IMAGE_GRAYSCALE:
             // Load image as Grayscale (luminosity method) discarding its channel count
-            mat = cv::imdecode(imageData, CV_LOAD_IMAGE_GRAYSCALE);
+            mat = cv::imdecode(imageData, IMAGE_GRAYSCALE);
             break;
         default:
             // As default, load image as it is
-            mat = cv::imdecode(imageData, CV_LOAD_IMAGE_UNCHANGED);
+            mat = cv::imdecode(imageData, IMAGE_UNCHANGED);
             break;
     }
 
@@ -93,19 +93,19 @@ void Image::load(const char * filename, LoadMode load_mode) {
 	switch (load_mode) {
 		case IMAGE_UNCHANGED:
             // Load image as it is
-			mat = cv::imread(filename, CV_LOAD_IMAGE_UNCHANGED);
+			mat = cv::imread(filename, IMAGE_UNCHANGED);
 			break;
 		case IMAGE_COLOR:
             // Load image as RGB discarding its original channel count
-			mat = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
+			mat = cv::imread(filename, IMAGE_COLOR);
 			break;
 		case IMAGE_GRAYSCALE:
             // Load image as Grayscale (luminosity method) discarding its channel count
-			mat = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
+			mat = cv::imread(filename, IMAGE_GRAYSCALE);
 			break;
 		default:
             // As default, load image as it is
-			mat = cv::imread(filename, CV_LOAD_IMAGE_UNCHANGED);
+			mat = cv::imread(filename, IMAGE_UNCHANGED);
 			break;
 	}
 

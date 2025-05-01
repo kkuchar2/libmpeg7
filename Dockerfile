@@ -1,14 +1,19 @@
-FROM krzysiekk44/opencv-java-gcc:latest
+FROM ubuntu:22.04
 
-RUN mkdir project
+# Avoid prompts during install
+ENV DEBIAN_FRONTEND=noninteractive
 
-COPY sources /project/sources
-COPY scripts /project/scripts
-COPY CMakeLists.txt /project
-COPY build.sh /project
-COPY java /project/java
+# Install only what's needed
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    openjdk-21-jdk \
+    libopencv-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /project/scripts
-RUN chmod a+x fire_up_build.sh
+# Set JAVA_HOME and PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
 WORKDIR /project

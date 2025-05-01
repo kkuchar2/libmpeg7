@@ -1,0 +1,8 @@
+services:
+  libmpeg7-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/project
+    command: bash -c "chmod +x lib/build.sh && ./lib/build.sh -all"
