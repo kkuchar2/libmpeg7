@@ -11,9 +11,9 @@ endif()
 # ------ Create library makefile  -------------------------------------------------
 message("${Yellow} libmpeg7 library - Krzysztof Kucharski ${ColourReset}")
 
-# ------ Set project -------------------------------------------------
-project (LIBMPEG7_PROJECT)
-cmake_minimum_required (VERSION 2.8)
+# ------ Set CMake minimum version and project -------------------------------------------------
+cmake_minimum_required(VERSION 3.31)
+project(LIBMPEG7_PROJECT)
 # ------ Set compilation flags -------------------------------------------------
 set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 set(CMAKE_CXX_FLAGS "-DBUILD_SHARED_LIBS=OFF")
