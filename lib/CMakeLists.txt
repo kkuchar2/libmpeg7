@@ -33,9 +33,15 @@ if(JNI_FOUND)
 	include_directories(${JAVA_AWT_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2})
 endif()
 
-file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/sources/*.cpp)
+file(GLOB_RECURSE LIB_SRC_FILES ${PROJECT_SOURCE_DIR}/sources/*.cpp)
+# Exclude main.cpp from the library sources
+list(FILTER LIB_SRC_FILES EXCLUDE REGEX ".*main\\.cpp$")
 
-add_library(mpeg7 SHARED ${SRC_FILES})
-add_library(mpeg7_s STATIC ${SRC_FILES})
+add_library(mpeg7 SHARED ${LIB_SRC_FILES})
+add_library(mpeg7_s STATIC ${LIB_SRC_FILES})
+
+# Add executable target using main.cpp
+add_executable(mpeg7_app ${PROJECT_SOURCE_DIR}/sources/main.cpp)
+target_link_libraries(mpeg7_app mpeg7_s ${OpenCV_LIBS})
 
 target_link_libraries(mpeg7 ${OpenCV_LIBS})
