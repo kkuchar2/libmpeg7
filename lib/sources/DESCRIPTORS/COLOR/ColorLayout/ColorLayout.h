@@ -14,7 +14,7 @@
  * Parameter Name  | Parameter values    | Description
  * --------------- | ------------------- | ------------
  * NumberOfYCoeff  | 3,6,10,15,21,28,64  | Number of coefficients for color component Y
- * NumberOfYCoeff  | 3,6,10,15,21,28,64  | Number of coefficients for color component Cb, Cr
+ * NumberOfCCoeff  | 3,6,10,15,21,28,64  | Number of coefficients for color component Cb, Cr
  *
  * Default values:
  *  - 6 for Y
