@@ -1130,16 +1130,12 @@ void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, int xsize,
         sum_pixel = 0.0;
 
         for (l = 0; l < ysize; l++) {
-            dummy = 0;
-
+            dummy = 0; 
             if (sqrt(pow((double) (j - xcenter), 2) + pow((double) (l - ycenter), 2)) <= 127.0) {
-                // probably wrong (xm comment)
-                /* (KK) Fix: for some images i,l indices are out of bounds, and
-                   cause wrong memory access (and crash) */
-                if (j >= inputImage->height || l >= inputImage->width) {
+                if (l >= inputImage->height || j >= inputImage->width) {
                     throw TEXT_BROWS_PROJECTION_COMPUTATION_ERROR;
                 }
-                dummy = (unsigned char) inputImage->data[j][l];
+                dummy = (unsigned char) inputImage->data[l][j];
                 sum_pixel += (double) dummy;
                 count_pixel++;
             }
