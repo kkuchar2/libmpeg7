@@ -16,7 +16,7 @@ project(LIBMPEG7_PROJECT)
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "-g -O0 -DDEBUG")
 set(CMAKE_CXX_FLAGS "-DBUILD_SHARED_LIBS=OFF")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_DEBUG_POSTFIX _d)
 
 # Ensure this is a debug build when built through CLion
