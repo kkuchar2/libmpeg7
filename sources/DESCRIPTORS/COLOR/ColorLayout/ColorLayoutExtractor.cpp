@@ -144,8 +144,8 @@ void ColorLayoutExtractor::CreateSmallImage(Image & image, short small_img[3][64
     idx = 0;
     for (y = 0; y < height; y++) {
         for (x = 0; x < width; x++) {
-            y_axis = (int) (y / (height / 8.0));
-            x_axis = (int) (x / (width  / 8.0));
+            y_axis = static_cast<int>(y / (height / 8.0));
+            x_axis = static_cast<int>(x / (width / 8.0));
 
             k = y_axis * 8 + x_axis;
 
@@ -165,9 +165,9 @@ void ColorLayoutExtractor::CreateSmallImage(Image & image, short small_img[3][64
             // RGB to YCbCr conversion
             yy = (0.299 * R + 0.587 * G + 0.114 * B) / 256.0;
 
-            small_block_sum[0][k] += (int) (219.0 * yy + 16.5);                              // Y
-            small_block_sum[1][k] += (int) (224.0 * 0.564 * (B / 256.0 * 1.0 - yy) + 128.5); // Cb
-            small_block_sum[2][k] += (int) (224.0 * 0.713 * (R / 256.0 * 1.0 - yy) + 128.5); // Cr
+            small_block_sum[0][k] += static_cast<int>(219.0 * yy + 16.5);                              // Y
+            small_block_sum[1][k] += static_cast<int>(224.0 * 0.564 * (B / 256.0 * 1.0 - yy) + 128.5); // Cb
+            small_block_sum[2][k] += static_cast<int>(224.0 * 0.713 * (R / 256.0 * 1.0 - yy) + 128.5); // Cr
 
             cnt[k]++;
         }
@@ -211,7 +211,7 @@ void ColorLayoutExtractor::CreateSmallImage(Image & image, short small_img[3][64
             for (j = 0; j < 8; j++) {
                 for (k = 0; k < 3; k++) {
                     if (small_img[k][i * 8 + j] == 0) {
-                        small_img[k][i * 8 + j] = (short) total_sum[k];
+                        small_img[k][i * 8 + j] = static_cast<short>(total_sum[k]);
                     }
                 }
             }
@@ -248,7 +248,7 @@ void ColorLayoutExtractor::FastDiscreteCosineTransform(short * block) {
 		for (i = 0; i < 8; i++) {
 			s = 0.0;
 			for (k = 0; k < 8; k++) s += DCT_Coefficients[i][k] * tmp[8 * k + j];
-			block[8 * i + j] = (int)floor(s + 0.499999);
+			block[8 * i + j] = static_cast<int>(floor(s + 0.499999));
 		}
 	}
 }

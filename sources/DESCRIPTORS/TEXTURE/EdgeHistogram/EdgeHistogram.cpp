@@ -48,7 +48,7 @@ void EdgeHistogram::readFromXML(XMLElement * descriptorElement) {
     char tempBins[80];
 
     for (int i = 0; i < 80; i++) {
-        tempBins[i] = (char) xmlBinCountsValues[i];
+        tempBins[i] = static_cast<char>(xmlBinCountsValues[i]);
     }
 
     setEdgeHistogramElement(tempBins);

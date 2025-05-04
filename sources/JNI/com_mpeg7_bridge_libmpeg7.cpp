@@ -117,7 +117,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
 
     /* ---------------- 4. Extract: -------------------------------------- */
 
-    const char * result = extractDescriptor((DescriptorType) desType, imgPath, params);
+    const char * result = extractDescriptor(static_cast<DescriptorType>(desType), imgPath, params);
 
     /* ---------------- 5. Cleanup: -------------------------------------- */
 
@@ -134,7 +134,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
     if (param_len != 0) {
         for (int i = 0; i < param_len; i++) {
             // Releases each array element:
-            env->ReleaseStringUTFChars((jstring) env->GetObjectArrayElement(parameters, i), params[i]);
+            env->ReleaseStringUTFChars(static_cast<jstring>(env->GetObjectArrayElement(parameters, i)), params[i]);
         }
     }
     // from C
@@ -197,7 +197,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromDa
     }
 
     /* ---------------- 4. Extract: -------------------------------------- */
-    const char * result = extractDescriptorFromData((DescriptorType) desType, imgData, data_len, params);
+    const char * result = extractDescriptorFromData(static_cast<DescriptorType>(desType), imgData, data_len, params);
 
     /* ---------------- 5. Cleanup: -------------------------------------- */
     // a) Descriptor type as int does not have to be released
@@ -212,7 +212,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromDa
     if (param_len != 0) {
         for (int i = 0; i < param_len; i++) {
             // Releases each array element:
-            env->ReleaseStringUTFChars((jstring) env->GetObjectArrayElement(parameters, i), params[i]);
+            env->ReleaseStringUTFChars(static_cast<jstring>(env->GetObjectArrayElement(parameters, i)), params[i]);
         }
     }
     // from C
@@ -286,7 +286,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
     if (param_len != 0) {
         for (int i = 0; i < param_len; i++) {
             // Releases each array element:
-            env->ReleaseStringUTFChars((jstring) env->GetObjectArrayElement(parameters, i), params[i]);
+            env->ReleaseStringUTFChars(static_cast<jstring>(env->GetObjectArrayElement(parameters, i)), params[i]);
         }
     }
     // from C
@@ -314,7 +314,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
     }
     // 2, 3 - Parameters size = 1
     else if (stringCount == 1) {
-        const auto string = (jstring) env->GetObjectArrayElement(parameters, 0);
+        const auto string = static_cast<jstring>(env->GetObjectArrayElement(parameters, 0));
 
         // 2. Single value NULL
         if (string == nullptr) {
@@ -333,7 +333,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
         params = new const char * [stringCount + 1];
 
         for (int i = 0; i < stringCount; i++) {
-            const auto string = (jstring) env->GetObjectArrayElement(parameters, i);
+            const auto string = static_cast<jstring>(env->GetObjectArrayElement(parameters, i));
 
             // Check if NULL
             if (string == nullptr) {

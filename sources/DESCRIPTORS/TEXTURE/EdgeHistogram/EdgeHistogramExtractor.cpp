@@ -96,18 +96,18 @@ Descriptor * EdgeHistogramExtractor::extract(Image & image, const char ** params
             if (isTransparent) {
                 if (A[(j + min_y) * imageWidth + (i + min_x)]) {
 
-                    pGrayImage[j * xsize + i] = (unsigned char) ((float) 
-                                                (R[(j + min_y) * imageWidth + (i + min_x)] + 
-                                                 G[(j + min_y) * imageWidth + (i + min_x)] + 
-                                                 B[(j + min_y) * imageWidth + (i + min_x)]) / 3.0f);
+                    pGrayImage[j * xsize + i] = static_cast<unsigned char>((float)
+                                                                           (R[(j + min_y) * imageWidth + (i + min_x)] +
+                                                                            G[(j + min_y) * imageWidth + (i + min_x)] +
+                                                                            B[(j + min_y) * imageWidth + (i + min_x)]) / 3.0f);
                 }
                 else {
                     pGrayImage[j * xsize + i] = 0;
                 }
             }
             else {
-                pGrayImage[j * xsize + i] = (unsigned char) ((float) 
-                                            (R[j * xsize + i] + G[j * xsize + i] + B[j * xsize + i]) / 3.0f);
+                pGrayImage[j * xsize + i] = static_cast<unsigned char>((float)
+                                                                       (R[j * xsize + i] + G[j * xsize + i] + B[j * xsize + i]) / 3.0f);
             }
         }
     }
@@ -128,8 +128,8 @@ Descriptor * EdgeHistogramExtractor::extract(Image & image, const char ** params
         // Upsampling
         scale = 70.0 / min_size;
 
-        re_xsize = (int) (xsize * scale + 0.5);
-        re_ysize = (int) (ysize * scale + 0.5);
+        re_xsize = static_cast<int>(xsize * scale + 0.5);
+        re_ysize = static_cast<int>(ysize * scale + 0.5);
 
         pResampleImage = new unsigned char[re_xsize * re_ysize];
 
@@ -138,16 +138,16 @@ Descriptor * EdgeHistogramExtractor::extract(Image & image, const char ** params
                 EWweight = i / scale - floor(i / scale);
                 NSweight = j / scale - floor(j / scale);
 
-                NW = pGrayImage[(int) floor(i / scale)     + (int) floor(j / scale) * xsize];
-                NE = pGrayImage[(int) floor(i / scale) + 1 + (int) floor(j / scale) * xsize];
+                NW = pGrayImage[static_cast<int>(floor(i / scale))     + static_cast<int>(floor(j / scale)) * xsize];
+                NE = pGrayImage[static_cast<int>(floor(i / scale)) + 1 + static_cast<int>(floor(j / scale)) * xsize];
 
-                SW = pGrayImage[(int) floor(i / scale)     + (int) (floor(j / scale) + 1) * xsize];
-                SE = pGrayImage[(int) floor(i / scale) + 1 + (int) (floor(j / scale) + 1) * xsize];
+                SW = pGrayImage[static_cast<int>(floor(i / scale))     + static_cast<int>(floor(j / scale) + 1) * xsize];
+                SE = pGrayImage[static_cast<int>(floor(i / scale)) + 1 + static_cast<int>(floor(j / scale) + 1) * xsize];
 
                 EWtop    = NW + EWweight * (NE - NW);
                 EWbottom = SW + EWweight * (SE - SW);
 
-                pResampleImage[i + j * re_xsize] = (unsigned char) (EWtop + NSweight * (EWbottom - EWtop) + 0.5);
+                pResampleImage[i + j * re_xsize] = static_cast<unsigned char>(EWtop + NSweight * (EWbottom - EWtop) + 0.5);
             }
         }
         block_size = GetBlockSize(re_xsize, re_ysize, desired_num_of_blocks);
@@ -195,7 +195,7 @@ void EdgeHistogramExtractor::EdgeHistogramGeneration(unsigned char * pImage_Y, u
     for (j = 0; j <= image_height - block_size; j += block_size) {
         for (i = 0; i <= image_width - block_size; i += block_size) {
 
-            sub_local_index = (int) (i * 4 / image_width) + (int) (j * 4 / image_height) * 4;
+            sub_local_index = static_cast<int>(i * 4 / image_width) + static_cast<int>(j * 4 / image_height) * 4;
 
             Count_Local[sub_local_index]++;
 
@@ -225,8 +225,8 @@ void EdgeHistogramExtractor::EdgeHistogramGeneration(unsigned char * pImage_Y, u
     }
 
     for (i = 0; i < 80; i++) { // Range 0.0 ~ 1.0
-        sub_local_index = (int) (i / 5);
-        pLocal_Edge->Local_Edge[i] = (double) LongTyp_Local_Edge[i] / Count_Local[sub_local_index];
+        sub_local_index = static_cast<int>(i / 5);
+        pLocal_Edge->Local_Edge[i] = static_cast<double>(LongTyp_Local_Edge[i]) / Count_Local[sub_local_index];
     }
 }
 
@@ -297,8 +297,8 @@ int EdgeHistogramExtractor::GetEdgeFeature(unsigned char * pImage_Y, int image_w
 }
 
 unsigned long EdgeHistogramExtractor::GetBlockSize(unsigned long image_width, unsigned long image_height, unsigned long desired_num_of_blocks) {
-    const double temp_size = (double) sqrt((double) (image_width * image_height / desired_num_of_blocks));
-    const unsigned long block_size = (unsigned long) (temp_size / 2) * 2;
+    const double temp_size = (double) sqrt(static_cast<double>(image_width * image_height / desired_num_of_blocks));
+    const unsigned long block_size = static_cast<unsigned long>(temp_size / 2) * 2;
 
     return block_size;
 }

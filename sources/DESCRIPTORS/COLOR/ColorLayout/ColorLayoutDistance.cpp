@@ -71,7 +71,7 @@ double ColorLayoutDistance::getDistance(Descriptor * descriptor1, Descriptor * d
 
     /* Calculate distance - sum of 3 square roots of (Y, Cb, Cr) sums
     Cast to float and back to double to have exact values. */
-    return double(float(sqrt(sum[0] * 1.0) + sqrt(sum[1] * 1.0) + sqrt(sum[2] * 1.0)));
+    return static_cast<double>(float(sqrt(sum[0] * 1.0) + sqrt(sum[1] * 1.0) + sqrt(sum[2] * 1.0)));
 }
 
 ColorLayoutDistance::~ColorLayoutDistance() {

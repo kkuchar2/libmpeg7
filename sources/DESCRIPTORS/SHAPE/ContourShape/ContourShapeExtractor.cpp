@@ -138,7 +138,7 @@ unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2
         per += dst[i1];
     }
 
-    const double del = per / (double) n;
+    const double del = per / static_cast<double>(n);
 
     int cur = 0;
     double oldd = dst[cur];
@@ -198,7 +198,7 @@ unsigned long ContourShapeExtractor::ExtractPeaks(int n, const Point2 * const & 
         dxdy[n1].y = ishp[n1].y - ishp[n2].y;
     }
 
-    int rec = 0, maxrec = (int) (0.262144 * n * n);
+    int rec = 0, maxrec = static_cast<int>(0.262144 * n * n);
     do {
         if (nNmin > 0)
             memcpy(oMinima, nMinima, nNmin*sizeof(double));
@@ -354,7 +354,7 @@ unsigned long ContourShapeExtractor::ExtractPeaks(int n, const Point2 * const & 
                 }
 
                 memmove(&peaks[1], &peaks[0], (CONTOURSHAPE_MAXCSS - 1)*sizeof(peaks[0]));
-                peaks[0].x = (double) xidx;
+                peaks[0].x = static_cast<double>(xidx);
                 peaks[0].y = rec;
                 if (nPeaks < CONTOURSHAPE_MAXCSS)
                     nPeaks++;
@@ -387,7 +387,7 @@ unsigned long ContourShapeExtractor::ExtractPeaks(int n, const Point2 * const & 
         fshp[s1].y = yc;
     }
 
-    double nsmap = 1.0 / ((double) n*(double) n);
+    double nsmap = 1.0 / (static_cast<double>(n)*static_cast<double>(n));
     for (int p1 = 0; p1 < nPeaks; p1++) {
         double pl = 0.0;
         for (int p2 = 0; p2 < peaks[p1].x; p2++)
@@ -423,22 +423,22 @@ unsigned long ContourShapeExtractor::ExtractPeaks(int n, const Point2 * const & 
     double py;
     for (int i = 0; i < nPeaks; i++) {
         unsigned short qx, qy;
-        qx = (unsigned short) ((int) ((CONTOURSHAPE_XMASK * peaks[i].x / CONTOURSHAPE_XMAX) + 0.5) & CONTOURSHAPE_XMASK);
+        qx = static_cast<unsigned short>((int) ((CONTOURSHAPE_XMASK * peaks[i].x / CONTOURSHAPE_XMAX) + 0.5) & CONTOURSHAPE_XMASK);
         if (i == 0) {
-            unsigned long qyl = (unsigned long) ((CONTOURSHAPE_YMASK * peaks[i].y / CONTOURSHAPE_YMAX) + 0.5);
+            unsigned long qyl = static_cast<unsigned long>((CONTOURSHAPE_YMASK * peaks[i].y / CONTOURSHAPE_YMAX) + 0.5);
             if (qyl > CONTOURSHAPE_YMASK)
                 qy = CONTOURSHAPE_YMASK;
             else
-                qy = (unsigned short) (qyl & CONTOURSHAPE_YMASK);
-            py = (qy * CONTOURSHAPE_YMAX / (double) CONTOURSHAPE_YMASK);
+                qy = static_cast<unsigned short>(qyl & CONTOURSHAPE_YMASK);
+            py = (qy * CONTOURSHAPE_YMAX / static_cast<double>(CONTOURSHAPE_YMASK));
         }
         else {
-            unsigned long qyl = (unsigned long) ((CONTOURSHAPE_YnMASK * peaks[i].y / py) + 0.5);
+            unsigned long qyl = static_cast<unsigned long>((CONTOURSHAPE_YnMASK * peaks[i].y / py) + 0.5);
             if (qyl > CONTOURSHAPE_YnMASK)
                 qy = CONTOURSHAPE_YnMASK;
             else
-                qy = (unsigned short) (qyl & CONTOURSHAPE_YnMASK);
-            py = (qy * py / (double) CONTOURSHAPE_YnMASK);
+                qy = static_cast<unsigned short>(qyl & CONTOURSHAPE_YnMASK);
+            py = (qy * py / static_cast<double>(CONTOURSHAPE_YnMASK));
         }
         descriptor->SetPeak(i, qx, qy);
         if (i == 0)
@@ -477,18 +477,18 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
     qsort(ind, n, sizeof(ind[0]), compare_ind);
     double y1 = ind[0].y, y2 = ind[n - 1].y;
 
-    const int iw = (int) (x2 - x1 + 1);
-    const int ih = (int) (y2 - y1 + 1);
+    const int iw = static_cast<int>(x2 - x1 + 1);
+    const int ih = static_cast<int>(y2 - y1 + 1);
     const auto xy = new unsigned char[iw*ih];
     memset(xy, 0, iw*ih*sizeof(unsigned char));
 
     int nedge = 0;
     const auto edgelist = new Edge[n];
 
-    int ybot = (int) ceil(y1 - 0.5);
-    int ytop = (int) floor(y2 - 0.5);
-    if (ybot - (int) y1 < 0) ybot = (int) y1;
-    if (ytop - (int) y1 >= ih) ytop = ih - 1 + (int) y1;
+    int ybot = static_cast<int>(ceil(y1 - 0.5));
+    int ytop = static_cast<int>(floor(y2 - 0.5));
+    if (ybot - static_cast<int>(y1) < 0) ybot = static_cast<int>(y1);
+    if (ytop - static_cast<int>(y1) >= ih) ytop = ih - 1 + static_cast<int>(y1);
 
     int k1 = 0;
     for (int y = ybot; y <= ytop; y++) {
@@ -531,11 +531,11 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
         qsort(edgelist, nedge, sizeof(edgelist[0]), compare_edges);
 
         for (int s = 0; s < nedge - 1; s += 2) {
-            int xl = (int) ceil(edgelist[s].x) - (int) x1;
+            int xl = static_cast<int>(ceil(edgelist[s].x)) - static_cast<int>(x1);
             if (xl < 0) xl = 0;
-            int xr = (int) floor(edgelist[s + 1].x) - (int) x1;
+            int xr = static_cast<int>(floor(edgelist[s + 1].x)) - static_cast<int>(x1);
             if (xr >= iw) xr = iw - 1;
-            const int yl = (int) (y - (int) y1);
+            const int yl = (int) (y - static_cast<int>(y1));
             for (int f = xl; f <= xr; f++)
                 xy[f + yl*iw] = 255;
 
@@ -594,22 +594,22 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
     else if (ecc < CONTOURSHAPE_EMIN)
         qe = 0;
     else
-        qe = (unsigned long) (((unsigned long) ((CONTOURSHAPE_EMASK + 1) * (ecc - CONTOURSHAPE_EMIN) / (CONTOURSHAPE_EMAX - CONTOURSHAPE_EMIN))) & CONTOURSHAPE_EMASK);
+        qe = (unsigned long) (static_cast<unsigned long>((CONTOURSHAPE_EMASK + 1) * (ecc - CONTOURSHAPE_EMIN) / (CONTOURSHAPE_EMAX - CONTOURSHAPE_EMIN)) & CONTOURSHAPE_EMASK);
 
     if (cir >= CONTOURSHAPE_CMAX)
         qc = CONTOURSHAPE_CMASK;
     else if (cir < CONTOURSHAPE_CMIN)
         qc = 0;
     else
-        qc = (unsigned long) (((unsigned long) ((CONTOURSHAPE_CMASK + 1) * (cir - CONTOURSHAPE_CMIN) / (CONTOURSHAPE_CMAX - CONTOURSHAPE_CMIN))) & CONTOURSHAPE_CMASK);
+        qc = (unsigned long) (static_cast<unsigned long>((CONTOURSHAPE_CMASK + 1) * (cir - CONTOURSHAPE_CMIN) / (CONTOURSHAPE_CMAX - CONTOURSHAPE_CMIN)) & CONTOURSHAPE_CMASK);
 }
 
 int ContourShapeExtractor::compare_edges(const void * v1, const void * v2) {
-    return (((const Edge *) v1)->x <= ((const Edge *) v2)->x ? -1 : 1);
+    return (static_cast<const Edge *>(v1)->x <= static_cast<const Edge *>(v2)->x ? -1 : 1);
 }
 
 int ContourShapeExtractor::compare_ind(const void * v1, const void * v2) {
-    return (((const IndexCoords *) v1)->y <= ((const IndexCoords *) v2)->y) ? -1 : 1;
+    return (static_cast<const IndexCoords *>(v1)->y <= static_cast<const IndexCoords *>(v2)->y) ? -1 : 1;
 }
 
 unsigned char * ContourShapeExtractor::getPixel(unsigned char * image, int col, int row, int imageWidth, int imageHeight) {

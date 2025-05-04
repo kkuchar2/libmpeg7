@@ -243,16 +243,16 @@ const char * mainExtraction(DescriptorType & descriptorType, Image & image, cons
     DescriptorExtractor * extractor = nullptr;
 
     try {
-        extractor = descriptorType == DOMINANT_COLOR_D      ? (DescriptorExtractor *) new DominantColorExtractor()      :
-                    descriptorType == SCALABLE_COLOR_D      ? (DescriptorExtractor *) new ScalableColorExtractor()      :
-                    descriptorType == COLOR_LAYOUT_D        ? (DescriptorExtractor *) new ColorLayoutExtractor()        :
-                    descriptorType == COLOR_STRUCTURE_D     ? (DescriptorExtractor *) new ColorStructureExtractor()     :
-                    descriptorType == CT_BROWSING_D         ? (DescriptorExtractor *) new CTBrowsingExtractor()         :
-                    descriptorType == HOMOGENEOUS_TEXTURE_D ? (DescriptorExtractor *) new HomogeneousTextureExtractor() :
-                    descriptorType == TEXTURE_BROWSING_D    ? (DescriptorExtractor *) new TextureBrowsingExtractor()    :
-                    descriptorType == EDGE_HISTOGRAM_D      ? (DescriptorExtractor *) new EdgeHistogramExtractor()      :
-                    descriptorType == REGION_SHAPE_D        ? (DescriptorExtractor *) new RegionShapeExtractor()        :
-                    descriptorType == CONTOUR_SHAPE_D       ? (DescriptorExtractor *) new ContourShapeExtractor()       :
+        extractor = descriptorType == DOMINANT_COLOR_D      ? static_cast<DescriptorExtractor *>(new DominantColorExtractor())      :
+                    descriptorType == SCALABLE_COLOR_D      ? static_cast<DescriptorExtractor *>(new ScalableColorExtractor())      :
+                    descriptorType == COLOR_LAYOUT_D        ? static_cast<DescriptorExtractor *>(new ColorLayoutExtractor())        :
+                    descriptorType == COLOR_STRUCTURE_D     ? static_cast<DescriptorExtractor *>(new ColorStructureExtractor())     :
+                    descriptorType == CT_BROWSING_D         ? static_cast<DescriptorExtractor *>(new CTBrowsingExtractor())         :
+                    descriptorType == HOMOGENEOUS_TEXTURE_D ? static_cast<DescriptorExtractor *>(new HomogeneousTextureExtractor()) :
+                    descriptorType == TEXTURE_BROWSING_D    ? static_cast<DescriptorExtractor *>(new TextureBrowsingExtractor())    :
+                    descriptorType == EDGE_HISTOGRAM_D      ? static_cast<DescriptorExtractor *>(new EdgeHistogramExtractor())      :
+                    descriptorType == REGION_SHAPE_D        ? static_cast<DescriptorExtractor *>(new RegionShapeExtractor())        :
+                    descriptorType == CONTOUR_SHAPE_D       ? static_cast<DescriptorExtractor *>(new ContourShapeExtractor())       :
                                                             throw UNRECOGNIZED_DESCRIPTOR_TYPE;
     }
     catch (ErrorCode exception) {

@@ -118,8 +118,8 @@ Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) 
         }
     }
 
-    m_centerX = (double) m10 / (double) m_mass;
-    m_centerY = (double) m01 / (double) m_mass;
+    m_centerX = static_cast<double>(m10) / static_cast<double>(m_mass);
+    m_centerY = static_cast<double>(m01) / static_cast<double>(m_mass);
 
     // Find radius:
     double temp_radius;
@@ -177,8 +177,8 @@ Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) 
 }
 
 double RegionShapeExtractor::GetReal(int p, int r, double dx, double dy) {
-    const int x = (int) dx;
-    const int y = (int) dy;
+    const int x = static_cast<int>(dx);
+    const int y = static_cast<int>(dy);
 
     const double ix = dx - x;
     const double iy = dy - y;
@@ -190,8 +190,8 @@ double RegionShapeExtractor::GetReal(int p, int r, double dx, double dy) {
 }
 
 double RegionShapeExtractor::GetImg(int p, int r, double dx, double dy) {
-    const int x = (int) dx;
-    const int y = (int) dy;
+    const int x = static_cast<int>(dx);
+    const int y = static_cast<int>(dy);
 
     const double ix = dx - x;
     const double iy = dy - y;

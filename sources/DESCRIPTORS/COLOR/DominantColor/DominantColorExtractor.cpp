@@ -134,7 +134,7 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
     // Set result dominant color values (first without quantizing) and percentages 
     for (i = 0; i < currentColorNumber; i++) {
         luv2rgb(resultDominantColors[i], dominantColorCentroids[i], 3);   // set dominant color values (and convert back LUV to RGB)
-        resultPercentages[i] = (int) (31.9999 * dominantColorWeights[i]);  // set dominant color percentages
+        resultPercentages[i] = static_cast<int>(31.9999 * dominantColorWeights[i]);  // set dominant color percentages
     }
 
     // Set result dominant color variances
@@ -482,7 +482,7 @@ int DominantColorExtractor::GetSpatialCoherency(float * ColorData, int dim, int 
         unsigned int Corres_Pixels = 0;
         const double Coherency = GetCoherencyWithColorAllow(ColorData, dim, IVisit, col_float[i][0], col_float[i][1], col_float[i][2],
                                                       SimColorAllow, NeighborRange, &Corres_Pixels, imageWidth, imageHeight);
-        CM += Coherency * (double) Corres_Pixels / (double) (All_Pixels);
+        CM += Coherency * static_cast<double>(Corres_Pixels) / static_cast<double>(All_Pixels);
     }
 
     delete[]IVisit;
@@ -552,7 +552,7 @@ double DominantColorExtractor::GetCoherencyWithColorAllow(float * ColorData, int
         Coherency = 0.0;
     }
     else {
-        Coherency = (double) Neighbor_Count / (double) Pixel_Count / (double) (neighbor_check_window_size - 1);
+        Coherency = static_cast<double>(Neighbor_Count) / static_cast<double>(Pixel_Count) / static_cast<double>(neighbor_check_window_size - 1);
     }
 
     return Coherency;
@@ -563,7 +563,7 @@ int DominantColorExtractor::QuantizeSC(double sc) {
         return 1;
     }
     else {
-        return (int) ((sc - 0.70) / (1.0 - 0.70) * (pow(2.0, (double) SC_BIT) - 3.0) + .5) + 2;
+        return static_cast<int>((sc - 0.70) / (1.0 - 0.70) * (pow(2.0, (double) SC_BIT) - 3.0) + .5) + 2;
     }
 }
 
@@ -643,13 +643,13 @@ void DominantColorExtractor::xyz2luv(double * XYZ, float * LUV, int size) {
         v2 = 9 * y / den;
 
         if (Y > 0.008856) {
-            LUV[i] = (float) (116 * pow(Y, 1.0 / 3.0) - 16);
+            LUV[i] = static_cast<float>(116 * pow(Y, 1.0 / 3.0) - 16);
         }
         else {
-            LUV[i] = (float) (903.3 * Y);
+            LUV[i] = static_cast<float>(903.3 * Y);
         }
-        LUV[i + 1] = (float) (13 * LUV[i] * (u2 - u20));
-        LUV[i + 2] = (float) (13 * LUV[i] * (v2 - v20));
+        LUV[i + 1] = static_cast<float>(13 * LUV[i] * (u2 - u20));
+        LUV[i + 2] = static_cast<float>(13 * LUV[i] * (v2 - v20));
     }
 }
 
@@ -676,14 +676,14 @@ void DominantColorExtractor::luv2rgb(int * RGB, float *LUV, int size) {
     for (i = 0; i < size; i += 3) {
         if (LUV[i] > 0) {
             if (LUV[i] < 8.0) {
-                Y = ((double) LUV[i]) / 903.3;
+                Y = static_cast<double>(LUV[i]) / 903.3;
             }
             else {
-                Y = pow((((double) LUV[i]) + 16) / 116.0, 3.0);
+                Y = pow((static_cast<double>(LUV[i]) + 16) / 116.0, 3.0);
             }
 
-            u2 = ((double) LUV[i + 1]) / 13.0 / ((double) LUV[i]) + u20;
-            v2 = ((double) LUV[i + 2]) / 13.0 / ((double) LUV[i]) + v20;
+            u2 = static_cast<double>(LUV[i + 1]) / 13.0 / static_cast<double>(LUV[i]) + u20;
+            v2 = static_cast<double>(LUV[i + 2]) / 13.0 / static_cast<double>(LUV[i]) + v20;
 
             den = 6 + 3 * u2 - 8 * v2;
 

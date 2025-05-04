@@ -64,7 +64,7 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
 
     // Determine working dimensions
     const double logArea = log((double) (imageWidth * imageHeight)) / log(2.);
-    int scalePower = (int) floor(0.5 * logArea - 8 + 0.5);
+    int scalePower = static_cast<int>(floor(0.5 * logArea - 8 + 0.5));
     scalePower     = std::max(0, scalePower);
 
     const unsigned long subSample   = 1 << scalePower;
@@ -199,15 +199,15 @@ void ColorStructureExtractor::RGB2HMMD(int R, int G, int B, int & H, int & S, in
 
     else { // Hue
         if (R == max) {
-            hue = ((G - B) / (float) (max - min));
+            hue = ((G - B) / static_cast<float>(max - min));
         }
 
         else if (G == max) {
-            hue = static_cast<float>((2.0 + (B - R) / (float) (max - min)));
+            hue = static_cast<float>((2.0 + (B - R) / static_cast<float>(max - min)));
         }
 
         else if (B == max) {
-            hue = static_cast<float>((4.0 + (R - G) / (float) (max - min)));
+            hue = static_cast<float>((4.0 + (R - G) / static_cast<float>(max - min)));
         }
 
         hue *= 60;
@@ -216,9 +216,9 @@ void ColorStructureExtractor::RGB2HMMD(int R, int G, int B, int & H, int & S, in
         }
     }
 
-    H = (long) (hue + 0.5);				  //range [0,360]
-    S = (long) ((max + min) / 2.0 + 0.5); //range [0,255]
-    D = (long) (max - min + 0.5);		  //range [0,255]
+    H = static_cast<long>(hue + 0.5);				  //range [0,360]
+    S = static_cast<long>((max + min) / 2.0 + 0.5); //range [0,255]
+    D = static_cast<long>(max - min + 0.5);		  //range [0,255]
 }
 
 int ColorStructureExtractor::QuantHMMD(int H, int S, int D, int N) {
@@ -240,7 +240,7 @@ int ColorStructureExtractor::QuantHMMD(int H, int S, int D, int N) {
     }
 
     /* Quantize the Hue component */
-    int Hindex = (int) ((H / 360.0) * nHueLevels[N][iSub]);
+    int Hindex = static_cast<int>((H / 360.0) * nHueLevels[N][iSub]);
 
     if (H == 360) {
         Hindex = 0;
@@ -248,7 +248,7 @@ int ColorStructureExtractor::QuantHMMD(int H, int S, int D, int N) {
 
     /* Quantize the Sum component
     The min value of Sum in a subspace is 0.5 * diffThresh (see HMMD slice) */
-    int Sindex = (int) floor((S - 0.5*diffThresh[N][iSub]) * nSumLevels[N][iSub] / (255 - diffThresh[N][iSub]));
+    int Sindex = static_cast<int>(floor((S - 0.5 * diffThresh[N][iSub]) * nSumLevels[N][iSub] / (255 - diffThresh[N][iSub])));
 
     if (Sindex >= nSumLevels[N][iSub]) {
         Sindex = nSumLevels[N][iSub] - 1;
@@ -488,7 +488,7 @@ int ColorStructureExtractor::QuantAmplNonLinear(unsigned long Norm) {
         }
 
         // Set value into histogram
-        descriptor->SetElement(iBin, (int) val);
+        descriptor->SetElement(iBin, static_cast<int>(val));
     }
     return 0;
 }

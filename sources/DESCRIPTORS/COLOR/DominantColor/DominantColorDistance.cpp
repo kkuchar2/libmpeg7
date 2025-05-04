@@ -123,7 +123,7 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     total = 0.0;
     for (int i = 0; i < N1; i++) {
         rgb2luv(dominantColors1[i], color1_float[i], 3);
-        per1_float[i] = static_cast<float>(((float) percentages1[i] + 0.5) / 31.9999);
+        per1_float[i] = static_cast<float>((static_cast<float>(percentages1[i]) + 0.5) / 31.9999);
         total += static_cast<double>(per1_float[i]);
     }
 
@@ -134,7 +134,7 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     total = 0.0;
     for (int i = 0; i < N2; i++) {
         rgb2luv(dominantColors2[i], color2_float[i], 3);
-        per2_float[i] = static_cast<float>(((float) percentages2[i] + 0.5) / 31.9999);
+        per2_float[i] = static_cast<float>((static_cast<float>(percentages2[i]) + 0.5) / 31.9999);
         total += static_cast<double>(per2_float[i]);
     }
 
@@ -390,13 +390,13 @@ void DominantColorDistance::rgb2luv(int * RGB, float * LUV, int size) {
         v2 = 9 * y / den;
 
         if (Y > 0.008856) {
-            LUV[i] = (float) (116 * pow(Y, 1.0 / 3.0) - 16);
+            LUV[i] = static_cast<float>(116 * pow(Y, 1.0 / 3.0) - 16);
         }
         else {
-            LUV[i] = (float) (903.3 * Y);
+            LUV[i] = static_cast<float>(903.3 * Y);
         }
-        LUV[i + 1] = (float) (13 * LUV[i] * (u2 - u20));
-        LUV[i + 2] = (float) (13 * LUV[i] * (v2 - v20));
+        LUV[i + 1] = static_cast<float>(13 * LUV[i] * (u2 - u20));
+        LUV[i + 2] = static_cast<float>(13 * LUV[i] * (v2 - v20));
     }
 }
 

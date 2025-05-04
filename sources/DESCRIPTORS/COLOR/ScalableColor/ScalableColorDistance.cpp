@@ -95,8 +95,8 @@ double ScalableColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     // ------------------- CALCULATE DISTANCE ---------------------------------------------
 
     // Prepare full histograms for 256 coefficients (filled with zeros)
-    const auto histogram1 = (int *) calloc(256, sizeof(int));
-    const auto histogram2 = (int *) calloc(256, sizeof(int));
+    const auto histogram1 = static_cast<int *>(calloc(256, sizeof(int)));
+    const auto histogram2 = static_cast<int *>(calloc(256, sizeof(int)));
 
     // Fill histograms (only specified coefficient count in parameters will be added)
     for (unsigned int i = 0; i < numberOfCoefficients; i++) {
@@ -109,7 +109,7 @@ double ScalableColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     double distance;
 
     for (unsigned int j = 0; j < numberOfCoefficients; ++j) {
-        distance = (double) histogram1[j] - (double) histogram2[j];
+        distance = static_cast<double>(histogram1[j]) - static_cast<double>(histogram2[j]);
 
         if (distance < 0.0) {
             distance = -distance;

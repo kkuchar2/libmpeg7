@@ -92,22 +92,22 @@ void TextureBrowsingExtractor::ArbitraryShape(unsigned char * a_image, unsigned 
     int ** m_arbitraryShape_temp;
     unsigned char ** m_arbitraryShape_patch;
 
-    m_arbitraryShape       = (int **) calloc(image_height + 2, sizeof(int *));
-    m_arbitraryShape_temp  = (int **) calloc(image_height + 2, sizeof(int *));
-    m_arbitraryShape_patch = (unsigned char **) calloc(image_height, sizeof(unsigned char *));
+    m_arbitraryShape       = static_cast<int **>(calloc(image_height + 2, sizeof(int *)));
+    m_arbitraryShape_temp  = static_cast<int **>(calloc(image_height + 2, sizeof(int *)));
+    m_arbitraryShape_patch = static_cast<unsigned char **>(calloc(image_height, sizeof(unsigned char *)));
 
     for (i = 0; i<image_height + 2; i++) {
-        m_arbitraryShape[i]      = (int *) calloc(image_width + 2, sizeof(int));
-        m_arbitraryShape_temp[i] = (int *) calloc(image_width + 2, sizeof(int));
+        m_arbitraryShape[i]      = static_cast<int *>(calloc(image_width + 2, sizeof(int)));
+        m_arbitraryShape_temp[i] = static_cast<int *>(calloc(image_width + 2, sizeof(int)));
     }
 
     for (i = 0; i < image_height; i++) {
-        m_arbitraryShape_patch[i] = (unsigned char *) calloc(image_width, sizeof(unsigned char));
+        m_arbitraryShape_patch[i] = static_cast<unsigned char *>(calloc(image_width, sizeof(unsigned char)));
     }
 
     for (i = 1; i < image_height + 1; i++) {
         for (j = 1; j < image_width + 1; j++) {
-            if (a_image[(i - 1) * image_width + (j - 1)] != (unsigned char) (255)) { // the pixel is white
+            if (a_image[(i - 1) * image_width + (j - 1)] != static_cast<unsigned char>(255)) { // the pixel is white
                 m_arbitraryShape[i][j] = 1;
                 m_arbitraryShape_temp[i][j] = 1;
             }
@@ -163,8 +163,8 @@ void TextureBrowsingExtractor::ArbitraryShape(unsigned char * a_image, unsigned 
     }	//while(flag ==1)
 
     a_size = a_max - 1;
-    pad_height_count = (int) (((float) image_height) / (2.0 * ((float) a_size))) + 1;
-    pad_width_count  = (int) (((float) image_width)  / (2.0 * ((float) a_size))) + 1;
+    pad_height_count = static_cast<int>(((float) image_height) / (2.0 * ((float) a_size))) + 1;
+    pad_width_count  = static_cast<int>(((float) image_width) / (2.0 * ((float) a_size))) + 1;
 
     for (y = 0; y < pad_height_count; y++) {
         for (x = 0; x < pad_width_count; x++) {
@@ -211,7 +211,7 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, int width, int heigh
 
 
     /* Extract both directions */
-    const auto temp_direction = (int *) malloc(2 * sizeof(int));
+    const auto temp_direction = static_cast<int *>(malloc(2 * sizeof(int)));
 
     try {
         GaborFeature(img, XM_SIDE, XM_UL, XM_UH, XM_SCALE, XM_ORIENTATION, XM_FLAG, temp_direction);
@@ -358,21 +358,21 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
     imgwid = img->width;
     border = side;
 
-    ProjectionSize = (int) (imgwid * 0.625);
+    ProjectionSize = static_cast<int>(imgwid * 0.625);
 
-    hei = (int) pow(2.0, ceil(log2((double) (img->height + 2.0 * border))));
-    wid = (int) pow(2.0, ceil(log2((double) (img->width  + 2.0 * border))));
+    hei = static_cast<int>(pow(2.0, ceil(log2((double) (img->height + 2.0 * border)))));
+    wid = static_cast<int>(pow(2.0, ceil(log2((double) (img->width + 2.0 * border)))));
 
-    rowProjections = (double **) malloc(orientation * scale * sizeof(double *));
+    rowProjections = static_cast<double **>(malloc(orientation * scale * sizeof(double *)));
 
     for (i = 0; i < orientation * scale; i++) {
-        rowProjections[i] = (double *) malloc(ProjectionSize * sizeof(double));
+        rowProjections[i] = static_cast<double *>(malloc(ProjectionSize * sizeof(double)));
     }
 
-    columnProjections = (double **) malloc(orientation * scale * sizeof(double *));
+    columnProjections = static_cast<double **>(malloc(orientation * scale * sizeof(double *)));
 
     for (i = 0; i < orientation * scale; i++) {
-        columnProjections[i] = (double *) malloc(ProjectionSize*sizeof(double));
+        columnProjections[i] = static_cast<double *>(malloc(ProjectionSize * sizeof(double)));
     }
     /* (KK) Allocate all the ImageHeaders, imageData and Matrices. 
     Newly created images are all initialized to 0 by default */
@@ -491,10 +491,10 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
         throw exception; 
     }
 
-    histo = (float **) malloc(scale * sizeof(float *));
+    histo = static_cast<float **>(malloc(scale * sizeof(float *)));
 
     for (s = 0; s < scale; s++) {
-        histo[s] = (float *) malloc(orientation * sizeof(float));
+        histo[s] = static_cast<float *>(malloc(orientation * sizeof(float)));
     }
 
     for (s = 0; s < scale; s++) {
@@ -682,16 +682,16 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
             for (h = 0; h < imghei; h++) {
                 for (w = 0; w < imgwid; w++) {
                     dummy1 = FilteredImageBuffer[s][n]->data[h][w];
-                    dummy2 = (unsigned char) ((dummy1 - fmin) / (fmax - fmin) * 255);
+                    dummy2 = static_cast<unsigned char>((dummy1 - fmin) / (fmax - fmin) * 255);
 
                     temp_FilteredImage->data[h][w] = dummy2;
                 }
             }
 
             // Here is the rotation
-            ImgRotate(temp_FilteredImage, (float) angle[0]);
+            ImgRotate(temp_FilteredImage, static_cast<float>(angle[0]));
 
-            temp_proj = (double *) malloc(ProjectionSize * sizeof(double));
+            temp_proj = static_cast<double *>(malloc(ProjectionSize * sizeof(double)));
 
             // And here projection H computation of this rotated image (4.3.2.1.4)
             try {
@@ -749,13 +749,13 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
             for (h = 0; h < imghei; h++) {
                 for (w = 0; w < imgwid; w++) {
                     dummy1 = FilteredImageBuffer[s][n]->data[h][w];
-                    dummy2 = (unsigned char) ((dummy1 - fmin) / (fmax - fmin) * 255);
+                    dummy2 = static_cast<unsigned char>((dummy1 - fmin) / (fmax - fmin) * 255);
                     temp_FilteredImage->data[h][w] = dummy2;
                 }
             }
 
             // Here is the rotation
-            ImgRotate(temp_FilteredImage, (float) angle[1]);
+            ImgRotate(temp_FilteredImage, static_cast<float>(angle[1]));
 
             // And here projection V computation of this rotated image (4.3.2.1.4)
             try {
@@ -842,11 +842,11 @@ void TextureBrowsingExtractor::Gabor(Matrix * Gr, Matrix * Gi, int s, int n, dou
     int x, y, side;
 
     base = Uh / Ul;
-    a = pow(base, 1.0 / (double) (scale - 1));
+    a = pow(base, 1.0 / static_cast<double>(scale - 1));
 
-    u0 = Uh / pow(a, (double) scale - s);
+    u0 = Uh / pow(a, static_cast<double>(scale) - s);
 
-    var = pow(0.6 / Uh * pow(a, (double) scale - s), 2.0);
+    var = pow(0.6 / Uh * pow(a, static_cast<double>(scale) - s), 2.0);
 
     t1 = cos((double) M_PI / orientation * (n - 1.0));
     t2 = sin((double) M_PI / orientation * (n - 1.0));
@@ -856,10 +856,10 @@ void TextureBrowsingExtractor::Gabor(Matrix * Gr, Matrix * Gi, int s, int n, dou
     for (x = 0; x < 2 * side + 1; x++) {
         for (y = 0; y < 2 * side + 1; y++) {
 
-            X = (double) (x - side)  * t1 + (double) (y - side) * t2;
-            Y = (double) -(x - side) * t2 + (double) (y - side) * t1;
+            X = static_cast<double>(x - side)  * t1 + static_cast<double>(y - side) * t2;
+            Y = static_cast<double>(-(x - side)) * t2 + static_cast<double>(y - side) * t1;
 
-            G = 1.0 / (2.0 * M_PI * var) * pow(a, (double) scale - s) * exp(-0.5 * (X * X + Y * Y) / var);
+            G = 1.0 / (2.0 * M_PI * var) * pow(a, static_cast<double>(scale) - s) * exp(-0.5 * (X * X + Y * Y) / var);
 
             Gr->data[x][y] = G*cos(2.0 * M_PI * u0 * X);
             Gi->data[x][y] = G*sin(2.0 * M_PI * u0 * X);
@@ -900,7 +900,7 @@ void TextureBrowsingExtractor::ImgRotate(Matrix * inImg, float angle) {
     MM = inImg->width;
     NN = inImg->height;
 
-    sina = (float) sin(angle); cosa = (float) cos(angle);
+    sina = static_cast<float>(sin(angle)); cosa = static_cast<float>(cos(angle));
     ci = NN / 2; cj = MM / 2;
 
     for (i = 0; i < NN; i++)
@@ -908,13 +908,13 @@ void TextureBrowsingExtractor::ImgRotate(Matrix * inImg, float angle) {
             oldi = (i - ci) * cosa - (j - cj) * sina + ci;
             oldj = (i - ci) * sina + (j - cj) * cosa + cj;
 
-            ii = (int) oldi;
-            jj = (int) oldj;
+            ii = static_cast<int>(oldi);
+            jj = static_cast<int>(oldj);
 
-            alpha = oldi - (float) ii;
-            beta = oldj - (float) jj;
+            alpha = oldi - static_cast<float>(ii);
+            beta = oldj - static_cast<float>(jj);
 
-            rImg->data[i][j] = (unsigned char) billinear(inImg, alpha, beta, ii, jj);
+            rImg->data[i][j] = static_cast<unsigned char>(billinear(inImg, alpha, beta, ii, jj));
         }
 
     for (i = 0; i < NN; i++) {
@@ -942,17 +942,17 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
     double *temp_value;
     int *temp_c_index;
 
-    temp_index = (int *) malloc(ORIENTATION * sizeof(int));
-    temp_ori = (double *) malloc(ORIENTATION * sizeof(double));
-    out_ori = (double *) malloc(ORIENTATION * sizeof(double));
-    final_index = (int *) malloc(2 * sizeof(int));
+    temp_index = static_cast<int *>(malloc(ORIENTATION * sizeof(int)));
+    temp_ori = static_cast<double *>(malloc(ORIENTATION * sizeof(double)));
+    out_ori = static_cast<double *>(malloc(ORIENTATION * sizeof(double)));
+    final_index = static_cast<int *>(malloc(2 * sizeof(int)));
 
     for (i = 0; i<SCALE; i++) {
         for (j = 0; j<ORIENTATION; j++) {
-            temp_ori[j] = (double) histo[i][j];
+            temp_ori[j] = static_cast<double>(histo[i][j]);
         }
 
-        temp_peak = (struct Peak *)malloc(ORIENTATION*sizeof(struct Peak));
+        temp_peak = static_cast<struct Peak *>(malloc(ORIENTATION * sizeof(struct Peak)));
 
         peak_count = 0;
         for (j = 0; j < ORIENTATION; j++) {
@@ -981,7 +981,7 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
             }
         }
 
-        temp_value = (double *) malloc(peak_count * sizeof(double));
+        temp_value = static_cast<double *>(malloc(peak_count * sizeof(double)));
 
         for (j = 0; j < peak_count; j++) {
             temp_value[j] = temp_peak[j].value;
@@ -1033,7 +1033,7 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
     else {
         count = 0;
 
-        index_value = (int *) malloc(ORIENTATION * sizeof(int));
+        index_value = static_cast<int *>(malloc(ORIENTATION * sizeof(int)));
 
         for (i = 0; i < SCALE; i++) {
             lable = 0;
@@ -1073,7 +1073,7 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
             final_index[1] = 6;
         }
         else {
-            contrast = (double *) malloc((count + 1) * sizeof(double));
+            contrast = static_cast<double *>(malloc((count + 1) * sizeof(double)));
 
             for (i = 0; i < count + 1; i++) {
                 contrast[i] = 0.0;
@@ -1089,8 +1089,8 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
                 }
             }
 
-            temp_contrast = (double *) malloc((count + 1) * sizeof(double));
-            temp_c_index = (int *) malloc((count + 1) * sizeof(int));
+            temp_contrast = static_cast<double *>(malloc((count + 1) * sizeof(double)));
+            temp_c_index = static_cast<int *>(malloc((count + 1) * sizeof(int)));
 
             sort(temp_contrast, temp_index, contrast, count + 1);
 
@@ -1135,8 +1135,8 @@ void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, int xsize,
                 if (l >= inputImage->height || j >= inputImage->width) {
                     throw TEXT_BROWS_PROJECTION_COMPUTATION_ERROR;
                 }
-                dummy = (unsigned char) inputImage->data[l][j];
-                sum_pixel += (double) dummy;
+                dummy = static_cast<unsigned char>(inputImage->data[l][j]);
+                sum_pixel += static_cast<double>(dummy);
                 count_pixel++;
             }
         }
@@ -1152,7 +1152,7 @@ void TextureBrowsingExtractor::pbcmain(struct pbc_struct * pbc, int size) {
 
     int img_size;
 
-    img_size = (int) (size * 0.625);
+    img_size = static_cast<int>(size * 0.625);
 
     sprintf(c5, "default");
 
@@ -1197,7 +1197,7 @@ int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, do
     long1 = long0 - 1;
 
     // Array for considered projection elements (after cutting zeros)
-    x = (double *) calloc(long0, sizeof(double));
+    x = static_cast<double *>(calloc(long0, sizeof(double)));
 
     // Fill it
     for (i = 0; i < long0; i++) {
@@ -1205,7 +1205,7 @@ int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, do
     }
 
     // Array for NAC
-    sum = (double *) calloc(long1, sizeof(double));
+    sum = static_cast<double *>(calloc(long1, sizeof(double)));
 
     // For each element
     for (k = 0; k < long1; k++) {
@@ -1213,8 +1213,8 @@ int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, do
         /*
         A --> P(m-k) in range from m = k to N - 1
         C --> P(m)   in range from m = k to N - 1 */
-        A = (double *) calloc(long0 - k, sizeof(double));
-        C = (double *) calloc(long0 - k, sizeof(double));
+        A = static_cast<double *>(calloc(long0 - k, sizeof(double)));
+        C = static_cast<double *>(calloc(long0 - k, sizeof(double)));
 
         for (j = k; j < long0; j++) {
             A[j - k] = x[j];
@@ -1250,7 +1250,7 @@ int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, do
     /* (KK)
     Here is part I don't understand - after autocorrelation it still makes operations on NAC. Some kind of (threshold?) cut. */
 
-    temp_out = (double *) calloc(2 * long1 - 1, sizeof(double));
+    temp_out = static_cast<double *>(calloc(2 * long1 - 1, sizeof(double)));
 
     for (i = 0; i < long1 - 1; i++) {
         temp_out[i] = sum[long1 - i - 1];
@@ -1260,9 +1260,9 @@ int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, do
         temp_out[i] = sum[i - long1 + 1];
     }
 
-    cut = static_cast<int>(round((float) ((long1 - 1) * 0.75)));
+    cut = static_cast<int>(round(static_cast<float>((long1 - 1) * 0.75)));
 
-    *y = (double *) calloc(2 * cut + 1, sizeof(double));
+    *y = static_cast<double *>(calloc(2 * cut + 1, sizeof(double)));
 
     for (i = 0; i < cut; i++) {
         (*y)[i] = temp_out[long1 - 1 - cut + i];
@@ -1303,7 +1303,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
     contrast = (float **) AllocateMatrixFloat(4, 6);
 
     // I guess A is used for the storage of the projections
-    A = (double *) calloc(img_size, sizeof(double));
+    A = static_cast<double *>(calloc(img_size, sizeof(double)));
 
     // For each filtered image W_mn(x,y) (4.3.2.1.4 Computation of the scale, Projection)
     for (i = 0; i < 4; i++) {
@@ -1339,8 +1339,8 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
             Autocorreclation of Radon transform (which projections aready went through before) */
             leng_B = RadonAutocorrelation(A, img_size, &B);
 
-            PeakI = (int *) calloc(leng_B, sizeof(int));
-            Peak = (float *) calloc(leng_B, sizeof(float));
+            PeakI = static_cast<int *>(calloc(leng_B, sizeof(int)));
+            Peak = static_cast<float *>(calloc(leng_B, sizeof(float)));
 
             size_peak = CountLocalProjectionPeaks(B, leng_B, PeakI, Peak);
 
@@ -1351,11 +1351,11 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
 
             if (size_peak > 1) {
                 if (size_peak == 2) {
-                    peak_diff = (float) fabs(Peak[0] - Peak[1]);
+                    peak_diff = static_cast<float>(fabs(Peak[0] - Peak[1]));
 
                     if (peak_diff <= 0.13 && contrast[i][j] > 0.5) {
 
-                        dis_peak = (float) (PeakI[1] - PeakI[0]);
+                        dis_peak = static_cast<float>(PeakI[1] - PeakI[0]);
                         var_dis = 0.0;
 
                         Proj_Candi_Posi[count_candi][0] = i;
@@ -1394,7 +1394,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
     flag = 0;
 
     if (count_candi > 0) {
-        refine_cand = (int *) calloc(count_candi, sizeof(int));
+        refine_cand = static_cast<int *>(calloc(count_candi, sizeof(int)));
         flag = cand_cluster(Proj_Candi_Valu, count_candi, 2, refine_cand, &pick_num);
 
         picked_cand = (float **) AllocateMatrixFloat(pick_num, 2);
@@ -1443,7 +1443,7 @@ int TextureBrowsingExtractor::CountLocalProjectionPeaks(double * B, int leng_B, 
     for (i = 1; i < leng_B - 1; i++) {
         if (B[i] > B[i - 1] && B[i] > B[i + 1]) {
             PeakI[count] = i;
-            Peak[count] = (float) B[i];
+            Peak[count] = static_cast<float>(B[i]);
             count++;
         }
     }
@@ -1456,7 +1456,7 @@ void TextureBrowsingExtractor::sort(double * Y, int * I, double * A, int length)
     int i, j;
     double max, *tmp;
 
-    tmp = (double *) calloc(length, sizeof(double));
+    tmp = static_cast<double *>(calloc(length, sizeof(double)));
 
     for (i = 0; i < length; i++) {
         tmp[i] = A[i];
@@ -1546,8 +1546,8 @@ float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B
     count = num_peak - 1;
 
     // Preapare arrays for valleys indices and values
-    index_valley = (int   *) calloc(count, sizeof(int));
-    valley_value = (float *) calloc(count, sizeof(float));
+    index_valley = static_cast<int *>(calloc(count, sizeof(int)));
+    valley_value = static_cast<float *>(calloc(count, sizeof(float)));
 
     // (KK) Calculate mean of v_magn (second part of equation)
     meanv = 0;
@@ -1556,7 +1556,7 @@ float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B
         for (j = PeakI[i] + 1; j <= PeakI[i + 1] - 1; j++) {
             if (B[j] <= B[j - 1] && B[j] <= B[j + 1]) {
                 index_valley[i] = j;
-                valley_value[i] = (float) B[j];
+                valley_value[i] = static_cast<float>(B[j]);
                 break;
             }
         }
@@ -1587,12 +1587,12 @@ void TextureBrowsingExtractor::peak_summary(float * dis_peak, float * var_dis, i
 
     len = size_peak - 1;
 
-    dis_array = (float *) calloc(len, sizeof(float));
+    dis_array = static_cast<float *>(calloc(len, sizeof(float)));
 
     dis = 0;
 
     for (i = 1; i < size_peak; i++) {
-        dis_array[i - 1] = (float) (PeakI[i] - PeakI[i - 1]);
+        dis_array[i - 1] = static_cast<float>(PeakI[i] - PeakI[i - 1]);
         dis += dis_array[i - 1];
     }
     dis /= len;
@@ -1603,7 +1603,7 @@ void TextureBrowsingExtractor::peak_summary(float * dis_peak, float * var_dis, i
         sum += (dis_array[i] - dis) * (dis_array[i] - dis);
     }
 
-    *var_dis = (float) sqrt(sum / len);
+    *var_dis = static_cast<float>(sqrt(sum / len));
     *dis_peak = dis;
     free(dis_array);
 }
@@ -1637,8 +1637,8 @@ int TextureBrowsingExtractor::cand_cluster(float ** candi, int size_in, int ndim
 
     }
     else {
-        cluster = (int *) calloc(size_in, sizeof(int));
-        count   = (int *) calloc(size_in, sizeof(int));
+        cluster = static_cast<int *>(calloc(size_in, sizeof(int)));
+        count   = static_cast<int *>(calloc(size_in, sizeof(int)));
 
         newN = agglom(candi, cluster, ndim, 2.0, count, size_in, 2);
 
@@ -1787,12 +1787,12 @@ void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, int size_cand,
     }
 
     if (size_cand == 1) {
-        cand_credit[0] = (float)0.2;
-        cand_credit[1] = (float)0.0;
-        cand_credit[2] = (float)0.2;
+        cand_credit[0] = static_cast<float>(0.2);
+        cand_credit[1] = static_cast<float>(0.0);
+        cand_credit[2] = static_cast<float>(0.2);
     }
     else if (size_cand == size_count_candi && flag == 1) {
-        cand_credit[2] = (float) (size_cand * 0.2);
+        cand_credit[2] = static_cast<float>(size_cand * 0.2);
     }
     else {
 
@@ -1824,9 +1824,9 @@ void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, int size_cand,
             }
         }
 
-        value[0] = (float)1.0; 
-        value[1] = (float)0.5; 
-        value[2] = (float)0.2;
+        value[0] = static_cast<float>(1.0); 
+        value[1] = static_cast<float>(0.5); 
+        value[2] = static_cast<float>(0.2);
 
         pbc_class[0] = 0; 
         pbc_class[1] = 0; 
@@ -1894,7 +1894,7 @@ void TextureBrowsingExtractor::get_map(int ** cand_pair, int size_cand, int tota
             in_pair[j - start][1] = cand_pair[j][1];
         }
 
-        sing = (int *) calloc(num[i], sizeof(int));
+        sing = static_cast<int *>(calloc(num[i], sizeof(int)));
         sing_map(in_pair, num[i], sing, type);
 
         if (type == 1) {
@@ -1917,8 +1917,8 @@ void TextureBrowsingExtractor::get_map(int ** cand_pair, int size_cand, int tota
 void TextureBrowsingExtractor::convertcand(int ** cand_pair, int ** direc_cand, int size_cand) {
     int i, *index, *tmpcand;
 
-    tmpcand = (int *) calloc(size_cand, sizeof(int));
-    index   = (int *) calloc(size_cand, sizeof(int));
+    tmpcand = static_cast<int *>(calloc(size_cand, sizeof(int)));
+    index   = static_cast<int *>(calloc(size_cand, sizeof(int)));
 
     for (i = 0; i < size_cand; i++) {
         tmpcand[i] = cand_pair[i][1];
@@ -2089,23 +2089,23 @@ int TextureBrowsingExtractor::billinear(Matrix * img, float a, float b, int ii, 
     }
 
     if ((a == 0.0) && (b == 0.0)) {
-        return (int) img->data[ii][jj];
+        return static_cast<int>(img->data[ii][jj]);
     }
 
     if (a == 0.0) {
         y = (1 - b) * img->data[ii][jj] + b * img->data[ii][jj + 1];
-        return (int) (y + 0.5);
+        return static_cast<int>(y + 0.5);
     }
 
     if (b == 0.0) {
         y = (1 - a) * img->data[ii][jj] + a * img->data[ii + 1][jj];
-        return (int) (y + 0.5);
+        return static_cast<int>(y + 0.5);
     }
 
     y = (1 - a) * (1 - b) * img->data[ii][jj]     + (1 - a) * b * img->data[ii][jj + 1] +
              a  * (1 - b) * img->data[ii + 1][jj] + a       * b * img->data[ii + 1][jj + 1];
 
-    return (int) (y + 0.5);
+    return static_cast<int>(y + 0.5);
 }
 
 void TextureBrowsingExtractor::threshold(pbc_struct * pbc) {
@@ -2133,13 +2133,13 @@ int ** TextureBrowsingExtractor::AllocateMatrixInteger(int nr, int nc) {
     int i, j;
     int **m;
 
-    m = (int **) malloc(nr*sizeof(int *));
+    m = static_cast<int **>(malloc(nr * sizeof(int *)));
     if (!m) {
         return nullptr;
     }
 
     for (i = 0; i < nr; i++) {
-        m[i] = (int *) malloc(nc * sizeof(int));
+        m[i] = static_cast<int *>(malloc(nc * sizeof(int)));
 
         if (!m[i]) {
             return nullptr;
@@ -2157,7 +2157,7 @@ float ** TextureBrowsingExtractor::AllocateMatrixFloat(int nr, int nc) {
     int i, j;
     float **m;
 
-    m = (float **) malloc(nr * sizeof(float *));
+    m = static_cast<float **>(malloc(nr * sizeof(float *)));
 
     if (!m) {
         return nullptr;
@@ -2165,7 +2165,7 @@ float ** TextureBrowsingExtractor::AllocateMatrixFloat(int nr, int nc) {
 
     for (i = 0; i < nr; i++) {
 
-        m[i] = (float *) malloc(nc * sizeof(float));
+        m[i] = static_cast<float *>(malloc(nc * sizeof(float)));
 
         if (!m[i]) {
             return nullptr;
@@ -2182,12 +2182,12 @@ double ** TextureBrowsingExtractor::AllocateMatrixDouble(int nrl, int nrh, int n
     int i;
     double **m;
 
-    m = (double **) calloc((unsigned) (nrh - nrl + 1), sizeof(double*));
+    m = static_cast<double **>(calloc((unsigned) (nrh - nrl + 1), sizeof(double *)));
 
     m -= nrl;
 
     for (i = nrl; i <= nrh; i++) {
-        m[i] = (double *) calloc((unsigned) (nch - ncl + 1), sizeof(double));
+        m[i] = static_cast<double *>(calloc((unsigned) (nch - ncl + 1), sizeof(double)));
         m[i] -= ncl;
     }
     return m;
@@ -2196,7 +2196,7 @@ double ** TextureBrowsingExtractor::AllocateMatrixDouble(int nrl, int nrh, int n
 double * TextureBrowsingExtractor::AllocateVectorOfDouble(int nl, int nh) {
     double * v;
 
-    v = (double *) calloc((unsigned) (nh - nl + 1), sizeof(double));
+    v = static_cast<double *>(calloc((unsigned) (nh - nl + 1), sizeof(double)));
 
     return v - nl;
 }
@@ -2244,7 +2244,7 @@ float TextureBrowsingExtractor::EuclideanVectorDistance(float * a, float * b, in
         dist += sqr(a[i] - b[i]);
     }
 
-    dist = (float) sqrt(dist);
+    dist = static_cast<float>(sqrt(dist));
     return dist;
 }
 
@@ -2253,7 +2253,7 @@ float TextureBrowsingExtractor::Vector2DVariance(float ** vector, int nvec, int 
     int i, j;
 
     // (KK) Count mean value
-    mean = (float *) calloc(ndim, sizeof(float));
+    mean = static_cast<float *>(calloc(ndim, sizeof(float)));
 
     for (i = 0; i < nvec; i++) {
         for (j = 0; j < ndim; j++) {
@@ -2274,7 +2274,7 @@ float TextureBrowsingExtractor::Vector2DVariance(float ** vector, int nvec, int 
         }
     }
 
-    var = (float) sqrt(var / nvec);
+    var = static_cast<float>(sqrt(var / nvec));
 
     free(mean);
     return var;
@@ -2332,9 +2332,9 @@ void TextureBrowsingExtractor::CreateMatrix(Matrix ** M, int hei, int wid) {
 
     Matrix * tmp;
 
-    tmp = (Matrix *) calloc(1, sizeof(Matrix));
+    tmp = static_cast<Matrix *>(calloc(1, sizeof(Matrix)));
 
-    tmp->data = (double **) calloc(hei, sizeof(double *));
+    tmp->data = static_cast<double **>(calloc(hei, sizeof(double *)));
 
     if (!(tmp->data)) {
         // Cleanup
@@ -2345,7 +2345,7 @@ void TextureBrowsingExtractor::CreateMatrix(Matrix ** M, int hei, int wid) {
     }
 
     for (h = 0; h < hei; h++) {
-        tmp->data[h] = (double *) calloc(wid, sizeof(double));
+        tmp->data[h] = static_cast<double *>(calloc(wid, sizeof(double)));
 
         if (!(tmp->data[h])) {
             // Cleanup
@@ -2486,7 +2486,7 @@ void TextureBrowsingExtractor::Mat_IFFT2(Matrix * Output_real, Matrix * Output_i
 
     FourierTransform2D(Fr, Fi, R, I, xs, ys, -1);         /* 2-D IFFT */
 
-    NN = (double) (xs * ys);
+    NN = static_cast<double>(xs * ys);
 
     for (i = 1; i <= Input_real->height; i++) {
         for (j = 1; j <= Input_real->width; j++) {

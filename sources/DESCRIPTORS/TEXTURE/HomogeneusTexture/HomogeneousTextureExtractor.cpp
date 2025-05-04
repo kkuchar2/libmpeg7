@@ -96,25 +96,25 @@ void HomogeneousTextureExtractor::ArbitraryShape(unsigned char * aChannel, unsig
 
     unsigned char ** m_arbitraryShape_patch;
 
-    m_arbitraryShape      = (int **) calloc(imageHeight + 2, sizeof(int *));
-    m_arbitraryShape_temp = (int **) calloc(imageHeight + 2, sizeof(int *));
+    m_arbitraryShape      = static_cast<int **>(calloc(imageHeight + 2, sizeof(int *)));
+    m_arbitraryShape_temp = static_cast<int **>(calloc(imageHeight + 2, sizeof(int *)));
 
-    m_arbitraryShape_patch = (unsigned char **) calloc(imageHeight, sizeof(unsigned char *));
+    m_arbitraryShape_patch = static_cast<unsigned char **>(calloc(imageHeight, sizeof(unsigned char *)));
 
     for (int i = 0; i < imageHeight + 2; i++) {
-        m_arbitraryShape[i]      = (int *) calloc(imageWidth + 2, sizeof(int));
-        m_arbitraryShape_temp[i] = (int *) calloc(imageWidth + 2, sizeof(int));
+        m_arbitraryShape[i]      = static_cast<int *>(calloc(imageWidth + 2, sizeof(int)));
+        m_arbitraryShape_temp[i] = static_cast<int *>(calloc(imageWidth + 2, sizeof(int)));
     }
 
     for (int i = 0; i < imageHeight; i++) {
-        m_arbitraryShape_patch[i] = (unsigned char *) calloc(imageWidth, sizeof(unsigned char));
+        m_arbitraryShape_patch[i] = static_cast<unsigned char *>(calloc(imageWidth, sizeof(unsigned char)));
     }
 
     flag = 0;
 
     for (int i = 1; i < imageHeight + 1; i++) {
         for (int j = 1; j < imageWidth + 1; j++) {
-            if (aChannel[(i - 1) * imageWidth + (j - 1)] != (unsigned char) (0)) { // The pixel is white
+            if (aChannel[(i - 1) * imageWidth + (j - 1)] != static_cast<unsigned char>(0)) { // The pixel is white
                 flag = 1;
                 m_arbitraryShape[i][j] = 1;
                 m_arbitraryShape_temp[i][j] = 1;
@@ -186,8 +186,8 @@ void HomogeneousTextureExtractor::ArbitraryShape(unsigned char * aChannel, unsig
 
     a_size = a_max - 1;
 
-    pad_height_count = (int) (((float) imageHeight) / (2.0 * ((float) a_size))) + 1;
-    pad_width_count  = (int) (((float) imageWidth)  / (2.0 * ((float) a_size))) + 1;
+    pad_height_count = static_cast<int>(((float) imageHeight) / (2.0 * ((float) a_size))) + 1;
+    pad_width_count  = static_cast<int>(((float) imageWidth) / (2.0 * ((float) a_size))) + 1;
 
     for (int y = 0; y < pad_height_count; y++) {
         for (int x = 0; x < pad_width_count; x++) {
@@ -250,18 +250,18 @@ void HomogeneousTextureExtractor::FeatureExtraction(unsigned char * image, int i
 
     SecondLevelExtraction(image, image_height, image_width);
 
-    m_dc  = (int) dc;
-    m_std = (int) stdev;
+    m_dc  = static_cast<int>(dc);
+    m_std = static_cast<int>(stdev);
 
     for (n = 0; n < 5; n++) {
         for (m = 0; m < 6; m++) {
-            mean2[n][m] = (int) (vec[n][m]); // mean : 30 energy features
+            mean2[n][m] = static_cast<int>(vec[n][m]); // mean : 30 energy features
         }
     }
 
     for (n = 0; n < 5; n++) {
         for (m = 0; m < 6; m++) {
-            dev2[n][m] = (int) (dvec[n][m]); // dev	: 30 deviation features
+            dev2[n][m] = static_cast<int>(dvec[n][m]); // dev	: 30 deviation features
         }
     }
 }
@@ -315,7 +315,7 @@ void HomogeneousTextureExtractor::hatomdesign() {
     }
 
     for (k = 0; k < 5; k++) {
-        cnt = (double) size2 + 0.5;
+        cnt = static_cast<double>(size2) + 0.5;
 
         for (i = 0; i < 128; i++) {
             x = (i - cnt);
@@ -349,11 +349,11 @@ void HomogeneousTextureExtractor::SecondLevelExtraction(unsigned char * imagedat
     double min = 1.e10;
 
     for (i = 0; i < 1024; i++) {
-        timage[i]  = (COMPLEX *) calloc(1024, sizeof(COMPLEX));
+        timage[i]  = static_cast<COMPLEX *>(calloc(1024, sizeof(COMPLEX)));
     }
     for (i = 0; i < 512; i++) {
-        inimage[i] = (COMPLEX *) calloc(512, sizeof(COMPLEX));
-        image[i]   = (COMPLEX *) calloc(512, sizeof(COMPLEX));
+        inimage[i] = static_cast<COMPLEX *>(calloc(512, sizeof(COMPLEX)));
+        image[i]   = static_cast<COMPLEX *>(calloc(512, sizeof(COMPLEX)));
     }
 
     // 2000.10.11 - yjyu@samsung.com
@@ -405,7 +405,7 @@ void HomogeneousTextureExtractor::RadonTransform(unsigned char(*cin)[imsize], do
 
     for (i = 0; i < imsize; i++) {
         for (j = 0; j < imsize; j++) {
-            inimage[i][j].r = (double) cin[i][j];
+            inimage[i][j].r = static_cast<double>(cin[i][j]);
             inimage[i][j].i = 0;
 
             dc    +=  inimage[i][j].r;
@@ -661,8 +661,8 @@ COMPLEX HomogeneousTextureExtractor::GetProjectionFromFFT(CARTESIAN cart, COMPLE
 
     ret.r = ret.i = 0;
 
-    x = (int) cart.x;
-    y = (int) cart.y;
+    x = static_cast<int>(cart.x);
+    y = static_cast<int>(cart.y);
 
     rx = cart.x - x;
     ry = cart.y - y;
@@ -700,7 +700,7 @@ void HomogeneousTextureExtractor::Quantization() {
     double dcstep, stdstep, mstep, dstep;
 
     dcstep = (dcmax - dcmin) / Quant_level;
-    dc1 = (int) ((dc - dcmin) / (dcmax - dcmin) * Quant_level);
+    dc1 = static_cast<int>((dc - dcmin) / (dcmax - dcmin) * Quant_level);
 
     if (dc1 > 255) {
         dc1 = 255;
@@ -713,7 +713,7 @@ void HomogeneousTextureExtractor::Quantization() {
 
     dc = dc1;
     stdstep = (stdmax - stdmin) / Quant_level;
-    std1 = (int) ((stdev - stdmin) / (stdmax - stdmin) * Quant_level);
+    std1 = static_cast<int>((stdev - stdmin) / (stdmax - stdmin) * Quant_level);
 
     if (std1 > 255) {
         std1 = 255;
@@ -728,7 +728,7 @@ void HomogeneousTextureExtractor::Quantization() {
     for (n = 0; n < 5; n++) {
         for (m = 0; m < 6; m++) {
             mstep = (mmax[n][m] - mmin[n][m]) / Quant_level;
-            m1 = (int) ((vec[n][m] - mmin[n][m]) / (mmax[n][m] - mmin[n][m]) * Quant_level);
+            m1 = static_cast<int>((vec[n][m] - mmin[n][m]) / (mmax[n][m] - mmin[n][m]) * Quant_level);
 
             if (m1 > 255) {
                 m1 = 255;
@@ -745,7 +745,7 @@ void HomogeneousTextureExtractor::Quantization() {
     for (n = 0; n < 5; n++) {
         for (m = 0; m < 6; m++) {
             dstep = (dmax[n][m] - dmin[n][m]) / Quant_level;
-            d1 = (int) ((dvec[n][m] - dmin[n][m]) / (dmax[n][m] - dmin[n][m]) * Quant_level);
+            d1 = static_cast<int>((dvec[n][m] - dmin[n][m]) / (dmax[n][m] - dmin[n][m]) * Quant_level);
 
             if (d1 > 255) {
                 d1 = 255;

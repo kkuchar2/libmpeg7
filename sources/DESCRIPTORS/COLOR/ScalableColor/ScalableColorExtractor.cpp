@@ -55,7 +55,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
     int integerBinaryValue;
 
     for (int i = 0; i < 256; i++) {
-        binaryValue = (double) (factor) * (double) (histogram[i]) / (double) (imageHeight*imageWidth);
+        binaryValue = static_cast<double>(factor) * static_cast<double>(histogram[i]) / static_cast<double>(imageHeight * imageWidth);
         integerBinaryValue = static_cast<int>(binaryValue + 0.49999);
 
         if (integerBinaryValue > factor) {
@@ -279,17 +279,17 @@ int * ScalableColorExtractor::rgb2hsv(int r, int g, int b, int hue_quant, int sa
 
     switch (order) {
         case 0:
-            h = 1.0 - (double) (r - g) / (double) (r - b); break;
+            h = 1.0 - static_cast<double>(r - g) / static_cast<double>(r - b); break;
         case 1:
-            h = 3.0 - (double) (g - b) / (double) (g - r); break;
+            h = 3.0 - static_cast<double>(g - b) / static_cast<double>(g - r); break;
         case 2:
-            h = 1.0 + (double) (g - r) / (double) (g - b); break;
+            h = 1.0 + static_cast<double>(g - r) / static_cast<double>(g - b); break;
         case 3:
-            h = 5.0 + (double) (r - b) / (double) (r - g); break;
+            h = 5.0 + static_cast<double>(r - b) / static_cast<double>(r - g); break;
         case 4:
-            h = 3.0 + (double) (b - g) / (double) (b - r); break;
+            h = 3.0 + static_cast<double>(b - g) / static_cast<double>(b - r); break;
         case 5:
-            h = 5.0 - (double) (b - r) / (double) (b - g); break;
+            h = 5.0 - static_cast<double>(b - r) / static_cast<double>(b - g); break;
         default:
             h = 0.0;
     }

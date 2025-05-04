@@ -62,22 +62,22 @@ Descriptor * CTBrowsingExtractor::extract(Image & image, const char ** params) {
 
 unsigned char ** CTBrowsingExtractor::allocateDiscardingArrayMemory(int height, int width) {
     // Allocate memory for rows:
-    const auto mem = (unsigned char **) malloc(height * sizeof(unsigned char *));
+    const auto mem = static_cast<unsigned char **>(malloc(height * sizeof(unsigned char *)));
 
     // Allocate memory for cols:
     for (int i = 0; i < height; i++) {
-        mem[i] = (unsigned char *) malloc(width * sizeof(unsigned char));
+        mem[i] = static_cast<unsigned char *>(malloc(width * sizeof(unsigned char)));
     }
     return	mem;
 }
 
 double ** CTBrowsingExtractor::allocateXYZ(int height, int width) {
     // Allocate memory for rows
-    const auto mem = (double **) malloc(height * sizeof(double *));
+    const auto mem = static_cast<double **>(malloc(height * sizeof(double *)));
 
     // Allocate memory for cols
     for (int i = 0; i < height; i++) {
-        mem[i] = (double *) malloc(width * sizeof(double));
+        mem[i] = static_cast<double *>(malloc(width * sizeof(double)));
     }
     return mem;
 }
@@ -185,9 +185,9 @@ void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, int i
                 }
             }
         }
-        xyz_a[0] /= (double) (pix_cnt);
-        xyz_a[1] /= (double) (pix_cnt);
-        xyz_a[2] /= (double) (pix_cnt);
+        xyz_a[0] /= static_cast<double>(pix_cnt);
+        xyz_a[1] /= static_cast<double>(pix_cnt);
+        xyz_a[2] /= static_cast<double>(pix_cnt);
 
         // end of averaging for current iteration
 
@@ -315,13 +315,13 @@ int CTBrowsingExtractor::uv2ColorTemperature(double iu, double iv) {
 
     // Using reciprocal temperature
     if (idx2 == 1000) {
-        nCT = (int) isoTemp[mindistIdx];
+        nCT = static_cast<int>(isoTemp[mindistIdx]);
     }
     else {
         invT1 = 1.0 / isoTemp[idx1];
         invT2 = 1.0 / isoTemp[idx2];
         invD = d1 / (d1 - d2);
-        nCT = (int) (1.0 / (invT1 + invD * (invT2 - invT1)));
+        nCT = static_cast<int>(1.0 / (invT1 + invD * (invT2 - invT1)));
     }
 
     return nCT;
@@ -331,7 +331,7 @@ void CTBrowsingExtractor::PCTBC_Extraction(int * ctemperature, int * pctbc_out) 
     double firstRCT, secondRCT, RCTemperature;
     int exit = 0, index = 0;
 
-    RCTemperature = double(1000000) / double(*ctemperature);
+    RCTemperature = static_cast<double>(1000000) / static_cast<double>(*ctemperature);
 
     if (*ctemperature < HotMaxTempK) {
         pctbc_out[0] = 0;
