@@ -1,3 +1,4 @@
-java/.idea
-lib/build
-java/libs
+venv
+build
+cmake-build-debug
+.idea
