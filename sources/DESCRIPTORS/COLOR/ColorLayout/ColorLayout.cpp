@@ -46,17 +46,17 @@ void ColorLayout::loadParameters(const char ** params) {
         // NumberOfCCoeff - 3,6,10,15,21,28,64
         //------------------------------------------------------------------
 
-        if (!p1.compare("NumberOfYCoeff")) {
-            numberOfYCoefficients = !p2.compare("3")  || !p2.compare("6")  || 
-                                    !p2.compare("10") || !p2.compare("15") || 
-                                    !p2.compare("21") || !p2.compare("28") || 
-                                    !p2.compare("64") ? std::stoi(p2) : throw COL_LAY_PARAMS_VALUE_ERROR;         
+        if (p1 == "NumberOfYCoeff") {
+            numberOfYCoefficients = p2 == "3"  || p2 == "6"  || 
+                                    p2 == "10" || p2 == "15" || 
+                                    p2 == "21" || p2 == "28" || 
+                                    p2 == "64" ? std::stoi(p2) : throw COL_LAY_PARAMS_VALUE_ERROR;         
         }
-        else if (!p1.compare("NumberOfCCoeff")) {       
-            numberOfCCoefficients = !p2.compare("3")  || !p2.compare("6")  || 
-                                    !p2.compare("10") || !p2.compare("15") || 
-                                    !p2.compare("21") || !p2.compare("28") || 
-                                    !p2.compare("64") ? std::stoi(p2) : throw COL_LAY_PARAMS_VALUE_ERROR;          
+        else if (p1 == "NumberOfCCoeff") {       
+            numberOfCCoefficients = p2 == "3"  || p2 == "6"  || 
+                                    p2 == "10" || p2 == "15" || 
+                                    p2 == "21" || p2 == "28" || 
+                                    p2 == "64" ? std::stoi(p2) : throw COL_LAY_PARAMS_VALUE_ERROR;          
         }
         else {
             throw COL_LAY_PARAMS_NAME_ERROR;
