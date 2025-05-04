@@ -1,6 +1,6 @@
 #include "DominantColor.h"
 
-DominantColor::DominantColor() {
+DominantColor::DominantColor(): resultDescriptorSize(0), spatialCoherencyValue(0) {
 }
 
 void DominantColor::loadParameters(const char ** params) {

@@ -1,7 +1,6 @@
 #include "ScalableColorDistance.h"
 
-ScalableColorDistance::ScalableColorDistance() {
-}
+ScalableColorDistance::ScalableColorDistance() = default;
 
 void ScalableColorDistance::loadParameters(const char ** params) {
     if (params == nullptr) {
@@ -121,5 +120,4 @@ double ScalableColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     return sqrerr;
 }
 
-ScalableColorDistance::~ScalableColorDistance() {
-}
+ScalableColorDistance::~ScalableColorDistance() = default;

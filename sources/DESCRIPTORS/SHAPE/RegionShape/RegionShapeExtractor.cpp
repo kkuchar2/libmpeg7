@@ -1,6 +1,6 @@
 #include "RegionShapeExtractor.h"
 
-RegionShapeExtractor::RegionShapeExtractor() {
+RegionShapeExtractor::RegionShapeExtractor(): m_mass(0), m_centerX(0), m_centerY(0), m_radius(0), m_pBasisR{}, m_pBasisI{}, m_pCoeffR{}, m_pCoeffI{} {
     descriptor = new RegionShape();
 }
 

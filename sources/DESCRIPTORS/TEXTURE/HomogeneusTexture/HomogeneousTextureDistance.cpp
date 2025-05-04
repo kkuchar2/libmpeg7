@@ -1,7 +1,6 @@
 #include "HomogeneousTextureDistance.h"
 
-HomogeneousTextureDistance::HomogeneousTextureDistance() {
-}
+HomogeneousTextureDistance::HomogeneousTextureDistance() = default;
 
 void HomogeneousTextureDistance::loadParameters(const char ** params) {
     if (params[0] == nullptr) {
@@ -327,5 +326,4 @@ void HomogeneousTextureDistance::Normalization(float * feature) {
     }
 }
 
-HomogeneousTextureDistance::~HomogeneousTextureDistance() {
-}
+HomogeneousTextureDistance::~HomogeneousTextureDistance() = default;

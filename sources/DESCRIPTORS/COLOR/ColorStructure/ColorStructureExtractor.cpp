@@ -1,6 +1,6 @@
 #include "ColorStructureExtractor.h"
 
-ColorStructureExtractor::ColorStructureExtractor() {
+ColorStructureExtractor::ColorStructureExtractor(): targetSize(0) {
     descriptor = new ColorStructure();
 }
 

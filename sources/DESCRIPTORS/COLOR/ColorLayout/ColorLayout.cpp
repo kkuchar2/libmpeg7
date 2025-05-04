@@ -1,7 +1,6 @@
 #include "ColorLayout.h"
 
-ColorLayout::ColorLayout() {
-}
+ColorLayout::ColorLayout() = default;
 
 void ColorLayout::loadParameters(const char ** params) {
 

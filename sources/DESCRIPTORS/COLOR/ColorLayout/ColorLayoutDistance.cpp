@@ -1,7 +1,6 @@
 #include "ColorLayoutDistance.h"
 
-ColorLayoutDistance::ColorLayoutDistance() {
-}
+ColorLayoutDistance::ColorLayoutDistance() = default;
 
 double ColorLayoutDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
     ColorLayout * colorLayoutDescriptor1 = static_cast<ColorLayout *>(descriptor1);

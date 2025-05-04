@@ -1,7 +1,6 @@
 #include "CTBrowsingDistance.h"
 
-CTBrowsingDistance::CTBrowsingDistance() {
-}
+CTBrowsingDistance::CTBrowsingDistance() = default;
 
 double CTBrowsingDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
     CTBrowsing * cTBrowsingDescriptor1 = static_cast<CTBrowsing *>(descriptor1);
@@ -15,5 +14,4 @@ double CTBrowsingDistance::getDistance(Descriptor * descriptor1, Descriptor * de
     return distance;
 }
 
-CTBrowsingDistance::~CTBrowsingDistance() {
-}
+CTBrowsingDistance::~CTBrowsingDistance() = default;

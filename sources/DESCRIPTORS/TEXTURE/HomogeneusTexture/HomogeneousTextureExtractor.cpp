@@ -1,6 +1,6 @@
 #include "HomogeneousTextureExtractor.h"
 
-HomogeneousTextureExtractor::HomogeneousTextureExtractor() {
+HomogeneousTextureExtractor::HomogeneousTextureExtractor(): timage{}, inimage{}, image{}, mean2{}, dev2{}, m_dc(0), m_std(0), Num_pixel(0), hdata{}, vdata{}, dc(0), stdev(0), vec{}, dvec{} {
     descriptor = new HomogeneousTexture();
 }
 

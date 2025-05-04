@@ -1,7 +1,6 @@
 #include "EdgeHistogramDistance.h"
 
-EdgeHistogramDistance::EdgeHistogramDistance() {
-}
+EdgeHistogramDistance::EdgeHistogramDistance() = default;
 
 double EdgeHistogramDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
     EdgeHistogram * edgeHistogramDescriptor1 = static_cast<EdgeHistogram *>(descriptor1);
@@ -93,5 +92,4 @@ void EdgeHistogramDistance::Make_Global_SemiGlobal(double * LocalHistogramOnly, 
     // Make Semi-Global Histogram end
 }
 
-EdgeHistogramDistance::~EdgeHistogramDistance() {
-}
+EdgeHistogramDistance::~EdgeHistogramDistance() = default;

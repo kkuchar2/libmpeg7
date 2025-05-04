@@ -7,8 +7,7 @@ static double twopi = 2.0 * 3.14159265358979323846;
 static float VAR_RECL = 60.0;
 static float VAR_RECH = 90.0;
 
-DominantColorDistance::DominantColorDistance() {
-}
+DominantColorDistance::DominantColorDistance() = default;
 
 void DominantColorDistance::loadParameters(const char ** params) {
     if (params == nullptr) {
@@ -401,5 +400,4 @@ void DominantColorDistance::rgb2luv(int * RGB, float * LUV, int size) {
     }
 }
 
-DominantColorDistance::~DominantColorDistance() {
-}
+DominantColorDistance::~DominantColorDistance() = default;

@@ -1,6 +1,6 @@
 #include "RegionShape.h"
 
-RegionShape::RegionShape() {
+RegionShape::RegionShape(): m_ArtDE{} {
 }
 
 void RegionShape::loadParameters(const char ** params) {
@@ -131,8 +131,7 @@ std::string RegionShape::generateXML() {
 	return xmlPrinter.CStr();
 }
 
-RegionShape::~RegionShape() {
-}
+RegionShape::~RegionShape() = default;
 
 const double RegionShape::QuantTable[17] = {
     0.000000000, 0.003585473, 0.007418411, 0.011535520, 0.015982337,

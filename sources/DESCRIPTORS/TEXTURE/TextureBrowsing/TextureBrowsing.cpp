@@ -1,7 +1,6 @@
 #include "TextureBrowsing.h"
 
-TextureBrowsing::TextureBrowsing() {
-}
+TextureBrowsing::TextureBrowsing() = default;
 
 void TextureBrowsing::loadParameters(const char ** params) {
     if (params == nullptr) {

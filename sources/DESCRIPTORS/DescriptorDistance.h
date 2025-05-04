@@ -25,5 +25,4 @@ class DescriptorDistance {
         virtual ~DescriptorDistance() = 0;
 };
 
-inline DescriptorDistance::~DescriptorDistance() {
-}
+inline DescriptorDistance::~DescriptorDistance() = default;

@@ -39,5 +39,4 @@ class Descriptor {
         virtual ~ Descriptor() = 0;
 };
 
-inline Descriptor::~Descriptor () {
-}
+inline Descriptor::~Descriptor () = default;

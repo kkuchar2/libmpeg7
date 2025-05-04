@@ -1,7 +1,6 @@
 #include "ScalableColor.h"
 
-ScalableColor::ScalableColor() {
-}
+ScalableColor::ScalableColor() = default;
 
 void ScalableColor::loadParameters(const char ** params) {
     if (params == nullptr) {

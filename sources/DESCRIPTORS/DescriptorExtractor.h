@@ -27,5 +27,4 @@ class DescriptorExtractor {
         virtual ~DescriptorExtractor() = 0;
 };
 
-inline DescriptorExtractor::~DescriptorExtractor() {
-}
+inline DescriptorExtractor::~DescriptorExtractor() = default;

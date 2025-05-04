@@ -1,7 +1,6 @@
 #include "CTBrowsing.h"
 
-CTBrowsing::CTBrowsing() {
-}
+CTBrowsing::CTBrowsing() = default;
 
 void CTBrowsing::loadParameters(const char ** params) {
 }

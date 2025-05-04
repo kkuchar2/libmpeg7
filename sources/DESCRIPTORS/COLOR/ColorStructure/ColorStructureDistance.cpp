@@ -1,7 +1,6 @@
 #include "ColorStructureDistance.h"
 
-ColorStructureDistance::ColorStructureDistance() {
-}
+ColorStructureDistance::ColorStructureDistance() = default;
 
 double ColorStructureDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
     ColorStructure * colorStructureDescriptor1 = static_cast<ColorStructure *>(descriptor1);

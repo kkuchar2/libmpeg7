@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Image::Image() : imageData(nullptr) {
+Image::Image() : imageData(nullptr), imageWidth(0), imageHeight(0), imageSize(0), totalImageSize(0), channels(0), depth(0) {
 }
 
 void Image::load(unsigned char* data, int size, LoadMode decode_mode) {

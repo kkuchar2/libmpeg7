@@ -1,6 +1,6 @@
 #include "ColorStructure.h"
 
-ColorStructure::ColorStructure() {
+ColorStructure::ColorStructure(): descriptorSize(0) {
 }
 
 void ColorStructure::loadParameters(const char ** params) {

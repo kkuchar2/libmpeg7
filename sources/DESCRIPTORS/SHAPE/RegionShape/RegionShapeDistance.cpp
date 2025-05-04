@@ -1,12 +1,11 @@
 #include "RegionShapeDistance.h"
 
-RegionShapeDistance::RegionShapeDistance() {
-}
+RegionShapeDistance::RegionShapeDistance() = default;
 
 double RegionShapeDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
     /*  
-        UWAGA: W oryginale wniesiono poprawkê w funckji initVOPGray, 
-               gdzie indeksowanie pikseli obrazu by³o niew³aœciwe
+        UWAGA: W oryginale wniesiono poprawki w funckji initVOPGray,
+               gdzie indeksowanie pikseli obrazu bylo niewlasciwe
         
         ----------------------------------------------------------------------------
         newbuf[i] = (buf[j++] + buf[j++] + buf[j++]) / 3
@@ -36,5 +35,4 @@ double RegionShapeDistance::getDistance(Descriptor * descriptor1, Descriptor * d
     return distance;
 }
 
-RegionShapeDistance::~RegionShapeDistance() {
-}
+RegionShapeDistance::~RegionShapeDistance() = default;

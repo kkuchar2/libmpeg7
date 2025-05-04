@@ -1,7 +1,6 @@
 #include "TextureBrowsingDistance.h"
 
-TextureBrowsingDistance::TextureBrowsingDistance() {
-}
+TextureBrowsingDistance::TextureBrowsingDistance() = default;
 
 double TextureBrowsingDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
     TextureBrowsing * textureBrowsingDescriptor1 = static_cast<TextureBrowsing *>(descriptor1);
@@ -29,5 +28,4 @@ double TextureBrowsingDistance::distance_PBC(int flag, int * Ref, int * Query) {
     return distance;
 }
 
-TextureBrowsingDistance::~TextureBrowsingDistance() {
-}
+TextureBrowsingDistance::~TextureBrowsingDistance() = default;

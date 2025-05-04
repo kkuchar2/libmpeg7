@@ -1,6 +1,6 @@
 #include "DominantColorExtractor.h"
 
-DominantColorExtractor::DominantColorExtractor() {
+DominantColorExtractor::DominantColorExtractor(): currentColorNumber(0) {
     descriptor = new DominantColor();
 }
 

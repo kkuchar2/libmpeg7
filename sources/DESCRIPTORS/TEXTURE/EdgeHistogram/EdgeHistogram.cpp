@@ -1,6 +1,6 @@
 #include "EdgeHistogram.h"
 
-EdgeHistogram::EdgeHistogram() {
+EdgeHistogram::EdgeHistogram(): Local_Edge{} {
 }
 
 void EdgeHistogram::loadParameters(const char ** params) {

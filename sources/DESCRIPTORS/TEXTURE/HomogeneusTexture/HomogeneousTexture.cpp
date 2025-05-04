@@ -1,6 +1,6 @@
 #include "HomogeneousTexture.h"
 
-HomogeneousTexture::HomogeneousTexture() {
+HomogeneousTexture::HomogeneousTexture(): outputFeature{} {
 }
 
 void HomogeneousTexture::loadParameters(const char ** params) {
@@ -199,5 +199,4 @@ int HomogeneousTexture::GetHomogeneousTextureFeatureFlag() {
     return energyDeviationFlag;
 }
 
-HomogeneousTexture::~HomogeneousTexture() {
-}
+HomogeneousTexture::~HomogeneousTexture() = default;
