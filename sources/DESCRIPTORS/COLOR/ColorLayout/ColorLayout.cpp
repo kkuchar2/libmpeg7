@@ -94,9 +94,9 @@ std::string ColorLayout::generateXML() {
     p_CbDCCoeff->SetText(cbCoefficients[0]); // CbDCCoeff
     p_CrDCCoeff->SetText(crCoefficients[0]); // CrDCCoeff
 
-    std::string yACstring = "";
-    std::string cbACstring = "";
-    std::string crACstring = "";
+    std::string yACstring;
+    std::string cbACstring;
+    std::string crACstring;
 
     for (int i = 1; i < numberOfYCoefficients; i++) {
         yACstring.append(std::to_string(yCoefficients[i]) + " ");
