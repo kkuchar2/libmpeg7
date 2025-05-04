@@ -184,18 +184,15 @@ void HomogeneousTexture::readFromXML(XMLElement * descriptorElement) {
     }
 }
 
-void HomogeneousTexture::SetHomogeneousTextureFeature(int * pHomogeneousTextureFeature) {
+void HomogeneousTexture::SetHomogeneousTextureFeature(const int * pHomogeneousTextureFeature) {
 	memcpy(outputFeature, pHomogeneousTextureFeature, sizeof(outputFeature));
 }
 
 int * HomogeneousTexture::GetHomogeneousTextureFeature() {
-    if (outputFeature == nullptr) {
-        return nullptr;
-    }
     return outputFeature;
 }
 
-int HomogeneousTexture::GetHomogeneousTextureFeatureFlag() {
+int HomogeneousTexture::GetHomogeneousTextureFeatureFlag() const {
     return energyDeviationFlag;
 }
 

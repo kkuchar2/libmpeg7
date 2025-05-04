@@ -200,7 +200,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
         histogram[i] = histogram_out[i];
     }
 
-    delete histogram_out;
+    delete[] histogram_out;
 
     descriptor->allocateCoefficients(coeffNumb);
 
@@ -211,7 +211,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
         coefficients[i] = histogram[i];
     }
 
-    delete histogram;
+    delete[] histogram;
 
     return descriptor;
 }

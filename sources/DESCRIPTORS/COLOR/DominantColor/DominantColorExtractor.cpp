@@ -116,7 +116,7 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
         CalculateVariances(pixelsClusters, LUV, imageSize, alphaChannelBuffer);
     }
 
-    delete pixelsClusters;
+    delete[] pixelsClusters;
 
     // Normalize
     for (int j = 0; j < currentColorNumber; j++) {
@@ -657,7 +657,7 @@ void DominantColorExtractor::rgb2luv(Image &image, float * LUV) {
     const auto XYZ = new double[image.getSize() * 3];
     rgb2xyz(image, XYZ);
     xyz2luv(XYZ, LUV, image.getSize() * 3);
-    delete XYZ;
+    delete[] XYZ;
 }
 
 void DominantColorExtractor::luv2rgb(int * RGB, float *LUV, const int size) {

@@ -46,8 +46,8 @@ class HomogeneousTexture : public Descriptor {
         std::string generateXML();
         void readFromXML(XMLElement * descriptorElement);
 
-        void SetHomogeneousTextureFeature(int * pHomogeneousTextureFeature);
-        int GetHomogeneousTextureFeatureFlag();
+        void SetHomogeneousTextureFeature(const int * pHomogeneousTextureFeature);
+        int GetHomogeneousTextureFeatureFlag() const;
         int * GetHomogeneousTextureFeature();
 
 		~HomogeneousTexture();

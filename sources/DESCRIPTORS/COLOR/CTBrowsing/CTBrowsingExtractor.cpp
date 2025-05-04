@@ -156,7 +156,7 @@ void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, const
     int loop_cnt = 0;   // Counting averaging loop iterations
     long pix_cnt;	    // Number of pixels, which are not discarded (in documentation equal to "rows x cols" in equation
     int flag = 1;	    // Flag for indicating, whenever current threshold is equal to previous one, what ends averaging loop
-    const double f = 3.0;	    // Multiplier for the colour component average value to obtain threshold above which pixels are discarded (typical value is 3 - subjective experiments)   
+    const double f = 3.0;	    // Multiplier for the colour component average value to obtain threshold above which pixels are discarded (typical value is 3 - subjective experiments)
     const int iterations = 5; // Number of averaging loop iterations (typical number is in range from 4 to 8, maximum happened to be 20)
     double	p_th[3] = { 0.0, 0.0, 0.0 }; // Previous threshold for threshold comparison
     
@@ -305,9 +305,9 @@ int CTBrowsingExtractor::uv2ColorTemperature(const double iu, const double iv) {
             wystarczy sprawdzic czy ostatnia linia jest najblizsza - 
             jesli tak, to jestesmy w 'obszarze czerwonym' 
             (tak w ogole to czy fakt ze tu program dotarl, nie oznacza juz automatycznie, ze jest w 'obszarze czerwonym'?)  */
-            if (mindist > abs(d2)) {//
+            if (mindist > std::abs(d2)) {//
             
-                mindist = abs(d2);
+                mindist = std::abs(d2);
                 mindistIdx = i + 1;
             }
         }
