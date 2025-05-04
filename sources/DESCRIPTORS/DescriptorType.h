@@ -11,8 +11,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No known bugs.	*/
 
-#ifndef _DESCRIPTOR_TYPE_H 
-#define _DESCRIPTOR_TYPE_H 
+#pragma once
 
 enum DescriptorType {
     NONE                  = 0, //!< Empty, not existing descriptor type
@@ -27,5 +26,3 @@ enum DescriptorType {
 	REGION_SHAPE_D 		  = 9, //!< Region Shape Descriptor
 	CONTOUR_SHAPE_D       = 10 //!< Contour Shape Descriptor
 };
-
-#endif

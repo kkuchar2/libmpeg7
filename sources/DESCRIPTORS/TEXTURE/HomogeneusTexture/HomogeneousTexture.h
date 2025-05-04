@@ -6,8 +6,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _HOMOGENEOUSTEXTURE_H 
-#define _HOMOGENEOUSTEXTURE_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -53,4 +52,3 @@ class HomogeneousTexture : public Descriptor {
 
 		~HomogeneousTexture();
 };
-#endif

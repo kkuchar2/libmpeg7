@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected.                            */
 
-#ifndef _SCALABLECOLORDISTANCE_H 
-#define _SCALABLECOLORDISTANCE_H
+#pragma once
 
 #include "../ScalableColor/ScalableColor.h"
 #include "../../DescriptorDistance.h"
@@ -18,5 +17,3 @@ class ScalableColorDistance : public DescriptorDistance {
         double getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params);
         ~ScalableColorDistance();
 };
-
-#endif/*_SCALABLECOLORDISTANCE_H */

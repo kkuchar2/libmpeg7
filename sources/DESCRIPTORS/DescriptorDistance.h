@@ -6,8 +6,7 @@
 *
 *  @author Krzysztof Lech Kucharski */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-#ifndef _DESCRIPTOR_DISTANCE_H 
-#define _DESCRIPTOR_DISTANCE_H 
+#pragma once
 
 #include "Descriptor.h"
 
@@ -28,5 +27,3 @@ class DescriptorDistance {
 
 inline DescriptorDistance::~DescriptorDistance() {
 }
-
-#endif

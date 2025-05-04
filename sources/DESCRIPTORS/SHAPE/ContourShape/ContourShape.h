@@ -6,8 +6,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _CONTOURSHAPE_H 
-#define _CONTOURSHAPE_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -92,5 +91,3 @@ class ContourShape : public Descriptor {
 
 		~ContourShape();
 };
-
-#endif /* _CONTOURSHAPE_H */

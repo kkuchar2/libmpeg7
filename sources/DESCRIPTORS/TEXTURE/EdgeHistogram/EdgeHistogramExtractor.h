@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected. */
 
-#ifndef _EDGEHISTOGRAM_EXTRACTOR_H
-#define _EDGEHISTOGRAM_EXTRACTOR_H
+#pragma once
 
 #include "../../DescriptorExtractor.h"
 #include "../EdgeHistogram/EdgeHistogram.h"
@@ -29,4 +28,3 @@ class EdgeHistogramExtractor : public DescriptorExtractor {
 	    Descriptor * extract(Image & image, const char ** params);
         ~EdgeHistogramExtractor();
 };
-#endif

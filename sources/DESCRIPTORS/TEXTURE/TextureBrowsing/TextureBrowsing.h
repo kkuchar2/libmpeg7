@@ -6,8 +6,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _TEXTUREBROWSING_H  
-#define _TEXTUREBROWSING_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -30,4 +29,3 @@ class TextureBrowsing : public Descriptor {
 
 		~TextureBrowsing();
 };
-#endif

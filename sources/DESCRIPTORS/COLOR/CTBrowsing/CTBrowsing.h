@@ -6,8 +6,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _CTBROWSING_H 
-#define _CTBROWSING_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -27,4 +26,4 @@ class CTBrowsing : public Descriptor {
 
 		~CTBrowsing();
 };
-#endif
+

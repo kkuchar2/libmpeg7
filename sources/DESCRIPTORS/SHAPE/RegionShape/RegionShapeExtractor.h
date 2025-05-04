@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected. */
 
-#ifndef _REGION_SHAPE_EXTRACTOR_H 
-#define _REGION_SHAPE_EXTRACTOR_H 
+#pragma once
 
 #ifndef M_PI
 #define M_PI 3.141592653
@@ -43,4 +42,3 @@ class RegionShapeExtractor : public DescriptorExtractor {
 	    Descriptor * extract(Image & image, const char ** params);
         ~RegionShapeExtractor();
 };
-#endif

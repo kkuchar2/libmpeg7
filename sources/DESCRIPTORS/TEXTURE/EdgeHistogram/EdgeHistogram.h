@@ -7,8 +7,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _EDGEHISTOGRAM_H 
-#define _EDGEHISTOGRAM_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -42,4 +41,3 @@ class EdgeHistogram : public Descriptor {
 
 		~EdgeHistogram();
 };
-#endif

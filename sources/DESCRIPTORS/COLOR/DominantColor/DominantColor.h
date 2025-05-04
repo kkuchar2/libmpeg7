@@ -6,8 +6,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _DOMINANTCOLOR_H 
-#define _DOMINANTCOLOR_H
+#pragma once
 
 #define DESCRIPTOR_SIZE 8
 
@@ -48,4 +47,3 @@ class DominantColor : public Descriptor {
 
 		~DominantColor();
 };
-#endif

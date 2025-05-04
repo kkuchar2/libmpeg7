@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected.                    */
 
-#ifndef _COLOR_STRUCTURE_EXTRACTOR_H 
-#define _COLOR_STRUCTURE_EXTRACTOR_H 
+#pragma once
 
 #define	BASE_QUANT_SPACE       256
 #define	BASE_QUANT_SPACE_INDEX 3
@@ -58,4 +57,3 @@ class ColorStructureExtractor : public DescriptorExtractor {
 		Descriptor * extract(Image & image, const char ** params);
         ~ColorStructureExtractor();
 };
-#endif

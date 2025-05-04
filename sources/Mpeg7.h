@@ -1,5 +1,4 @@
-#ifndef _MPEG7_H
-#define _MPEG7_H
+#pragma once
 
 #include "TOOLS/ErrorCode.h"
 #include "DESCRIPTORS/DescriptorType.h"
@@ -63,5 +62,3 @@ extern "C" {
     MODULE_API const char * getDistance (const char * xml1, const char * xml2, const char ** params);
     MODULE_API void freeResultPointer(char * ptr);
 }
-
-#endif /* _MPEG7_H */

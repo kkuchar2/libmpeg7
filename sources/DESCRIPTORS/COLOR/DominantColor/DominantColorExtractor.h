@@ -3,8 +3,7 @@
 *  @author Krzysztof Lech Kucharski
 *  @bug    No bugs detected.                            */
 
-#ifndef _DOMINANTCOLOR_EXTRACTOR_H 
-#define _DOMINANTCOLOR_EXTRACTOR_H 
+#pragma once
 
 #define MINIMUM_DISTORTION_CHANGE       0.01 // 1% minimum distortion condition
 #define SPLIT_MINIMUM_DISTORTION_CHANGE 0.02 // 2% minimum distortion condition for cluster split 
@@ -71,4 +70,3 @@ class DominantColorExtractor : public DescriptorExtractor {
 		Descriptor * extract(Image & image, const char ** params);
         ~DominantColorExtractor();
 };
-#endif

@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected.                              */
 
-#ifndef _COLORSTRUCTUREDISTANCE_H 
-#define _COLORSTRUCTUREDISTANCE_H
+#pragma once
 
 #include "../../DescriptorDistance.h"
 #include "../ColorStructure/ColorStructure.h"
@@ -15,5 +14,3 @@ class ColorStructureDistance : public DescriptorDistance {
         double getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params);
         ~ColorStructureDistance();
 };
-
-#endif

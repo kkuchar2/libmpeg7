@@ -8,8 +8,7 @@
 *  @author Krzysztof Lech Kucharski */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-#ifndef _DESCRIPTOR_H 
-#define _DESCRIPTOR_H 
+#pragma once
 
 #include <string>
 #include <iostream>
@@ -42,5 +41,3 @@ class Descriptor {
 
 inline Descriptor::~Descriptor () {
 }
-
-#endif

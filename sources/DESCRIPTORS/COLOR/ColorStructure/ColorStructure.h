@@ -26,8 +26,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected.                                                                          */
 
-#ifndef _COLORSTRUCTURE_H 
-#define _COLORSTRUCTURE_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -52,4 +51,3 @@ class ColorStructure : public Descriptor {
 
 		~ColorStructure();
 };
-#endif

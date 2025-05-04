@@ -3,8 +3,7 @@
 *   @author Krzysztof Lech Kucharski
 *   @bug    No bugs detected.                            */
 
-#ifndef _HOMOGENEOUSTEXTURE_DISTANCE_H
-#define _HOMOGENEOUSTEXTURE_DISTANCE_H
+#pragma once
 
 #include "../../DescriptorDistance.h"
 #include "../HomogeneusTexture/HomogeneousTexture.h"
@@ -37,4 +36,3 @@ class HomogeneousTextureDistance : public DescriptorDistance {
 
         ~HomogeneousTextureDistance();
 };
-#endif

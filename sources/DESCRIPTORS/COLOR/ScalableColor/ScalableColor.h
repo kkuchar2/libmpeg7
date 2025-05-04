@@ -6,8 +6,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _SCALABLECOLOR_H  
-#define _SCALABLECOLOR_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -37,4 +36,3 @@ class ScalableColor : public Descriptor {
 
 	    ~ScalableColor();
 };
-#endif

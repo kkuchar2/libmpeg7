@@ -7,8 +7,7 @@
 *  @author Krzysztof Lech Kucharski */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-#ifndef _DESCRIPTOR_EXTRACTOR_H 
-#define _DESCRIPTOR_EXTRACTOR_H 
+#pragma once
 
 #include "Descriptor.h"
 
@@ -30,5 +29,3 @@ class DescriptorExtractor {
 
 inline DescriptorExtractor::~DescriptorExtractor() {
 }
-
-#endif

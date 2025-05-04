@@ -3,8 +3,7 @@
 *   @author Krzysztof Lech Kucharski
 *   @bug    No bugs detected.                            */
 
-#ifndef _CTBROWSING_EXTRACTOR_H 
-#define _CTBROWSING_EXTRACTOR_H
+#pragma once
 
 #include "../../DescriptorExtractor.h"
 #include "../CTBrowsing/CTBrowsing.h"
@@ -70,4 +69,3 @@ class CTBrowsingExtractor : public DescriptorExtractor {
 	    Descriptor * extract(Image & image, const char ** params);
         ~CTBrowsingExtractor();
 };
-#endif

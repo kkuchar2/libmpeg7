@@ -3,8 +3,7 @@
  *   @author Krzysztof Lech Kucharski
  *   @bug    No bugs detected.                            */
 
-#ifndef _EDGEHISTOGRAM_DISTANCE_H
-#define _EDGEHISTOGRAM_DISTANCE_H
+#pragma once
 
 #include "../../DescriptorDistance.h"
 #include "../EdgeHistogram/EdgeHistogram.h"
@@ -20,4 +19,3 @@ class EdgeHistogramDistance : public DescriptorDistance {
 
         ~EdgeHistogramDistance();
 };
-#endif

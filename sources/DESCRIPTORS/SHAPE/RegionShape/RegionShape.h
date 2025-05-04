@@ -7,8 +7,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug No bugs detected. */
 
-#ifndef _REGIONSHAPE_H 
-#define _REGIONSHAPE_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -35,5 +34,3 @@ class RegionShape : public Descriptor {
         double GetRealValue(char p, char r);
 		~RegionShape();
 };
-
-#endif /* _REGIONSHAPE_H */

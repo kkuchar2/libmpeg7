@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    Some results are not equal to XM (floating point accuraccy?). */
 
-#ifndef _CONTOUR_SHAPE_DISTANCE_H 
-#define _CONTOUR_SHAPE_DISTANCE_H 
+#pragma once
 
 #include "../../DescriptorDistance.h"
 #include "../ContourShape/ContourShape.h"
@@ -35,5 +34,3 @@ class ContourShapeDistance : public DescriptorDistance {
         double getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params);
         ~ContourShapeDistance();
 };
-
-#endif

@@ -52,8 +52,7 @@
 *  @author Krzysztof Lech Kucharski */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-#ifndef _IMAGE_H
-#define _IMAGE_H 
+#pragma once
 
 #include <iostream>
 #include <memory>
@@ -222,4 +221,4 @@ class Image {
 		~Image();
 };
 
-#endif
+#pragma once

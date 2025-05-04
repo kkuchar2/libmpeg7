@@ -3,8 +3,7 @@
 *  @author Krzysztof Lech Kucharski
 *  @bug    No bugs detected.                            */
 
-#ifndef _HOMOGENEOUSTEXTURE_EXTRACTOR_H
-#define _HOMOGENEOUSTEXTURE_EXTRACTOR_H
+#pragma once
 
 #include "../../DescriptorExtractor.h"
 #include "../HomogeneusTexture/HomogeneousTexture.h"
@@ -76,4 +75,3 @@ class HomogeneousTextureExtractor : public DescriptorExtractor {
         Descriptor * extract(Image & image, const char ** params);
         ~HomogeneousTextureExtractor();
 };
-#endif

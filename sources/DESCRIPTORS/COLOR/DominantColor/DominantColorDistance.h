@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected.                            */
 
-#ifndef _DOMINANTCOLORDISTANCE_H 
-#define _DOMINANTCOLORDISTANCE_H
+#pragma once
 
 #include "../DominantColor/DominantColor.h"
 #include "../../DescriptorDistance.h"
@@ -25,4 +24,3 @@ class DominantColorDistance : public DescriptorDistance {
         
         ~DominantColorDistance();
 };
-#endif

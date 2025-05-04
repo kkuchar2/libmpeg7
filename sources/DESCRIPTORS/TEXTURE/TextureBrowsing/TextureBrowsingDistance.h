@@ -3,8 +3,7 @@
 *   @author Krzysztof Lech Kucharski
 *   @bug    No bugs detected.                            */
 
-#ifndef _TEXTURE_BROWSING_DISTANCE_H 
-#define _TEXTURE_BROWSING_DISTANCE_H 
+#pragma once
 
 #include "../../DescriptorDistance.h"
 #include "../TextureBrowsing/TextureBrowsing.h"
@@ -18,4 +17,3 @@ class TextureBrowsingDistance : public DescriptorDistance {
         double getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params);
         ~TextureBrowsingDistance();
 };
-#endif

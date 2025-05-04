@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected.                            */
 
-#ifndef _SCALABLE_COLOR_EXTRACTOR_H 
-#define _SCALABLE_COLOR_EXTRACTOR_H 
+#pragma once
 
 #include "../../DescriptorExtractor.h"
 #include "../ScalableColor/ScalableColor.h"
@@ -26,5 +25,3 @@ class ScalableColorExtractor : public DescriptorExtractor {
 	    Descriptor * extract(Image & image, const char ** params);
         ~ScalableColorExtractor();
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef _ERROR_CODE_H 
-#define _ERROR_CODE_H 
+#pragma once
 
 enum ErrorCode {
     // Main errors
@@ -131,5 +130,3 @@ enum ErrorCode {
     EDGE_HIST_BIN_COUNTS_SIZE_ERROR = 105, //!< BinCounts size in XML
     EDGE_HIST_XML_BINCOUNTS_MISSING = 106, //!< <BinCounts> element missing from XML
 };
-
-#endif

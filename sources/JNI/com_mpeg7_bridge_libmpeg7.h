@@ -2,8 +2,8 @@
 #include <jni.h>
 /* Header for class com_mpeg7_bridge_libmpeg7 */
 
-#ifndef _Included_com_mpeg7_bridge_libmpeg7
-#define _Included_com_mpeg7_bridge_libmpeg7
+#pragma once
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -33,5 +33,4 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
 
 #ifdef __cplusplus
 }
-#endif
 #endif

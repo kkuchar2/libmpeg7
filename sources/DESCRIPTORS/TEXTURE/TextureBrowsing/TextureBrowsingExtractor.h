@@ -3,8 +3,7 @@
 *  @author Krzysztof Lech Kucharski
 *  @bug    Code needs to be revised. Very often extraction results with error */
 
-#ifndef _TEXTURE_BROWSING_EXTRACTOR_H 
-#define _TEXTURE_BROWSING_EXTRACTOR_H 
+#pragma once
 
 #include "../../DescriptorExtractor.h"
 #include "../TextureBrowsing/TextureBrowsing.h"
@@ -152,4 +151,3 @@ class TextureBrowsingExtractor : public DescriptorExtractor {
         Descriptor * extract(Image & image, const char ** params);
         ~TextureBrowsingExtractor();
 };
-#endif

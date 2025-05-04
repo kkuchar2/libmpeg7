@@ -3,8 +3,7 @@
  *  @author Krzysztof Lech Kucharski
  *  @bug    No bugs detected */
 
-#ifndef _CONTOUR_SHAPE_EXTRACTOR_H 
-#define _CONTOUR_SHAPE_EXTRACTOR_H 
+#pragma once
 
 #include "../../DescriptorExtractor.h"
 #include "../ContourShape/ContourShape.h"
@@ -29,5 +28,3 @@ class ContourShapeExtractor : public DescriptorExtractor {
         unsigned char * getPixel(unsigned char * image, int x, int y, int imageWidth, int imageHeight);
         ~ContourShapeExtractor();
 };
-
-#endif

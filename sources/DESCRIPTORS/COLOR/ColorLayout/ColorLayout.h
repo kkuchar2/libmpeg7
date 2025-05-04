@@ -40,8 +40,7 @@
  *  @author Krzysztof Lech Kucharski                                                                    
  *  @bug    No bugs detected. */
 
-#ifndef _COLORLAYOUT_H 
-#define _COLORLAYOUT_H
+#pragma once
 
 #include "../../Descriptor.h"
 
@@ -88,4 +87,3 @@ class ColorLayout : public Descriptor {
 
         ~ColorLayout();
 };
-#endif
