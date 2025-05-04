@@ -180,7 +180,7 @@ Descriptor * EdgeHistogramExtractor::extract(Image & image, const char ** params
     return descriptor;
 }
 
-void EdgeHistogramExtractor::EdgeHistogramGeneration(unsigned char * pImage_Y, unsigned long image_width, unsigned long image_height, unsigned long block_size, EHD * pLocal_Edge, int Te_Value) {
+void EdgeHistogramExtractor::EdgeHistogramGeneration(unsigned char * pImage_Y, const unsigned long image_width, const unsigned long image_height, const unsigned long block_size, EHD * pLocal_Edge, const int Te_Value) {
     int  Count_Local[16];
     long LongTyp_Local_Edge[80];
 
@@ -230,7 +230,7 @@ void EdgeHistogramExtractor::EdgeHistogramGeneration(unsigned char * pImage_Y, u
     }
 }
 
-int EdgeHistogramExtractor::GetEdgeFeature(unsigned char * pImage_Y, int image_width, int block_size, int Te_Value) {
+int EdgeHistogramExtractor::GetEdgeFeature(unsigned char * pImage_Y, const int image_width, const int block_size, const int Te_Value) {
     int		i, j;
     double	d1, d2, d3, d4;
     int		e_index;
@@ -296,8 +296,8 @@ int EdgeHistogramExtractor::GetEdgeFeature(unsigned char * pImage_Y, int image_w
     return(e_index);
 }
 
-unsigned long EdgeHistogramExtractor::GetBlockSize(unsigned long image_width, unsigned long image_height, unsigned long desired_num_of_blocks) {
-    const double temp_size = (double) sqrt(static_cast<double>(image_width * image_height / desired_num_of_blocks));
+unsigned long EdgeHistogramExtractor::GetBlockSize(const unsigned long image_width, const unsigned long image_height, const unsigned long desired_num_of_blocks) {
+    const double temp_size = sqrt(static_cast<double>(image_width * image_height / desired_num_of_blocks));
     const unsigned long block_size = static_cast<unsigned long>(temp_size / 2) * 2;
 
     return block_size;

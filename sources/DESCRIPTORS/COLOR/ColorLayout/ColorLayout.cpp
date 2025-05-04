@@ -127,7 +127,7 @@ std::string ColorLayout::generateXML() {
 
     XMLPrinter xmlPrinter;
     xmlDoc.Accept(&xmlPrinter);
-    return static_cast<const char *>(xmlPrinter.CStr());
+    return xmlPrinter.CStr();
 }
 
 void ColorLayout::readFromXML(XMLElement * descriptorElement) {
@@ -345,23 +345,23 @@ void ColorLayout::allocateCrCoefficients() {
 	crCoefficients = new int[numberOfCCoefficients];
 }
 
-void ColorLayout::setNumberOfYCoefficients(int yCoeffNumber) {
+void ColorLayout::setNumberOfYCoefficients(const int yCoeffNumber) {
 	numberOfYCoefficients = yCoeffNumber;
 }
 
-void ColorLayout::setNumberOfCCoefficients(int cCoeffNumber) {
+void ColorLayout::setNumberOfCCoefficients(const int cCoeffNumber) {
 	numberOfCCoefficients = cCoeffNumber;
 }
 
-void ColorLayout::setYCoefficient(int index, int value) {
+void ColorLayout::setYCoefficient(const int index, const int value) {
     yCoefficients[index] = value;
 }
 
-void ColorLayout::setCbCoefficient(int index, int value) {
+void ColorLayout::setCbCoefficient(const int index, const int value) {
     cbCoefficients[index] = value;
 }
 
-void ColorLayout::setCrCoefficient(int index, int value) {
+void ColorLayout::setCrCoefficient(const int index, const int value) {
     crCoefficients[index] = value;
 }
 

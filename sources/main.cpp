@@ -19,7 +19,7 @@ void printUsage(const char* programName) {
     std::cout << "Example: " << programName << " 3 image.jpg NumberOfYCoeff 64 NumberOfCCoeff 64" << std::endl;
 }
 
-int main(int argc, char* argv[]) {
+int main(const int argc, char* argv[]) {
     if (argc < 3) {
         printUsage(argv[0]);
         return 1;

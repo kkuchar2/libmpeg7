@@ -25,7 +25,7 @@ Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) 
         for (x = 0; x < ART_LUT_SIZE; x++) {
             radius = HYPOT((double) (x - maxradius), y - maxradius);
             if (radius < maxradius) {
-                angle = atan2((double) (y - maxradius), x - maxradius);
+                angle = atan2(y - maxradius, x - maxradius);
 
                 for (p = 0; p < ART_ANGULAR; p++) {
                     for (r = 0; r < ART_RADIAL; r++) {
@@ -176,7 +176,7 @@ Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) 
     return descriptor;
 }
 
-double RegionShapeExtractor::GetReal(int p, int r, double dx, double dy) {
+double RegionShapeExtractor::GetReal(const int p, const int r, const double dx, const double dy) {
     const int x = static_cast<int>(dx);
     const int y = static_cast<int>(dy);
 
@@ -189,7 +189,7 @@ double RegionShapeExtractor::GetReal(int p, int r, double dx, double dy) {
     return (x1 + (x2 - x1) * iy);
 }
 
-double RegionShapeExtractor::GetImg(int p, int r, double dx, double dy) {
+double RegionShapeExtractor::GetImg(const int p, const int r, const double dx, const double dy) {
     const int x = static_cast<int>(dx);
     const int y = static_cast<int>(dy);
 

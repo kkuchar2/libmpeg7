@@ -56,7 +56,7 @@ typedef struct MatrixStruct {
 
 struct pbc_struct {
     // Regularity
-    float structuredness = static_cast<float>(1.401e-45);
+    float structuredness = 1.401e-45;
     int tstructuredness = 0;
     // [Scale1, Direction1, Scale2 , Direction2]
 	int element[4];

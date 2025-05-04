@@ -82,7 +82,7 @@ Descriptor * TextureBrowsingExtractor::extract(Image & image, const char ** para
 }
 
 /* ----- ARBITRARY SHAPE CALCULATION ----- */
-void TextureBrowsingExtractor::ArbitraryShape(unsigned char * a_image, unsigned char * y_image, int image_height, int image_width) {
+void TextureBrowsingExtractor::ArbitraryShape(unsigned char * a_image, unsigned char * y_image, const int image_height, const int image_width) {
     int i, j, x, y;
     int flag, a_min, a_max;
     int center_x, center_y;
@@ -189,13 +189,13 @@ void TextureBrowsingExtractor::ArbitraryShape(unsigned char * a_image, unsigned 
     free(m_arbitraryShape_patch);
 }
 
-void TextureBrowsingExtractor::min_test(int a, int & min) {
+void TextureBrowsingExtractor::min_test(const int a, int & min) {
     if (a < min) {
         min = a;
     }
 }
 
-bool TextureBrowsingExtractor::max_test(int a, int & max) {
+bool TextureBrowsingExtractor::max_test(const int a, int & max) {
     if (a > max) {
         max = a;
         return true;
@@ -206,7 +206,7 @@ bool TextureBrowsingExtractor::max_test(int a, int & max) {
 }
 
 /* ----- TBC EXTRACTION ----- */
-void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, int width, int height, int * pbc_out) {
+void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, const int width, int height, int * pbc_out) {
     /* (KK) Method extracting TBC from image matrix */
 
 
@@ -258,7 +258,7 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, int width, int heigh
 
 }
 
-void TextureBrowsingExtractor::cleaupMainVariables(int orientation, int scale, double  * temp_proj, double ** rowProjections, double ** columnProjections, float ** histo,
+void TextureBrowsingExtractor::cleaupMainVariables(const int orientation, const int scale, double  * temp_proj, double ** rowProjections, double ** columnProjections, float ** histo,
                          Matrix * FilteredImageBuffer[4][6], Matrix * Gr, Matrix * Gi, Matrix * Tmp_1, Matrix * Tmp_2, Matrix * F_1, Matrix * F_2, Matrix * G_real, Matrix * G_imag, 
                          Matrix * F_real, Matrix * F_imag, Matrix * IMG, Matrix * IMG_imag, Matrix * temp_FilteredImage) {
     free(temp_proj);
@@ -360,8 +360,8 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
 
     ProjectionSize = static_cast<int>(imgwid * 0.625);
 
-    hei = static_cast<int>(pow(2.0, ceil(log2((double) (img->height + 2.0 * border)))));
-    wid = static_cast<int>(pow(2.0, ceil(log2((double) (img->width + 2.0 * border)))));
+    hei = static_cast<int>(pow(2.0, ceil(log2(img->height + 2.0 * border))));
+    wid = static_cast<int>(pow(2.0, ceil(log2(img->width + 2.0 * border))));
 
     rowProjections = static_cast<double **>(malloc(orientation * scale * sizeof(double *)));
 
@@ -837,7 +837,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
     return 1;
 }
 
-void TextureBrowsingExtractor::Gabor(Matrix * Gr, Matrix * Gi, int s, int n, double Ul, double Uh, int scale, int orientation, int flag) {
+void TextureBrowsingExtractor::Gabor(Matrix * Gr, Matrix * Gi, const int s, const int n, const double Ul, const double Uh, const int scale, const int orientation, const int flag) {
     double base, a, u0, var, X, Y, G, t1, t2, m;
     int x, y, side;
 
@@ -848,10 +848,10 @@ void TextureBrowsingExtractor::Gabor(Matrix * Gr, Matrix * Gi, int s, int n, dou
 
     var = pow(0.6 / Uh * pow(a, static_cast<double>(scale) - s), 2.0);
 
-    t1 = cos((double) M_PI / orientation * (n - 1.0));
-    t2 = sin((double) M_PI / orientation * (n - 1.0));
+    t1 = cos(M_PI / orientation * (n - 1.0));
+    t2 = sin(M_PI / orientation * (n - 1.0));
 
-    side = (int) (Gr->height - 1) / 2;
+    side = (Gr->height - 1) / 2;
 
     for (x = 0; x < 2 * side + 1; x++) {
         for (y = 0; y < 2 * side + 1; y++) {
@@ -876,7 +876,7 @@ void TextureBrowsingExtractor::Gabor(Matrix * Gr, Matrix * Gi, int s, int n, dou
             }
         }
 
-        m /= pow((double) 2.0 * side + 1, 2.0);
+        m /= pow(2.0 * side + 1, 2.0);
 
         for (x = 0; x < 2 * side + 1; x++) {
             for (y = 0; y < 2 * side + 1; y++) {
@@ -1116,7 +1116,7 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
     return final_index;
 }
 
-void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, int xsize, int ysize, double angle, int proj_size, double * proj) {
+void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, const int xsize, const int ysize, double angle, const int proj_size, double * proj) {
     int xcenter, ycenter;
     int j, l, count_pixel;
     double sum_pixel;
@@ -1131,7 +1131,7 @@ void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, int xsize,
 
         for (l = 0; l < ysize; l++) {
             dummy = 0; 
-            if (sqrt(pow((double) (j - xcenter), 2) + pow((double) (l - ycenter), 2)) <= 127.0) {
+            if (sqrt(pow(j - xcenter, 2) + pow(l - ycenter, 2)) <= 127.0) {
                 if (l >= inputImage->height || j >= inputImage->width) {
                     throw TEXT_BROWS_PROJECTION_COMPUTATION_ERROR;
                 }
@@ -1146,7 +1146,7 @@ void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, int xsize,
 }
 
 /* ----- SCALE CALCULATION MAIN METHODS I GUESS  ----- */
-void TextureBrowsingExtractor::pbcmain(struct pbc_struct * pbc, int size) {
+void TextureBrowsingExtractor::pbcmain(struct pbc_struct * pbc, const int size) {
     char c5[200];
     float row_credit[3], column_credit[3], image_credit;
 
@@ -1169,7 +1169,7 @@ void TextureBrowsingExtractor::pbcmain(struct pbc_struct * pbc, int size) {
     pbc->structuredness = image_credit;
 }
 
-int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, double ** y) {
+int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, const int x_long, double ** y) {
     int x_start, x_end, long0, long1, i, j, k, cut;
     double *x, *sum, *A, *C, temp1, temp2, temp3, *temp_out;
 
@@ -1281,7 +1281,7 @@ int TextureBrowsingExtractor::RadonAutocorrelation(double * x_in, int x_long, do
     return 2 * cut + 1;
 }
 
-void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_type, float * credit, pbc_struct * pbc, int img_size) {
+void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, const int proj_type, float * credit, pbc_struct * pbc, const int img_size) {
     char c5[200];
 
     float ** Proj_Candi_Valu = nullptr;
@@ -1296,11 +1296,11 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
 
     FILE * fp;
 
-    Proj_Candi_Posi = (int **) AllocateMatrixInteger(24, 2);
-    Proj_Candi_Valu = (float **) AllocateMatrixFloat(24, 2);
+    Proj_Candi_Posi = AllocateMatrixInteger(24, 2);
+    Proj_Candi_Valu = AllocateMatrixFloat(24, 2);
     Candi_Avail = 0;
     count_candi = 0;
-    contrast = (float **) AllocateMatrixFloat(4, 6);
+    contrast = AllocateMatrixFloat(4, 6);
 
     // I guess A is used for the storage of the projections
     A = static_cast<double *>(calloc(img_size, sizeof(double)));
@@ -1397,8 +1397,8 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
         refine_cand = static_cast<int *>(calloc(count_candi, sizeof(int)));
         flag = cand_cluster(Proj_Candi_Valu, count_candi, 2, refine_cand, &pick_num);
 
-        picked_cand = (float **) AllocateMatrixFloat(pick_num, 2);
-        picked_cand_posi = (int **) AllocateMatrixInteger(pick_num, 2);
+        picked_cand = AllocateMatrixFloat(pick_num, 2);
+        picked_cand_posi = AllocateMatrixInteger(pick_num, 2);
 
         for (i = 0; i < pick_num; i++) {
             picked_cand[i][0] = Proj_Candi_Valu[refine_cand[i]][0];
@@ -1437,7 +1437,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, int proj_ty
     FreeMatrixFloat(contrast, 4);
 }
 
-int TextureBrowsingExtractor::CountLocalProjectionPeaks(double * B, int leng_B, int * PeakI, float * Peak) {
+int TextureBrowsingExtractor::CountLocalProjectionPeaks(double * B, const int leng_B, int * PeakI, float * Peak) {
     int count = 0, i;
 
     for (i = 1; i < leng_B - 1; i++) {
@@ -1452,7 +1452,7 @@ int TextureBrowsingExtractor::CountLocalProjectionPeaks(double * B, int leng_B, 
 }
 
 /* ----- OTHER ----- */
-void TextureBrowsingExtractor::sort(double * Y, int * I, double * A, int length) {
+void TextureBrowsingExtractor::sort(double * Y, int * I, double * A, const int length) {
     int i, j;
     double max, *tmp;
 
@@ -1488,7 +1488,7 @@ void TextureBrowsingExtractor::sort(double * Y, int * I, double * A, int length)
     free(tmp);
 }
 
-double TextureBrowsingExtractor::ComputeHistogramContrast(int index, double * histo, int len) {
+double TextureBrowsingExtractor::ComputeHistogramContrast(const int index, double * histo, const int len) {
     double slope;
     double temp_slop1, temp_slop2;
 
@@ -1510,7 +1510,7 @@ double TextureBrowsingExtractor::ComputeHistogramContrast(int index, double * hi
     return slope;
 }
 
-int TextureBrowsingExtractor::JudgeContinuity(int index, int order, Peak * peak, int size) {
+int TextureBrowsingExtractor::JudgeContinuity(const int index, int order, Peak * peak, const int size) {
     int status;
     int i;
 
@@ -1525,7 +1525,7 @@ int TextureBrowsingExtractor::JudgeContinuity(int index, int order, Peak * peak,
     return status;
 }
 
-float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B, int * PeakI, float * Peak, int num_peak) {
+float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B, int * PeakI, float * Peak, const int num_peak) {
     /*
     (KK)
     Method calculating contrast for current projection
@@ -1581,7 +1581,7 @@ float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B
     return (meanp - meanv); 
 }
 
-void TextureBrowsingExtractor::peak_summary(float * dis_peak, float * var_dis, int * PeakI, float * Peak, int size_peak) {
+void TextureBrowsingExtractor::peak_summary(float * dis_peak, float * var_dis, int * PeakI, float * Peak, const int size_peak) {
     float *dis_array, dis, sum;
     int len, i;
 
@@ -1608,7 +1608,7 @@ void TextureBrowsingExtractor::peak_summary(float * dis_peak, float * var_dis, i
     free(dis_array);
 }
 
-int TextureBrowsingExtractor::cand_cluster(float ** candi, int size_in, int ndim, int * y, int * pick_num) {
+int TextureBrowsingExtractor::cand_cluster(float ** candi, const int size_in, const int ndim, int * y, int * pick_num) {
     int flag = 0, *cluster, *count, i, newN, maxcount, domi_num;
     float temp;
 
@@ -1676,11 +1676,11 @@ int TextureBrowsingExtractor::cand_cluster(float ** candi, int size_in, int ndim
     return flag;
 }
 
-int TextureBrowsingExtractor::agglom(float ** candi, int * label, int N, float thresh, int * count, int Nlabel, int fN) {
+int TextureBrowsingExtractor::agglom(float ** candi, int * label, const int N, const float thresh, int * count, const int Nlabel, const int fN) {
     int i, j, newNlabel, mini, minj, total;
     float ** dist, mindist, **labelcf;
 
-    labelcf = (float **) AllocateMatrixFloat(Nlabel, N);
+    labelcf = AllocateMatrixFloat(Nlabel, N);
 
     for (i = 0; i < Nlabel; i++) {
         for (j = 0; j < N; j++) {
@@ -1692,7 +1692,7 @@ int TextureBrowsingExtractor::agglom(float ** candi, int * label, int N, float t
         label[i] = i; count[i] = 1; 
     }
 
-    dist = (float **) AllocateMatrixFloat(Nlabel, Nlabel);
+    dist = AllocateMatrixFloat(Nlabel, Nlabel);
 
     mindist = 100000;
 
@@ -1777,7 +1777,7 @@ int TextureBrowsingExtractor::agglom(float ** candi, int * label, int N, float t
     return newNlabel;
 }
 
-void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, int size_cand, int size_count_candi, int flag, float * cand_credit) {
+void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, const int size_cand, const int size_count_candi, const int flag, float * cand_credit) {
     int i, j, **cand_pair, **cand_class_map, **scale_map, **direc_map, num_scales;
     int scale_num[4], direc_num[6], num_direc, **direc_cand, pbc_class[3];
     float value[3];
@@ -1796,10 +1796,10 @@ void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, int size_cand,
     }
     else {
 
-        cand_class_map = (int **) AllocateMatrixInteger(4, 6);
-        scale_map      = (int **) AllocateMatrixInteger(4, 6);
-        direc_map      = (int **) AllocateMatrixInteger(4, 6);
-        cand_pair      = (int **) AllocateMatrixInteger(size_cand, 2);
+        cand_class_map = AllocateMatrixInteger(4, 6);
+        scale_map      = AllocateMatrixInteger(4, 6);
+        direc_map      = AllocateMatrixInteger(4, 6);
+        cand_pair      = AllocateMatrixInteger(size_cand, 2);
 
         for (i = 0; i < size_cand; i++) {
             cand_pair[i][0] = candidate[i][0];
@@ -1810,7 +1810,7 @@ void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, int size_cand,
 
         get_map(cand_pair, size_cand, num_scales, scale_num, 1, scale_map);
 
-        direc_cand = (int **) AllocateMatrixInteger(size_cand, 2);
+        direc_cand = AllocateMatrixInteger(size_cand, 2);
 
         convertcand(cand_pair, direc_cand, size_cand);
 
@@ -1858,7 +1858,7 @@ void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, int size_cand,
     }
 }
 
-int TextureBrowsingExtractor::get_num(int ** cand_pair, int size_cand, int * num, int len) {
+int TextureBrowsingExtractor::get_num(int ** cand_pair, const int size_cand, int * num, const int len) {
     int i, temp_scale, total;
 
     for (i = 0; i < len; i++) {
@@ -1882,12 +1882,12 @@ int TextureBrowsingExtractor::get_num(int ** cand_pair, int size_cand, int * num
     return total;
 }
 
-void TextureBrowsingExtractor::get_map(int ** cand_pair, int size_cand, int total, int * num, int type, int ** map) {
+void TextureBrowsingExtractor::get_map(int ** cand_pair, int size_cand, const int total, int * num, const int type, int ** map) {
     int start, i, j, **in_pair, *sing;
 
     start = 0;
     for (i = 0; i < total; i++) {
-        in_pair = (int **) AllocateMatrixInteger(num[i], sizeof(int));
+        in_pair = AllocateMatrixInteger(num[i], sizeof(int));
 
         for (j = start; j < start + num[i]; j++) {
             in_pair[j - start][0] = cand_pair[j][0];
@@ -1914,7 +1914,7 @@ void TextureBrowsingExtractor::get_map(int ** cand_pair, int size_cand, int tota
     }
 }
 
-void TextureBrowsingExtractor::convertcand(int ** cand_pair, int ** direc_cand, int size_cand) {
+void TextureBrowsingExtractor::convertcand(int ** cand_pair, int ** direc_cand, const int size_cand) {
     int i, *index, *tmpcand;
 
     tmpcand = static_cast<int *>(calloc(size_cand, sizeof(int)));
@@ -1934,7 +1934,7 @@ void TextureBrowsingExtractor::convertcand(int ** cand_pair, int ** direc_cand, 
     free(index); free(tmpcand);
 }
 
-void TextureBrowsingExtractor::piksrtintS2B(int n, int * num, int * index) {
+void TextureBrowsingExtractor::piksrtintS2B(const int n, int * num, int * index) {
     int i, j;
     int indextmp;
     int numtmp;
@@ -1960,7 +1960,7 @@ void TextureBrowsingExtractor::piksrtintS2B(int n, int * num, int * index) {
     }
 }
 
-void TextureBrowsingExtractor::sing_map(int ** inpair, int size_in, int * sing, int type) {
+void TextureBrowsingExtractor::sing_map(int ** inpair, const int size_in, int * sing, const int type) {
     int i;
 
     if (size_in == 1) {
@@ -2019,7 +2019,7 @@ void TextureBrowsingExtractor::sing_map(int ** inpair, int size_in, int * sing, 
     }
 }
 
-void TextureBrowsingExtractor::four1(double * data, int nn, int isign) {
+void TextureBrowsingExtractor::four1(double * data, const int nn, const int isign) {
     int n, mmax, m, j, istep, i;
     double wtemp, wr, wpr, wpi, wi, theta;
     double tempr, tempi;
@@ -2077,7 +2077,7 @@ void TextureBrowsingExtractor::four1(double * data, int nn, int isign) {
     }
 }
 
-int TextureBrowsingExtractor::billinear(Matrix * img, float a, float b, int ii, int jj) {
+int TextureBrowsingExtractor::billinear(Matrix * img, const float a, const float b, const int ii, const int jj) {
     double y;
 
     if ((ii < 0) || (ii >= img->height - 1)) {
@@ -2129,7 +2129,7 @@ void TextureBrowsingExtractor::threshold(pbc_struct * pbc) {
 }
 
 /* ----- ALLOCATING AND FREEING METHODS FOR C ARRAYS ----- */
-int ** TextureBrowsingExtractor::AllocateMatrixInteger(int nr, int nc) {
+int ** TextureBrowsingExtractor::AllocateMatrixInteger(const int nr, const int nc) {
     int i, j;
     int **m;
 
@@ -2153,7 +2153,7 @@ int ** TextureBrowsingExtractor::AllocateMatrixInteger(int nr, int nc) {
     return m;
 }
 
-float ** TextureBrowsingExtractor::AllocateMatrixFloat(int nr, int nc) {
+float ** TextureBrowsingExtractor::AllocateMatrixFloat(const int nr, const int nc) {
     int i, j;
     float **m;
 
@@ -2178,7 +2178,7 @@ float ** TextureBrowsingExtractor::AllocateMatrixFloat(int nr, int nc) {
     return m;
 }
 
-double ** TextureBrowsingExtractor::AllocateMatrixDouble(int nrl, int nrh, int ncl, int nch) {
+double ** TextureBrowsingExtractor::AllocateMatrixDouble(const int nrl, const int nrh, const int ncl, const int nch) {
     int i;
     double **m;
 
@@ -2193,7 +2193,7 @@ double ** TextureBrowsingExtractor::AllocateMatrixDouble(int nrl, int nrh, int n
     return m;
 }
 
-double * TextureBrowsingExtractor::AllocateVectorOfDouble(int nl, int nh) {
+double * TextureBrowsingExtractor::AllocateVectorOfDouble(const int nl, const int nh) {
     double * v;
 
     v = static_cast<double *>(calloc((unsigned) (nh - nl + 1), sizeof(double)));
@@ -2201,7 +2201,7 @@ double * TextureBrowsingExtractor::AllocateVectorOfDouble(int nl, int nh) {
     return v - nl;
 }
 
-void TextureBrowsingExtractor::FreeMatrixInteger(int ** m, int nr) {
+void TextureBrowsingExtractor::FreeMatrixInteger(int ** m, const int nr) {
     int i;
 
     for (i = 0; i < nr; i++) {
@@ -2211,7 +2211,7 @@ void TextureBrowsingExtractor::FreeMatrixInteger(int ** m, int nr) {
     free(m);
 }
 
-void TextureBrowsingExtractor::FreeMatrixFloat(float ** m, int nr) {
+void TextureBrowsingExtractor::FreeMatrixFloat(float ** m, const int nr) {
     int i;
 
     for (i = 0; i < nr; i++) {
@@ -2221,22 +2221,22 @@ void TextureBrowsingExtractor::FreeMatrixFloat(float ** m, int nr) {
     free(m);
 }
 
-void TextureBrowsingExtractor::FreeMatrixOfDouble(double ** m, int nrl, int nrh, int ncl, int nch) {
+void TextureBrowsingExtractor::FreeMatrixOfDouble(double ** m, const int nrl, const int nrh, const int ncl, int nch) {
     int i;
 
     for (i = nrh; i >= nrl; i--) {
-        free((char*) (m[i] + ncl));
+        free(m[i] + ncl);
     }
 
-    free((char*) (m + nrl));
+    free(m + nrl);
 }
 
-void TextureBrowsingExtractor::FreeVectorOfDouble(double * v, int nl, int nh) {
-    free((char*) (v + nl));
+void TextureBrowsingExtractor::FreeVectorOfDouble(double * v, const int nl, int nh) {
+    free(v + nl);
 }
 
 /* ----- BASIC OPERATIONS ON C ARRAYS ----- */
-float TextureBrowsingExtractor::EuclideanVectorDistance(float * a, float * b, int dim) {
+float TextureBrowsingExtractor::EuclideanVectorDistance(float * a, float * b, const int dim) {
     int i;
     float dist = 0.0;
 
@@ -2248,7 +2248,7 @@ float TextureBrowsingExtractor::EuclideanVectorDistance(float * a, float * b, in
     return dist;
 }
 
-float TextureBrowsingExtractor::Vector2DVariance(float ** vector, int nvec, int ndim) {
+float TextureBrowsingExtractor::Vector2DVariance(float ** vector, const int nvec, const int ndim) {
     float *mean, var;
     int i, j;
 
@@ -2280,7 +2280,7 @@ float TextureBrowsingExtractor::Vector2DVariance(float ** vector, int nvec, int 
     return var;
 }
 
-void TextureBrowsingExtractor::FourierTransform2D(double ** fftr, double ** ffti, double ** rdata, double ** idata, int rs, int cs, int isign) {
+void TextureBrowsingExtractor::FourierTransform2D(double ** fftr, double ** ffti, double ** rdata, double ** idata, const int rs, const int cs, const int isign) {
     /************************************************************
     2-D fourier transform of data with real part stored in
     "rdata" and imaginary part in "idata" with size "rs" x
@@ -2327,7 +2327,7 @@ void TextureBrowsingExtractor::FourierTransform2D(double ** fftr, double ** ffti
 }
 
 /* ----- CUSTOM MATRIX SECTION ----- */
-void TextureBrowsingExtractor::CreateMatrix(Matrix ** M, int hei, int wid) {
+void TextureBrowsingExtractor::CreateMatrix(Matrix ** M, const int hei, const int wid) {
     int h;
 
     Matrix * tmp;
@@ -2362,7 +2362,7 @@ void TextureBrowsingExtractor::CreateMatrix(Matrix ** M, int hei, int wid) {
     *M = tmp;
 }
 
-void TextureBrowsingExtractor::Convert2Matrix(unsigned char * R, int width, int height, Matrix * image) {
+void TextureBrowsingExtractor::Convert2Matrix(unsigned char * R, const int width, const int height, Matrix * image) {
     int i, j;
     int count;
 
@@ -2375,7 +2375,7 @@ void TextureBrowsingExtractor::Convert2Matrix(unsigned char * R, int width, int 
     }
 }
 
-void TextureBrowsingExtractor::Mat_Copy(Matrix * A, Matrix * B, int h_target, int w_target, int h_begin, int w_begin, int h_end, int w_end) {
+void TextureBrowsingExtractor::Mat_Copy(Matrix * A, Matrix * B, const int h_target, const int w_target, const int h_begin, const int w_begin, const int h_end, const int w_end) {
     int i, j, h, w, h_done, w_done;
 
     if ((h_target >= 0) && (h_target < A->height) && (w_target >= 0) && (w_target < A->width)) {

@@ -7,7 +7,7 @@
 Image::Image() : imageData(nullptr), imageWidth(0), imageHeight(0), imageSize(0), totalImageSize(0), channels(0), depth(0) {
 }
 
-void Image::load(unsigned char* data, int size, LoadMode decode_mode) {
+void Image::load(unsigned char* data, const int size, const LoadMode decode_mode) {
     std::cout << "Loading image of size: " << size << std::endl;
 
     int desiredChannels = 0; // 0 means keep original format
@@ -77,7 +77,7 @@ void Image::load(unsigned char* data, int size, LoadMode decode_mode) {
     depth = 8; // stb_image always returns 8-bit channels
 }
 
-void Image::load(const char* filename, LoadMode load_mode) {
+void Image::load(const char* filename, const LoadMode load_mode) {
     int desiredChannels = 0; // 0 means keep original format
     
     switch (load_mode) {
@@ -312,7 +312,7 @@ unsigned char * Image::getGray() {
     return getGray(GRAYSCALE_LUMINOSITY);
 }
 
-unsigned char * Image::getGray(GrayscaleMode mode) {
+unsigned char * Image::getGray(const GrayscaleMode mode) {
     auto grayChannel = new unsigned char[imageSize];
     
     if (!imageData) {

@@ -253,7 +253,7 @@ void ColorLayoutExtractor::FastDiscreteCosineTransform(short * block) {
 	}
 }
 
-int ColorLayoutExtractor::YDCQuantization(int i) {
+int ColorLayoutExtractor::YDCQuantization(const int i) {
 	int j;
 
 	if (i > 191) {
@@ -275,7 +275,7 @@ int ColorLayoutExtractor::YDCQuantization(int i) {
 	return j;
 }
 
-int ColorLayoutExtractor::CDCQuantization(int i) {
+int ColorLayoutExtractor::CDCQuantization(const int i) {
 	int j;
 
 	if (i > 191) {

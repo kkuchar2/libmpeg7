@@ -60,7 +60,7 @@ Descriptor * CTBrowsingExtractor::extract(Image & image, const char ** params) {
     return descriptor;
 }
 
-unsigned char ** CTBrowsingExtractor::allocateDiscardingArrayMemory(int height, int width) {
+unsigned char ** CTBrowsingExtractor::allocateDiscardingArrayMemory(const int height, const int width) {
     // Allocate memory for rows:
     const auto mem = static_cast<unsigned char **>(malloc(height * sizeof(unsigned char *)));
 
@@ -71,7 +71,7 @@ unsigned char ** CTBrowsingExtractor::allocateDiscardingArrayMemory(int height, 
     return	mem;
 }
 
-double ** CTBrowsingExtractor::allocateXYZ(int height, int width) {
+double ** CTBrowsingExtractor::allocateXYZ(const int height, const int width) {
     // Allocate memory for rows
     const auto mem = static_cast<double **>(malloc(height * sizeof(double *)));
 
@@ -82,16 +82,16 @@ double ** CTBrowsingExtractor::allocateXYZ(int height, int width) {
     return mem;
 }
 
-void CTBrowsingExtractor::rgb2xyz(unsigned char * imagebuff, double ** XYZ, unsigned char ** p_mask, int imageWidth, int imageHeight) {
+void CTBrowsingExtractor::rgb2xyz(unsigned char * imagebuff, double ** XYZ, unsigned char ** p_mask, const int imageWidth, const int imageHeight) {
     int i, j;
     double sRGBr, sRGBg, sRGBb;
 
     for (i = 0; i < imageHeight; i++) {
         for (j = 0; j < imageWidth; j++) {
             // Convert RGB to sRGB (1)
-            rgb2srgb((int) imagebuff[(i * (imageWidth * 3)) + j * 3 + 0],
-                     (int) imagebuff[(i * (imageWidth * 3)) + j * 3 + 1],
-                     (int) imagebuff[(i * (imageWidth * 3)) + j * 3 + 2], &sRGBr, &sRGBg, &sRGBb);
+            rgb2srgb(imagebuff[i * (imageWidth * 3) + j * 3 + 0],
+                     imagebuff[i * (imageWidth * 3) + j * 3 + 1],
+                     imagebuff[i * (imageWidth * 3) + j * 3 + 2], &sRGBr, &sRGBg, &sRGBb);
 
             // Convert sRGB to XYZ with conversion matrix (2)
             XYZ[i][j * 3 + 0] = RGB2XYZ_M[0][0] * sRGBr + RGB2XYZ_M[0][1] * sRGBg + RGB2XYZ_M[0][2] * sRGBb;
@@ -113,13 +113,13 @@ void CTBrowsingExtractor::rgb2xyz(unsigned char * imagebuff, double ** XYZ, unsi
     }
 }
 
-void CTBrowsingExtractor::rgb2srgb(int r, int g, int b, double * r_srgb, double * g_srgb, double * b_srgb) {
+void CTBrowsingExtractor::rgb2srgb(const int r, const int g, const int b, double * r_srgb, double * g_srgb, double * b_srgb) {
     *r_srgb = (r <= 0.03928 * 255.0) ? r / (255.0 * 12.92) : rgb_pow_table[r];
     *g_srgb = (g <= 0.03928 * 255.0) ? g / (255.0 * 12.92) : rgb_pow_table[g];
     *b_srgb = (b <= 0.03928 * 255.0) ? b / (255.0 * 12.92) : rgb_pow_table[b];
 }
 
-void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, int imageWidth, int imageHeight, double * pix, double * piy) {
+void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, const int imageWidth, const int imageHeight, double * pix, double * piy) {
     /* (KK) OMMIT DARK PIXELS FROM XYZ (3)
     If luminance component of threshold array is lower than 5 %,
     this pixel does not impact colour temperature perception,
@@ -235,19 +235,19 @@ void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, int i
     *piy = xyz_a[1] / (xyz_a[0] + xyz_a[1] + xyz_a[2]);
 }
 
-void CTBrowsingExtractor::convert_xy2temp(double pix, double piy, int * ctemperature) {
+void CTBrowsingExtractor::convert_xy2temp(const double pix, const double piy, int * ctemperature) {
     double u, v;
     xy2uv(pix, piy, &u, &v); // (7)
     *ctemperature = uv2ColorTemperature(u, v);
 }
 
-void CTBrowsingExtractor::xy2uv(double x, double y, double * u, double * v) {
+void CTBrowsingExtractor::xy2uv(const double x, const double y, double * u, double * v) {
     //-- Reference : Color Science 2nd Edition, pp. 828 (KK)
     *u = (4 * x) / (-2 * x + 12 * y + 3);
     *v = (6 * y) / (-2 * x + 12 * y + 3);
 }
 
-int CTBrowsingExtractor::uv2ColorTemperature(double iu, double iv) {
+int CTBrowsingExtractor::uv2ColorTemperature(const double iu, const double iv) {
     //-- Reference : Color Science 2nd Edition, pp. 227~228 (KK)
     int i, idx1, idx2, nCT;
     double d1, d2, sqt1, sqt2;

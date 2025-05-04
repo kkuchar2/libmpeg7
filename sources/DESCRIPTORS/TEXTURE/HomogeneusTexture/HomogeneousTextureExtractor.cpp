@@ -86,7 +86,7 @@ Descriptor * HomogeneousTextureExtractor::extract(Image & image, const char ** p
 }
 
 // Arbitrary shape computing
-void HomogeneousTextureExtractor::ArbitraryShape(unsigned char * aChannel, unsigned char * grayImage, int imageHeight, int imageWidth) {
+void HomogeneousTextureExtractor::ArbitraryShape(unsigned char * aChannel, unsigned char * grayImage, const int imageHeight, const int imageWidth) {
     int flag, a_min, a_max;
     int center_x, center_y;
     int a_size, pad_height_count, pad_width_count;
@@ -223,13 +223,13 @@ void HomogeneousTextureExtractor::ArbitraryShape(unsigned char * aChannel, unsig
     free(m_arbitraryShape_patch);
 }
 
-void HomogeneousTextureExtractor::mintest(int a, int & min) {
+void HomogeneousTextureExtractor::mintest(const int a, int & min) {
     if (a < min) {
         min = a;
     }
 }
 
-bool HomogeneousTextureExtractor::maxtest(int a, int & max) {
+bool HomogeneousTextureExtractor::maxtest(const int a, int & max) {
     if (a > max) {
         max = a;
         return true;
@@ -240,7 +240,7 @@ bool HomogeneousTextureExtractor::maxtest(int a, int & max) {
 }
 
 // (KK) First level extraction
-void HomogeneousTextureExtractor::FeatureExtraction(unsigned char * image, int image_height, int image_width) {
+void HomogeneousTextureExtractor::FeatureExtraction(unsigned char * image, const int image_height, const int image_width) {
     int n, m;
     Num_pixel = 180 * 64;
 
@@ -337,7 +337,7 @@ void HomogeneousTextureExtractor::hatomdesign() {
 }
 
 // (KK) Second level extraction
-void HomogeneousTextureExtractor::SecondLevelExtraction(unsigned char * imagedata, int image_height, int image_width) {
+void HomogeneousTextureExtractor::SecondLevelExtraction(unsigned char * imagedata, int image_height, const int image_width) {
     int	i;
     const auto cin = new unsigned char[imsize][imsize];
 
@@ -387,7 +387,7 @@ void HomogeneousTextureExtractor::SecondLevelExtraction(unsigned char * imagedat
     Quantization();
 }
 
-void HomogeneousTextureExtractor::RadonTransform(unsigned char(*cin)[imsize], double(*fin)[Nray], int nr, int nv) {
+void HomogeneousTextureExtractor::RadonTransform(unsigned char(*cin)[imsize], double(*fin)[Nray], const int nr, const int nv) {
     int i, j;
     int size2, size3, nr2;
 
@@ -430,8 +430,8 @@ void HomogeneousTextureExtractor::RadonTransform(unsigned char(*cin)[imsize], do
     nr2 = nr / 2;
     size2 = imsize * 3;
 
-    stepray  = ((double) 1.0) / nr;
-    stepview = ((double) M_PI) / nv;
+    stepray  = 1.0 / nr;
+    stepview = M_PI / nv;
 
     for (i = 0, view = 0; i < nv; i++, view = view + stepview) {
         cosv = cos(view) * nr;
@@ -532,7 +532,7 @@ void HomogeneousTextureExtractor::Feature(double(*fin)[128], double(*vec)[6], do
 }
 
 // FFTs
-void HomogeneousTextureExtractor::FastFourierTransform2d(COMPLEX ** inimage, COMPLEX ** timage, int size2, int x, int y, int inc, double dx, double dy) {
+void HomogeneousTextureExtractor::FastFourierTransform2d(COMPLEX ** inimage, COMPLEX ** timage, const int size2, const int x, const int y, const int inc, const double dx, const double dy) {
     COMPLEX * ptr;
     COMPLEX  buf[2 * imsize];
 
@@ -572,7 +572,7 @@ void HomogeneousTextureExtractor::FastFourierTransform2d(COMPLEX ** inimage, COM
     }
 }
 
-void HomogeneousTextureExtractor::four1(COMPLEX * data1, int nn, int isign) {
+void HomogeneousTextureExtractor::four1(COMPLEX * data1, const int nn, const int isign) {
     /* (KK) comment 
     Fast Fourier transform program, four1, from "Numerical Recipes in C"
     Replaces data[1..2 * nn] by its discrete Fourier transform, if isign is input as
@@ -641,7 +641,7 @@ void HomogeneousTextureExtractor::four1(COMPLEX * data1, int nn, int isign) {
 }
 
 // Swap
-void HomogeneousTextureExtractor::Swap(COMPLEX * data, int size2) {
+void HomogeneousTextureExtractor::Swap(COMPLEX * data, const int size2) {
     int i, center = size2 / 2;
     COMPLEX tempr;
 
@@ -651,7 +651,7 @@ void HomogeneousTextureExtractor::Swap(COMPLEX * data, int size2) {
 }
 
 // Compute projection from fft complex data
-COMPLEX HomogeneousTextureExtractor::GetProjectionFromFFT(CARTESIAN cart, COMPLEX ** inimage, int size2) {
+COMPLEX HomogeneousTextureExtractor::GetProjectionFromFFT(const CARTESIAN cart, COMPLEX ** inimage, const int size2) {
     int x, y;
     int x2, y2;
     double rx, ry;

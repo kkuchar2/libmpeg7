@@ -8,8 +8,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters);
 unsigned char * getImageBuffer(JNIEnv * env, jbyteArray data, int size);
 
 JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
-(JNIEnv * env, jobject, jint descriptorType, jstring imgURL, jobjectArray parameters) {
-    int desType;
+(JNIEnv * env, jobject, const jint descriptorType, const jstring imgURL, const jobjectArray parameters) {
     const char * imgPath = nullptr;
     const char ** params = nullptr;
 
@@ -25,9 +24,9 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
         return createJniMessage(env, message(JNI_PARAMS_NULL));
     }
   
-    desType = descriptorType;
+    int desType = descriptorType;
 
-    imgPath = env->GetStringUTFChars(imgURL, (jboolean *) nullptr);
+    imgPath = env->GetStringUTFChars(imgURL, nullptr);
 
     if (imgPath == nullptr) {
         return createJniMessage(env, message(JNI_IMG_NULL));
@@ -61,7 +60,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
 }
 
 JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromData
-(JNIEnv * env, jobject, jint descriptorType, jbyteArray data, jobjectArray parameters) {
+(JNIEnv * env, jobject, const jint descriptorType, const jbyteArray data, const jobjectArray parameters) {
     int desType;
     const char * imgPath = nullptr;
 
@@ -112,7 +111,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromDa
 }
 
 JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
-(JNIEnv * env, jobject, jstring xml1, jstring xml2, jobjectArray parameters) {
+(JNIEnv * env, jobject, const jstring xml1, const jstring xml2, const jobjectArray parameters) {
     const char *  xml1_str = nullptr;
     const char *  xml2_str = nullptr;
     const char ** params   = nullptr;
@@ -125,8 +124,8 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
         return createJniMessage(env, message(JNI_PARAMS_NULL));
     }
 
-    xml1_str = env->GetStringUTFChars(xml1, (jboolean *) nullptr);
-    xml2_str = env->GetStringUTFChars(xml2, (jboolean *) nullptr);
+    xml1_str = env->GetStringUTFChars(xml1, nullptr);
+    xml2_str = env->GetStringUTFChars(xml2, nullptr);
 
     if (xml1_str == nullptr || xml2_str == nullptr) {
         return createJniMessage(env, message(JNI_XML_NULL));
@@ -166,7 +165,7 @@ jstring createJniMessage(JNIEnv * env, const char * message) {
     return jniMessage;
 }
 
-const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
+const char ** getParameters(JNIEnv * env, const jobjectArray parameters) {
     const char ** params = nullptr;
 
     const int stringCount = env->GetArrayLength(parameters);
@@ -184,7 +183,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
         }
         else {
             params = new const char *[stringCount + 1];
-            params[0] = env->GetStringUTFChars(string, (jboolean *) nullptr);
+            params[0] = env->GetStringUTFChars(string, nullptr);
             params[1] = nullptr;
         }
     }
@@ -198,7 +197,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
                 delete[] params;
                 throw JNI_PARAMS_NULL;
             }
-            params[i] = env->GetStringUTFChars(string, (jboolean *) nullptr);
+            params[i] = env->GetStringUTFChars(string, nullptr);
         }
         params[stringCount] = nullptr;
     }
@@ -206,8 +205,8 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
     return params;
 }
 
-unsigned char * getImageBuffer(JNIEnv * env, jbyteArray data, int size) {
-    jbyte * jniBufferPtr = env->GetByteArrayElements(data, (jboolean *) nullptr);
+unsigned char * getImageBuffer(JNIEnv * env, const jbyteArray data, const int size) {
+    jbyte * jniBufferPtr = env->GetByteArrayElements(data, nullptr);
 
     const auto imgBuffer = new unsigned char[size];
 

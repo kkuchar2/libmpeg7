@@ -162,7 +162,7 @@ void ColorStructure::readFromXML(XMLElement * descriptorElement) {
     }
 }
 
-unsigned long ColorStructure::SetSize(unsigned long size) {
+unsigned long ColorStructure::SetSize(const unsigned long size) {
 	if (size == 32 || size == 64 || size == 128 || size == 256) {
 		if (descriptorSize == size) {
 			return 0;
@@ -186,7 +186,7 @@ unsigned long ColorStructure::SetSize(unsigned long size) {
 	return 0;
 }
 
-unsigned long ColorStructure::SetElement(unsigned long index, int value) {
+unsigned long ColorStructure::SetElement(const unsigned long index, const int value) {
     if (index < descriptorSize && descriptorData) {
         descriptorData[index] = value;
         return 0;
@@ -206,7 +206,7 @@ unsigned long ColorStructure::GetSize() {
     return descriptorSize;
 }
 
-unsigned long ColorStructure::GetElement(unsigned long index) {
+unsigned long ColorStructure::GetElement(const unsigned long index) {
 	if (index < descriptorSize && descriptorData) {
 		return descriptorData[index];
 	}

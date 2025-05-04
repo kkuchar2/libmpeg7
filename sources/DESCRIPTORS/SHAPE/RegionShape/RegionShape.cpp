@@ -44,7 +44,7 @@ void RegionShape::readFromXML(XMLElement * descriptorElement) {
     }
 }
 
-bool RegionShape::SetElement(char p, char r, double value) {
+bool RegionShape::SetElement(const char p, const char r, const double value) {
 	if (p < 0 || p >= ART_ANGULAR || r < 0 || r >= ART_RADIAL || value > 1.0 || value < 0.0) {
 		return false;
 	}
@@ -68,14 +68,14 @@ bool RegionShape::SetElement(char p, char r, double value) {
 	return true;
 }
 
-char RegionShape::GetElement(char p, char r) {
+char RegionShape::GetElement(const char p, const char r) {
 	if (p < 0 || p >= ART_ANGULAR || r < 0 || r >= ART_RADIAL) {
         throw REG_SHAPE_WRONG_ELEMENT_ACCESS;
 	}
 	return m_ArtDE[p][r]; // Always positive value
 }
 
-double RegionShape::GetRealValue(char p, char r) {
+double RegionShape::GetRealValue(const char p, const char r) {
     return IQuantTable[m_ArtDE[p][r]];
 }
 

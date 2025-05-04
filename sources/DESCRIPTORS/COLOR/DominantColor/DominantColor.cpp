@@ -277,11 +277,11 @@ bool DominantColor::getSpatialCoherencyPresent() {
     return spatialCoherencyPresent;
 }
 
-void DominantColor::setResultDescriptorSize(unsigned char size) {
+void DominantColor::setResultDescriptorSize(const unsigned char size) {
     resultDescriptorSize = size;
 }
 
-void DominantColor::allocateResultArrays(int size) {
+void DominantColor::allocateResultArrays(const int size) {
     resultDominantColors = new int * [3 * size];
     resultColorVariances = new int * [3 * size];
     resultPercentages    = new int   [size]; 
@@ -311,7 +311,7 @@ float DominantColor::getSpatialCoherencyValue() {
     return spatialCoherencyValue;
 }
 
-void DominantColor::setSpatialCoherencyValue(float value) {
+void DominantColor::setSpatialCoherencyValue(const float value) {
     spatialCoherencyValue = value;
 }
 

@@ -216,7 +216,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
     return descriptor;
 }
 
-int * ScalableColorExtractor::rgb2hsv(int r, int g, int b, int hue_quant, int sat_quant, int val_quant) {
+int * ScalableColorExtractor::rgb2hsv(const int r, const int g, const int b, const int hue_quant, const int sat_quant, const int val_quant) {
     int max, min;
     static char order;
     double h;

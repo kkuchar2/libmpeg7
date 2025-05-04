@@ -179,19 +179,19 @@ unsigned int ScalableColor::getNumberOfBitplanesDiscarded() {
     return numberOfBitplanesDiscarded;
 }
 
-int ScalableColor::getCoefficient(int index) {
+int ScalableColor::getCoefficient(const int index) {
     return coefficients[index];
 }
 
-void ScalableColor::setNumberOfCoefficients(int coeffNum) {
+void ScalableColor::setNumberOfCoefficients(const int coeffNum) {
     numberOfCoefficients = coeffNum;
 }
 
-void ScalableColor::setNumberOfBitplanesDiscarded(int bitsDisc) {
+void ScalableColor::setNumberOfBitplanesDiscarded(const int bitsDisc) {
     numberOfBitplanesDiscarded = bitsDisc;
 }
 
-void ScalableColor::allocateCoefficients(int size) {
+void ScalableColor::allocateCoefficients(const int size) {
     coefficients = new int[size];
 }
 

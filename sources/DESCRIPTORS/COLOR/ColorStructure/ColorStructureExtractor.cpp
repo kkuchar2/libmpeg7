@@ -63,7 +63,7 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
     unsigned char * alphaChannelBuffer = image.getTransparencyPresent() ? image.getChannel_A() : nullptr;
 
     // Determine working dimensions
-    const double logArea = log((double) (imageWidth * imageHeight)) / log(2.);
+    const double logArea = log(imageWidth * imageHeight) / log(2.);
     int scalePower = static_cast<int>(floor(0.5 * logArea - 8 + 0.5));
     scalePower     = std::max(0, scalePower);
 
@@ -96,7 +96,7 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
     // Loop through columns
     for (col = 0; col < modifiedImageWidth; col += subSample) {
         // Reset and fill in the first (top of image) full sliding window histograms
-        memset((void *) slideHist, 0, BASE_QUANT_SPACE * sizeof(unsigned long));
+        memset(slideHist, 0, BASE_QUANT_SPACE * sizeof(unsigned long));
 
         for (row = 0; row < slideHeight; row += subSample) {
             pAdd      = & quantizedImageBuffer[row * imageWidth + col];
@@ -171,7 +171,7 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
     return descriptor;
 }
 
-void ColorStructureExtractor::RGB2HMMD(int R, int G, int B, int & H, int & S, int & D) {
+void ColorStructureExtractor::RGB2HMMD(const int R, const int G, const int B, int & H, int & S, int & D) {
     int max, min;
     float hue;
 
@@ -221,7 +221,7 @@ void ColorStructureExtractor::RGB2HMMD(int R, int G, int B, int & H, int & S, in
     D = static_cast<long>(max - min + 0.5);		  //range [0,255]
 }
 
-int ColorStructureExtractor::QuantHMMD(int H, int S, int D, int N) {
+int ColorStructureExtractor::QuantHMMD(const int H, const int S, const int D, const int N) {
     /* colorQuantTable was initialized with zeros before, so it is not used
     I'll leave it here in case of future usage (KK) */
     if (colorQuantTable[N]) {
@@ -261,7 +261,7 @@ int ColorStructureExtractor::QuantHMMD(int H, int S, int D, int N) {
     return nCumLevels[N][iSub] + Hindex*nSumLevels[N][iSub] + Sindex;
 }
 
-int ColorStructureExtractor::UnifyBins(unsigned long Norm, int targetSize) {
+int ColorStructureExtractor::UnifyBins(const unsigned long Norm, const int targetSize) {
     /* (KK)
     Method is quantizing all coefficients (initially of default size 256) 
     to target size specified by user (e.g. 32) */
@@ -326,7 +326,7 @@ int ColorStructureExtractor::UnifyBins(unsigned long Norm, int targetSize) {
     return 0;
 }
 
-int ColorStructureExtractor::TransformBinIndex(int iOrig, int iOrigColorQuantSpace, int iNewColorQuantSpace) {
+int ColorStructureExtractor::TransformBinIndex(const int iOrig, const int iOrigColorQuantSpace, const int iNewColorQuantSpace) {
     // Build transform table if not already present
     if (!colorQuantTransform[iOrigColorQuantSpace][iNewColorQuantSpace]) {
         BuildTransformTable(iOrigColorQuantSpace, iNewColorQuantSpace);
@@ -339,7 +339,7 @@ int ColorStructureExtractor::TransformBinIndex(int iOrig, int iOrigColorQuantSpa
     return colorQuantTransform[iOrigColorQuantSpace][iNewColorQuantSpace][iOrig];
 }
 
-int ColorStructureExtractor::BuildTransformTable(int iOrigColorQuantSpace, int iNewColorQuantSpace) {
+int ColorStructureExtractor::BuildTransformTable(const int iOrigColorQuantSpace, const int iNewColorQuantSpace) {
     const int maxMatchTest = 27; // Allow deviation +/- 1 in 3D (XM)
     int iMatch[maxMatchTest], nMatch[maxMatchTest], nUniqueMatch = 0;
     int iOrig, iNew;
@@ -432,7 +432,7 @@ int ColorStructureExtractor::BuildTransformTable(int iOrigColorQuantSpace, int i
     return 1;
 }
 
-int ColorStructureExtractor::QuantAmplNonLinear(unsigned long Norm) {
+int ColorStructureExtractor::QuantAmplNonLinear(const unsigned long Norm) {
     unsigned long iBin, TotalNoOfBins, iQuant;
     const int nAmplLinearRegions = sizeof(nAmplLevels) / sizeof(nAmplLevels[0]);
     int nTotalLevels = 0;
@@ -493,7 +493,7 @@ int ColorStructureExtractor::QuantAmplNonLinear(unsigned long Norm) {
     return 0;
 }
 
-int ColorStructureExtractor::GetColorQuantSpace(int size) {
+int ColorStructureExtractor::GetColorQuantSpace(const int size) {
     if (size == 256) {
         return 3;
     }
@@ -511,7 +511,7 @@ int ColorStructureExtractor::GetColorQuantSpace(int size) {
     }
 }
 
-int ColorStructureExtractor::GetBinSize(int iColorQuantSpace) {
+int ColorStructureExtractor::GetBinSize(const int iColorQuantSpace) {
     if (iColorQuantSpace <= 3 && iColorQuantSpace >= 0) {
         return 32 << iColorQuantSpace;
     }

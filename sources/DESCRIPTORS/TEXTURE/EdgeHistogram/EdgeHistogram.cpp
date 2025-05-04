@@ -6,7 +6,7 @@ EdgeHistogram::EdgeHistogram(): Local_Edge{} {
 void EdgeHistogram::loadParameters(const char ** params) {
 }
 
-void EdgeHistogram::setEdgeHistogramElement(int index, int value) {
+void EdgeHistogram::setEdgeHistogramElement(const int index, const int value) {
     m_pEdge_HistogramElement[index] = value;
 }
 
@@ -18,7 +18,7 @@ void EdgeHistogram::setEdgeHistogramElement(char * pEdgeHistogram) {
     memcpy(m_pEdge_HistogramElement, pEdgeHistogram, 80);
 }
 
-char EdgeHistogram::getEdgeHistogramElement(int index) {
+char EdgeHistogram::getEdgeHistogramElement(const int index) {
     return m_pEdge_HistogramElement[index];
 }
 

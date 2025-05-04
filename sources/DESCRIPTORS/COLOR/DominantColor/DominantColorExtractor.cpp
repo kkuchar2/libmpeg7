@@ -20,8 +20,8 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
     const int imageTotalSize = image.getTotalSize();
     const bool transparencyPresent = image.getTransparencyPresent();
 
-    const float agglomeratingFactor = static_cast<float>(DSTMIN);
-    const float splittingFactor     = static_cast<float>(SPLITTING_FACTOR);
+    const float agglomeratingFactor = DSTMIN;
+    const float splittingFactor     = SPLITTING_FACTOR;
 
     dominantColorWeights    = new float[DESCRIPTOR_SIZE];
     dominantColorCentroids  = new float * [DESCRIPTOR_SIZE];
@@ -159,7 +159,7 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
     return descriptor;
 }
 
-double DominantColorExtractor::AssignPixelsToClusters(int * pixelsClusters, float * imageData, int imageSize, unsigned char * alphaChannelBuffer) {
+double DominantColorExtractor::AssignPixelsToClusters(int * pixelsClusters, float * imageData, const int imageSize, unsigned char * alphaChannelBuffer) {
     /* Assign each pixel to it's cluster ISO/IEC 15938-8 4.2.3.1, 267  */
     int nearestClusterIndex;			   // index of cluster centroid nearest to pixel
     double currentDistance;				   // current distance
@@ -210,7 +210,7 @@ double DominantColorExtractor::AssignPixelsToClusters(int * pixelsClusters, floa
     return  sumOfMinimumDistances / notTransparentPixels;
 }
 
-void DominantColorExtractor::RecalculateCentroids(int * pixelsClusters, float * imageData, int imageSize, unsigned char * alphaChannelBuffer) {
+void DominantColorExtractor::RecalculateCentroids(int * pixelsClusters, float * imageData, const int imageSize, unsigned char * alphaChannelBuffer) {
     /* Calculate new color cluster centroids - as average of pixels assigned for them */
     int currentPixelIndex;
     int currentColorCentroid;
@@ -262,7 +262,7 @@ void DominantColorExtractor::RecalculateCentroids(int * pixelsClusters, float * 
     }
 }
 
-void DominantColorExtractor::CalculateVariances(int * pixelsClusters, float * imageData, int imageSize, unsigned char * alphaChannelBuffer) {
+void DominantColorExtractor::CalculateVariances(int * pixelsClusters, float * imageData, const int imageSize, unsigned char * alphaChannelBuffer) {
     int i, j;
     double tmp;
     unsigned char * pAlpha;
@@ -300,7 +300,7 @@ void DominantColorExtractor::CalculateVariances(int * pixelsClusters, float * im
     }
 }
 
-void DominantColorExtractor::Split(int * pixelsClusters, float *imageData, int imageSize, unsigned char * alphaChannelBuffer, double factor) {
+void DominantColorExtractor::Split(int * pixelsClusters, float *imageData, const int imageSize, unsigned char * alphaChannelBuffer, const double factor) {
     /*  Splitting color clusters (KK)
     NewcolorBin1 = OldcolorBin + PerturbanceVector;
     NewcolorBin2 = OldcolorBin - PerturbanceVector; */
@@ -380,7 +380,7 @@ void DominantColorExtractor::Split(int * pixelsClusters, float *imageData, int i
     currentColorNumber++;
 }
 
-void DominantColorExtractor::Agglom(double distthr) {
+void DominantColorExtractor::Agglom(const double distthr) {
     double d1, d2, d3;
     double dists[DESCRIPTOR_SIZE][DESCRIPTOR_SIZE];
     double distmin = 0.0;
@@ -452,7 +452,7 @@ void DominantColorExtractor::Agglom(double distthr) {
     } while (currentColorNumber > 1 && distmin < distthr);
 }
 
-int DominantColorExtractor::GetSpatialCoherency(float * ColorData, int dim, int N, float ** col_float, unsigned char * alphaChannelBuffer, int imageWidth, int imageHeight) {
+int DominantColorExtractor::GetSpatialCoherency(float * ColorData, const int dim, const int N, float ** col_float, unsigned char * alphaChannelBuffer, const int imageWidth, const int imageHeight) {
     double CM = .0;
     const int NeighborRange = 1;
     const float SimColorAllow = static_cast<float>(sqrt(DSTMIN));
@@ -490,7 +490,7 @@ int DominantColorExtractor::GetSpatialCoherency(float * ColorData, int dim, int 
     return QuantizeSC(CM);
 }
 
-double DominantColorExtractor::GetCoherencyWithColorAllow(float * ColorData, int dim, bool * IVisit, float l, float u, float v, float Allow, int NeighborRange, unsigned int * OUTPUT_Corres_Pixel_Count, int imageWidth, int imageHeight) {
+double DominantColorExtractor::GetCoherencyWithColorAllow(float * ColorData, const int dim, bool * IVisit, const float l, const float u, const float v, const float Allow, const int NeighborRange, unsigned int * OUTPUT_Corres_Pixel_Count, const int imageWidth, const int imageHeight) {
     int Neighbor_Count = 0;
     unsigned int Pixel_Count = 0;
     double Coherency = 0.0;
@@ -558,16 +558,16 @@ double DominantColorExtractor::GetCoherencyWithColorAllow(float * ColorData, int
     return Coherency;
 }
 
-int DominantColorExtractor::QuantizeSC(double sc) {
+int DominantColorExtractor::QuantizeSC(const double sc) {
     if (sc < 0.70) {
         return 1;
     }
     else {
-        return static_cast<int>((sc - 0.70) / (1.0 - 0.70) * (pow(2.0, (double) SC_BIT) - 3.0) + .5) + 2;
+        return static_cast<int>((sc - 0.70) / (1.0 - 0.70) * (pow(2.0, SC_BIT) - 3.0) + .5) + 2;
     }
 }
 
-void DominantColorExtractor::rgb2yuv(int r, int g, int b, int & y, int & u, int & v) {
+void DominantColorExtractor::rgb2yuv(const int r, const int g, const int b, int & y, int & u, int & v) {
     y = static_cast<int>((y < 0) ? 0 : ((y > 255) ? 255 :  0.587 * static_cast<float>(r) + 0.114 * static_cast<float>(g) + 0.299 * static_cast<float>(b) + 0.5));
     u = static_cast<int>((u < 0) ? 0 : ((u > 255) ? 255 : -0.331 * static_cast<float>(r) + 0.500 * static_cast<float>(g) - 0.169 * static_cast<float>(b) + 0.5 + 128));
     v = static_cast<int>((v < 0) ? 0 : ((v > 255) ? 255 : -0.419 * static_cast<float>(r) - 0.081 * static_cast<float>(g) + 0.500 * static_cast<float>(b) + 0.5 + 128));
@@ -606,7 +606,7 @@ void DominantColorExtractor::rgb2xyz(Image &image, double * XYZ) {
     delete[] RGB;
 }
 
-void DominantColorExtractor::xyz2luv(double * XYZ, float * LUV, int size) {
+void DominantColorExtractor::xyz2luv(double * XYZ, float * LUV, const int size) {
     double x, y;
     double den, u2, v2;
     double X0, Z0, Y0;
@@ -660,7 +660,7 @@ void DominantColorExtractor::rgb2luv(Image &image, float * LUV) {
     delete XYZ;
 }
 
-void DominantColorExtractor::luv2rgb(int * RGB, float *LUV, int size) {
+void DominantColorExtractor::luv2rgb(int * RGB, float *LUV, const int size) {
     int i, k;
     double x, y, X, Y, Z, den, u2, v2, X0, Z0, Y0, u20, v20, vec[3];
     float veckf;

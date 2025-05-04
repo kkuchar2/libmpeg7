@@ -149,7 +149,7 @@ void TextureBrowsing::readFromXML(XMLElement * descriptorElement) {
     }
 }
 
-void TextureBrowsing::SetComponentNumberFlag(int ComponentNumber) {
+void TextureBrowsing::SetComponentNumberFlag(const int ComponentNumber) {
 	m_ComponentNumberFlag = ComponentNumber;
 }
 

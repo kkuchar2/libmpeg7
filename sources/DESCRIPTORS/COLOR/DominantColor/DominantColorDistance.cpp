@@ -210,7 +210,7 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
         delete[] vars2;
     }
     else {
-        const double Td = sqrt((double) Td2);
+        const double Td = sqrt(Td2);
 
         dmax = 1.2 * Td;
 
@@ -287,7 +287,7 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     return distance;
 }
 
-double DominantColorDistance::GetDistanceVariance(float * per1, float ** color1, float ** var1, int size1, float * per2, float ** color2, float ** var2, int size2) {
+double DominantColorDistance::GetDistanceVariance(float * per1, float ** color1, float ** var1, const int size1, float * per2, float ** color2, float ** var2, const int size2) {
     int     i1, i2;
     double  d0, d1, d2, v0, v1, v2, arg1, arg2;
     double  tmp, val = 0.0;
@@ -339,7 +339,7 @@ double DominantColorDistance::GetDistanceVariance(float * per1, float ** color1,
     return val;
 }
 
-void DominantColorDistance::rgb2luv(int * RGB, float * LUV, int size) {
+void DominantColorDistance::rgb2luv(int * RGB, float * LUV, const int size) {
     int i;
     double x, y, X, Y, Z, den, u2, v2, X0, Z0, Y0, u20, v20, r, g, b;
 
@@ -353,24 +353,24 @@ void DominantColorDistance::rgb2luv(int * RGB, float * LUV, int size) {
 
     for (i = 0; i<size; i += 3) {
         if (RGB[i] <= 20) {
-            r = (double) (8.715e-4 * RGB[i]);
+            r = 8.715e-4 * RGB[i];
         }
         else {
-            r = (double) pow((RGB[i] + 25.245) / 280.245, 2.22);
+            r = pow((RGB[i] + 25.245) / 280.245, 2.22);
         }
 
         if (RGB[i + 1] <= 20) {
-            g = (double) (8.715e-4 * RGB[i + 1]);
+            g = 8.715e-4 * RGB[i + 1];
         }
         else {
-            g = (double) pow((RGB[i + 1] + 25.245) / 280.245, 2.22);
+            g = pow((RGB[i + 1] + 25.245) / 280.245, 2.22);
         }
 
         if (RGB[i + 2] <= 20) {
-            b = (double) (8.715e-4*RGB[i + 2]);
+            b = 8.715e-4*RGB[i + 2];
         }
         else {
-            b = (double) pow((RGB[i + 2] + 25.245) / 280.245, 2.22);
+            b = pow((RGB[i + 2] + 25.245) / 280.245, 2.22);
         }
 
         X = 0.412453 * r + 0.357580 * g + 0.180423 * b;

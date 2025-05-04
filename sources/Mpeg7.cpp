@@ -23,7 +23,7 @@ const char * extractDescriptor(DescriptorType descriptorType, const char * imgUR
     return mainExtraction(descriptorType, image, params);
 }
 
-const char * extractDescriptorFromData(DescriptorType descriptorType, unsigned char * buffer, int size, const char ** params) {
+const char * extractDescriptorFromData(DescriptorType descriptorType, unsigned char * buffer, const int size, const char ** params) {
     if (params == nullptr) {
         return message(PARAMS_NULL);
     }
@@ -199,7 +199,7 @@ void freeResultPointer(char * ptr) {
     free(ptr);
 }
 
-const char * message(int error) {
+const char * message(const int error) {
     const std::string msg_str = std::to_string(error);
 
     const auto msg = new char[msg_str.size() + 1];
@@ -214,7 +214,7 @@ const char * message(const std::string &xml) {
     return msg;
 }
 
-const char * message(double distance) {
+const char * message(const double distance) {
     std::stringstream msg_str_stream;
     msg_str_stream << std::fixed << std::setprecision(17) << distance;
 

@@ -197,7 +197,7 @@ std::string ContourShape::generateXML() {
     return xmlPrinter.CStr();
 }
 
-void ContourShape::SetNumberOfPeaks(unsigned char cPeaks) {
+void ContourShape::SetNumberOfPeaks(const unsigned char cPeaks) {
     const unsigned char cOldPeaks = descriptorPeaksCount;
 
     // Only 5 bits used so mask out rest
@@ -219,7 +219,7 @@ void ContourShape::SetNumberOfPeaks(unsigned char cPeaks) {
         descriptorPeaks = nullptr;
 
         if (descriptorPeaksCount > 0) {
-            descriptorPeaks = (unsigned short*) new unsigned short[descriptorPeaksCount * 2];
+            descriptorPeaks = new unsigned short[descriptorPeaksCount * 2];
         }
     }
     else {
@@ -227,11 +227,11 @@ void ContourShape::SetNumberOfPeaks(unsigned char cPeaks) {
     }
 }
 
-void ContourShape::SetHighestPeakY(unsigned short iHigh) {
+void ContourShape::SetHighestPeakY(const unsigned short iHigh) {
     descriptorHighestPeakY = iHigh;
 }
 
-void ContourShape::SetPeak(unsigned char cIndex, unsigned short iX, unsigned short iY) {
+void ContourShape::SetPeak(const unsigned char cIndex, const unsigned short iX, const unsigned short iY) {
     const unsigned char cOffset = cIndex * 2;
 
     if (cIndex < descriptorPeaksCount) {
@@ -240,12 +240,12 @@ void ContourShape::SetPeak(unsigned char cIndex, unsigned short iX, unsigned sho
     }
 }
 
-void ContourShape::SetGlobalCurvature(unsigned long lC, unsigned long lE) {
+void ContourShape::SetGlobalCurvature(const unsigned long lC, const unsigned long lE) {
     descriptorGlobalCurvatureVector[0] = lC;
     descriptorGlobalCurvatureVector[1] = lE;
 }
 
-void ContourShape::SetPrototypeCurvature(unsigned long lC, unsigned long lE) {
+void ContourShape::SetPrototypeCurvature(const unsigned long lC, const unsigned long lE) {
     if (descriptorPeaksCount > 0) {
         descriptorPrototypeCurvatureVector[0] = lC;
         descriptorPrototypeCurvatureVector[1] = lE;
@@ -261,7 +261,7 @@ unsigned char ContourShape::GetNumberOfPeaks() const {
     return descriptorPeaksCount;
 }
 
-void ContourShape::GetPeak(unsigned char cIndex, unsigned short & iX, unsigned short & iY) {
+void ContourShape::GetPeak(const unsigned char cIndex, unsigned short & iX, unsigned short & iY) {
     const unsigned char cOffset = cIndex * 2;
 
     if (cIndex < descriptorPeaksCount) {

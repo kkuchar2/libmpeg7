@@ -11,7 +11,7 @@ double TextureBrowsingDistance::getDistance(Descriptor * descriptor1, Descriptor
     return distance_PBC(flag, textureBrowsingDescriptor1->getBrowsingComponent(), textureBrowsingDescriptor2->getBrowsingComponent());
 }
 
-double TextureBrowsingDistance::distance_PBC(int flag, int * Ref, int * Query) {
+double TextureBrowsingDistance::distance_PBC(const int flag, int * Ref, int * Query) {
     double distance, temp1, temp2;
 
     temp1 = abs(Ref[1] - Query[1]);

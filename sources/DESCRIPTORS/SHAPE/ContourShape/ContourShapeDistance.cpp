@@ -59,7 +59,7 @@ double ContourShapeDistance::getDistance(ContourShape *  contourShapeDescriptor1
             m_rPeaksY[nr] = static_cast<float>((iry * CONTOURSHAPE_YMAX / static_cast<float> (CONTOURSHAPE_YMASK)));
         }
         else {
-            m_rPeaksY[nr] = static_cast<float>((iry * m_rPeaksY[nr - 1] / static_cast<float> (CONTOURSHAPE_YnMASK)));
+            m_rPeaksY[nr] = iry * m_rPeaksY[nr - 1] / static_cast<float> (CONTOURSHAPE_YnMASK);
         }
     }
 
