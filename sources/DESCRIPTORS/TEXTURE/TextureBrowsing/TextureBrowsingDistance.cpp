@@ -3,10 +3,10 @@
 TextureBrowsingDistance::TextureBrowsingDistance() = default;
 
 double TextureBrowsingDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    TextureBrowsing * textureBrowsingDescriptor1 = static_cast<TextureBrowsing *>(descriptor1);
-    TextureBrowsing * textureBrowsingDescriptor2 = static_cast<TextureBrowsing *>(descriptor2);
+    const auto textureBrowsingDescriptor1 = static_cast<TextureBrowsing *>(descriptor1);
+    const auto textureBrowsingDescriptor2 = static_cast<TextureBrowsing *>(descriptor2);
 
-    int flag = textureBrowsingDescriptor1->GetComponentNumberFlag() * textureBrowsingDescriptor2->GetComponentNumberFlag();
+    const int flag = textureBrowsingDescriptor1->GetComponentNumberFlag() * textureBrowsingDescriptor2->GetComponentNumberFlag();
 
     return distance_PBC(flag, textureBrowsingDescriptor1->getBrowsingComponent(), textureBrowsingDescriptor2->getBrowsingComponent());
 }

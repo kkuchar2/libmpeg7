@@ -8,7 +8,7 @@ void RegionShape::loadParameters(const char ** params) {
 
 void RegionShape::readFromXML(XMLElement * descriptorElement) {   
     /* Load MagnitudeOfART element */
-    XMLElement * p_MagnitudeOfArt = descriptorElement->FirstChildElement("MagnitudeOfART");
+    const XMLElement * p_MagnitudeOfArt = descriptorElement->FirstChildElement("MagnitudeOfART");
 
     if (p_MagnitudeOfArt == nullptr) {
         throw REG_SHAPE_MAGNITUDE_ART_MISSING;

@@ -16,8 +16,8 @@ Descriptor * TextureBrowsingExtractor::extract(Image & image, const char ** para
     }
 
     // 2. Get image data
-    int imageHeight = image.getHeight();
-    int imageWidth = image.getWidth();
+    const int imageHeight = image.getHeight();
+    const int imageWidth = image.getWidth();
     unsigned char * grayImage = image.getGray(GRAYSCALE_AVERAGE);
     unsigned char * aChannel = nullptr;
 
@@ -211,7 +211,7 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, int width, int heigh
 
 
     /* Extract both directions */
-    int * temp_direction = (int *) malloc(2 * sizeof(int));
+    const auto temp_direction = (int *) malloc(2 * sizeof(int));
 
     try {
         GaborFeature(img, XM_SIDE, XM_UL, XM_UH, XM_SCALE, XM_ORIENTATION, XM_FLAG, temp_direction);
@@ -238,7 +238,7 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, int width, int heigh
     free(temp_direction);
 
     /* Extract scale */
-    int imgsize = width;
+    const int imgsize = width;
 
     try {
         pbcmain(&pbc, imgsize);
@@ -931,7 +931,7 @@ int * TextureBrowsingExtractor::DominantDirection(float ** histo) {
     double *temp_ori, *out_ori;
     int *temp_index;
     struct Peak histo_peak[4][2];
-    int 	candi_size = 2;
+    const int 	candi_size = 2;
     int    temp_flag;
     int    lable, count;
     int	*index_value;

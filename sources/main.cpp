@@ -32,8 +32,8 @@ int main(int argc, char* argv[]) {
         printUsage(argv[0]);
         return 1;
     }
-    
-    DescriptorType descriptorType = static_cast<DescriptorType>(descriptorTypeInt);
+
+    const auto descriptorType = static_cast<DescriptorType>(descriptorTypeInt);
     const char* imagePath = argv[2];
     
     // Parse optional parameters

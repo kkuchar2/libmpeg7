@@ -14,16 +14,16 @@ Descriptor * EdgeHistogramExtractor::extract(Image & image, const char ** params
     }
 
     // Get image information
-    int imageWidth     = image.getWidth();
-    int imageHeight    = image.getHeight();
-    bool isTransparent = image.getTransparencyPresent();
+    const int imageWidth     = image.getWidth();
+    const int imageHeight    = image.getHeight();
+    const bool isTransparent = image.getTransparencyPresent();
 
     // Get image data
-    unsigned char * R = image.getChannel_R();
-    unsigned char * G = image.getChannel_G();
-    unsigned char * B = image.getChannel_B();
+    const unsigned char * R = image.getChannel_R();
+    const unsigned char * G = image.getChannel_G();
+    const unsigned char * B = image.getChannel_B();
 
-    unsigned char * A = nullptr;
+    const unsigned char * A = nullptr;
 
     if (isTransparent) {
         A = image.getChannel_A();
@@ -234,7 +234,7 @@ int EdgeHistogramExtractor::GetEdgeFeature(unsigned char * pImage_Y, int image_w
     int		i, j;
     double	d1, d2, d3, d4;
     int		e_index;
-    double  dc_th = Te_Value;
+    const double  dc_th = Te_Value;
     double  e_h, e_v, e_45, e_135, e_m, e_max;
 
     d1 = 0.0;
@@ -297,8 +297,8 @@ int EdgeHistogramExtractor::GetEdgeFeature(unsigned char * pImage_Y, int image_w
 }
 
 unsigned long EdgeHistogramExtractor::GetBlockSize(unsigned long image_width, unsigned long image_height, unsigned long desired_num_of_blocks) {
-    double temp_size = (double) sqrt((double) (image_width * image_height / desired_num_of_blocks));
-    unsigned long block_size = (unsigned long) (temp_size / 2) * 2;
+    const double temp_size = (double) sqrt((double) (image_width * image_height / desired_num_of_blocks));
+    const unsigned long block_size = (unsigned long) (temp_size / 2) * 2;
 
     return block_size;
 }

@@ -12,7 +12,7 @@ import time
 import math
 from datetime import timedelta
 
-ONLY_DESCRIPTOR_ID = 10
+ONLY_DESCRIPTOR_ID = None
 
 DATASET_DIR = "/home/kuchkr/Desktop/dataset/png"
 OUTPUT_DIR = "/home/kuchkr/Desktop/original_mpeg7_files/out"

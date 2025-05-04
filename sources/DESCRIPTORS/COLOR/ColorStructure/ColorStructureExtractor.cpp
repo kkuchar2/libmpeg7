@@ -14,9 +14,9 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
     }
 
     // Get image information
-    int imageWidth  = image.getWidth();
-    int imageHeight = image.getHeight();
-    int imageSize   = image.getSize();
+    const int imageWidth  = image.getWidth();
+    const int imageHeight = image.getHeight();
+    const int imageSize   = image.getSize();
 
     /* Initial extraction always to Base size (XM) 
     Size of m_Data initially will be 256, and all elements will be set to 0 (KK) */
@@ -27,9 +27,9 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
     }
 
     // Image data, alpha channel is not needed (used later)
-    unsigned char * channel_R = image.getChannel_R();
-    unsigned char * channel_G = image.getChannel_G();
-    unsigned char * channel_B = image.getChannel_B();
+    const unsigned char * channel_R = image.getChannel_R();
+    const unsigned char * channel_G = image.getChannel_G();
+    const unsigned char * channel_B = image.getChannel_B();
 
     // Convert color space and quantize 
     int i;
@@ -63,13 +63,13 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
     unsigned char * alphaChannelBuffer = image.getTransparencyPresent() ? image.getChannel_A() : nullptr;
 
     // Determine working dimensions
-    double logArea = log((double) (imageWidth * imageHeight)) / log(2.);
+    const double logArea = log((double) (imageWidth * imageHeight)) / log(2.);
     int scalePower = (int) floor(0.5 * logArea - 8 + 0.5);
     scalePower     = std::max(0, scalePower);
 
-    unsigned long subSample   = 1 << scalePower;
-    unsigned long slideWidth  = 8 * subSample;
-    unsigned long slideHeight = 8 * subSample;
+    const unsigned long subSample   = 1 << scalePower;
+    const unsigned long slideWidth  = 8 * subSample;
+    const unsigned long slideHeight = 8 * subSample;
 
     modifiedImageWidth  = imageWidth  - (slideWidth - 1);
     modifiedImageHeight = imageHeight - (slideHeight - 1);
@@ -269,7 +269,7 @@ int ColorStructureExtractor::UnifyBins(unsigned long Norm, int targetSize) {
     int iTargBin; // target coeff array
     int iOrigBin; // original coeff array
 
-    int nOrigSize = descriptor->GetSize(); // this original size is 256
+    const int nOrigSize = descriptor->GetSize(); // this original size is 256
 
     // If target size is original size (so 256) - there is nothing to do
     if (targetSize == nOrigSize) {
@@ -277,7 +277,7 @@ int ColorStructureExtractor::UnifyBins(unsigned long Norm, int targetSize) {
     }
 
     // Otherwise prepare new array
-    double * pBin = new double[targetSize];
+    const auto pBin = new double[targetSize];
 
     // Fill it with zeros
     for (iTargBin = 0; iTargBin < targetSize; iTargBin++) {
@@ -347,7 +347,7 @@ int ColorStructureExtractor::BuildTransformTable(int iOrigColorQuantSpace, int i
     int iTest;
 
     // Allocate
-    unsigned char * tbl = new unsigned char[GetBinSize(iOrigColorQuantSpace)];
+    const auto tbl = new unsigned char[GetBinSize(iOrigColorQuantSpace)];
 
     if (!tbl) {
         throw COL_STRUCT_BUILD_TRANSFORM_TABLE_ERROR; // (KK)
@@ -360,8 +360,8 @@ int ColorStructureExtractor::BuildTransformTable(int iOrigColorQuantSpace, int i
         for (H = 0; H < 361; H++) {
             for (D = 0; D < 256; D++) {
 
-                int beginS = (D + 1) >> 1;
-                int endS = 256 - (D >> 1);
+                const int beginS = (D + 1) >> 1;
+                const int endS = 256 - (D >> 1);
 
                 for (S = beginS; S < endS; S++) {
                     // Check match and get new space
@@ -468,7 +468,7 @@ int ColorStructureExtractor::QuantAmplNonLinear(unsigned long Norm) {
         }
 
         // Quantize
-        double nextThresh = (iQuant + 1 < nAmplLinearRegions) ? amplThresh[iQuant + 1] : 1.0;
+        const double nextThresh = (iQuant + 1 < nAmplLinearRegions) ? amplThresh[iQuant + 1] : 1.0;
 
         val = floor(quantValue +(val - amplThresh[iQuant]) * (nAmplLevels[iQuant] / (nextThresh - amplThresh[iQuant])));
 

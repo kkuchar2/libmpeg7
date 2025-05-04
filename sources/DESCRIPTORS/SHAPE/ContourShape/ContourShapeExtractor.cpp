@@ -14,9 +14,9 @@ Descriptor * ContourShapeExtractor::extract(Image & image, const char ** params)
 
     const int CONTOUR_SIZE = 500;
 
-    Point2 * coords = new Point2[CONTOUR_SIZE];
+    const auto coords = new Point2[CONTOUR_SIZE];
 
-    int nContour = ExtractContour(CONTOUR_SIZE, image, coords);
+    const int nContour = ExtractContour(CONTOUR_SIZE, image, coords);
 
     if (nContour > 0) {
         ExtractPeaks(nContour, coords);
@@ -28,8 +28,8 @@ Descriptor * ContourShapeExtractor::extract(Image & image, const char ** params)
 }
 
 unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2 * const & ishp) {
-    int dr[] = { 0, -1, -1, -1,  0,  1,  1,  1 };
-    int dc[] = { 1,  1,  0, -1, -1, -1,  0,  1 };
+    const int dr[] = { 0, -1, -1, -1,  0,  1,  1,  1 };
+    const int dc[] = { 1,  1,  0, -1, -1, -1,  0,  1 };
 
     int size = 0;
     Point2 *xy = nullptr;
@@ -38,14 +38,14 @@ unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2
 
     mask_chan = image.getGray(GRAYSCALE_AVERAGE);
 
-    int imageWidth = image.getWidth();
-    int imageHeight = image.getHeight();
+    const int imageWidth = image.getWidth();
+    const int imageHeight = image.getHeight();
 
     for (int r = 0; (r < image.getHeight()) && (size == 0); r++) {
-        unsigned char lastPel = 0;
+        const unsigned char lastPel = 0;
 
         for (int c = 0; (c < image.getWidth()) && (size == 0); c++) {
-            unsigned char thisPel = *getPixel(mask_chan, c, r, imageWidth, imageHeight);
+            const unsigned char thisPel = *getPixel(mask_chan, c, r, imageWidth, imageHeight);
 
             if (thisPel != lastPel) {
                 unsigned char dir = 0, dir0;
@@ -101,7 +101,7 @@ unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2
                         break;
 
                     if ((size % 32) == 0) {
-                        Point2 *nxy = new Point2[size + 32];
+                        const auto nxy = new Point2[size + 32];
                         memset(nxy, 0, (size + 32)*sizeof(Point2));
                         if (size > 0) {
                             memcpy(nxy, xy, size*sizeof(Point2));
@@ -129,27 +129,27 @@ unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2
         return 0;
 
     double per = 0.0;
-    double *dst = new double[size];
+    const auto dst = new double[size];
     for (int i1 = 0; i1 < size; i1++) {
-        int i2 = (i1 == 0) ? (size - 1) : (i1 - 1);
-        double dx = xy[i1].x - xy[i2].x;
-        double dy = xy[i1].y - xy[i2].y;
+        const int i2 = (i1 == 0) ? (size - 1) : (i1 - 1);
+        const double dx = xy[i1].x - xy[i2].x;
+        const double dy = xy[i1].y - xy[i2].y;
         dst[i1] = sqrt(dx*dx + dy*dy);
         per += dst[i1];
     }
 
-    double del = per / (double) n;
+    const double del = per / (double) n;
 
     int cur = 0;
     double oldd = dst[cur];
     ishp[0] = xy[0];
     for (int j = 1; j < n; j++) {
         if (oldd > del) {
-            double f = del / oldd;
+            const double f = del / oldd;
             oldd -= del;
-            int i1 = (cur < size - 1) ? (cur + 1) : 0;
-            double xs = f*(xy[i1].x - ishp[j - 1].x);
-            double ys = f*(xy[i1].y - ishp[j - 1].y);
+            const int i1 = (cur < size - 1) ? (cur + 1) : 0;
+            const double xs = f*(xy[i1].x - ishp[j - 1].x);
+            const double ys = f*(xy[i1].y - ishp[j - 1].y);
             ishp[j].x = ishp[j - 1].x + xs;
             ishp[j].y = ishp[j - 1].y + ys;
         }
@@ -158,10 +158,10 @@ unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2
             while (newd < del)
                 newd += dst[++cur];
             oldd = newd - del;
-            double f = (dst[cur] - oldd) / dst[cur];
-            int i1 = (cur < size - 1) ? (cur + 1) : 0;
-            double xs = f*(xy[i1].x - xy[cur].x);
-            double ys = f*(xy[i1].y - xy[cur].y);
+            const double f = (dst[cur] - oldd) / dst[cur];
+            const int i1 = (cur < size - 1) ? (cur + 1) : 0;
+            const double xs = f*(xy[i1].x - xy[cur].x);
+            const double ys = f*(xy[i1].y - xy[cur].y);
             ishp[j].x = xy[cur].x + xs;
             ishp[j].y = xy[cur].y + ys;
         }
@@ -174,22 +174,22 @@ unsigned long ContourShapeExtractor::ExtractContour(int n, Image & image, Point2
 }
 
 unsigned long ContourShapeExtractor::ExtractPeaks(int n, const Point2 * const & ishp) {
-    Point2 *fshp = new Point2[n];
+    auto fshp = new Point2[n];
 
-    Point2 *peaks = new Point2[CONTOURSHAPE_MAXCSS];
+    auto peaks = new Point2[CONTOURSHAPE_MAXCSS];
     int nPeaks = 0;
 
-    Point2 *dxdy = new Point2[n];
-    Point2 *d2xd2y = new Point2[n];
-    Point2 *ang = new Point2[n];
-    Point2 *fxfy = new Point2[n];
+    auto dxdy = new Point2[n];
+    auto d2xd2y = new Point2[n];
+    auto ang = new Point2[n];
+    auto fxfy = new Point2[n];
 
-    double *nMinima = new double[n];
-    double *nMaxima = new double[n];
+    auto nMinima = new double[n];
+    auto nMaxima = new double[n];
     int nNmin = 0, nNmax = 0;
 
-    double *oMinima = new double[n];
-    double *oMaxima = new double[n];
+    auto oMinima = new double[n];
+    auto oMaxima = new double[n];
     int oNmin = 0, oNmax = 0;
 
     for (int n1 = 0; n1 < n; n1++) {
@@ -465,7 +465,7 @@ unsigned long ContourShapeExtractor::ExtractPeaks(int n, const Point2 * const & 
 void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, unsigned long & qc, unsigned long & qe) {
     double ecc = 0.0, cir = 0.0;
 
-    IndexCoords *ind = new IndexCoords[n];
+    const auto ind = new IndexCoords[n];
     double x1 = shp[0].x, x2 = shp[0].x;
     for (int k0 = 0; k0 < n; k0++) {
         if (shp[k0].x < x1) x1 = shp[k0].x;
@@ -477,13 +477,13 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
     qsort(ind, n, sizeof(ind[0]), compare_ind);
     double y1 = ind[0].y, y2 = ind[n - 1].y;
 
-    int iw = (int) (x2 - x1 + 1);
-    int ih = (int) (y2 - y1 + 1);
-    unsigned char * xy = new unsigned char[iw*ih];
+    const int iw = (int) (x2 - x1 + 1);
+    const int ih = (int) (y2 - y1 + 1);
+    const auto xy = new unsigned char[iw*ih];
     memset(xy, 0, iw*ih*sizeof(unsigned char));
 
     int nedge = 0;
-    Edge * edgelist = new Edge[n];
+    const auto edgelist = new Edge[n];
 
     int ybot = (int) ceil(y1 - 0.5);
     int ytop = (int) floor(y2 - 0.5);
@@ -493,9 +493,9 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
     int k1 = 0;
     for (int y = ybot; y <= ytop; y++) {
         for (; (k1 < n) && (ind[k1].y < (y + 0.5)); k1++) {
-            int i1 = ind[k1].i;
-            int i0 = (i1 < n - 1) ? i1 + 1 : 0;
-            int i2 = (i1 > 0) ? i1 - 1 : n - 1;
+            const int i1 = ind[k1].i;
+            const int i0 = (i1 < n - 1) ? i1 + 1 : 0;
+            const int i2 = (i1 > 0) ? i1 - 1 : n - 1;
 
             if (shp[i0].y <= y - 0.5) {
                 int e;
@@ -535,7 +535,7 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
             if (xl < 0) xl = 0;
             int xr = (int) floor(edgelist[s + 1].x) - (int) x1;
             if (xr >= iw) xr = iw - 1;
-            int yl = (int) (y - (int) y1);
+            const int yl = (int) (y - (int) y1);
             for (int f = xl; f <= xr; f++)
                 xy[f + yl*iw] = 255;
 
@@ -579,8 +579,8 @@ void ContourShapeExtractor::ExtractCurvature(int n, const Point2 * const & shp, 
         }
     }
 
-    double temp1 = (i20 + i02);
-    double temp2 = sqrt(i20*i20 + i02*i02 - 2.0*i02*i20 + 4.0*i11*i11);
+    const double temp1 = (i20 + i02);
+    const double temp2 = sqrt(i20*i20 + i02*i02 - 2.0*i02*i20 + 4.0*i11*i11);
 
     cir = perim * perim / vol;
     ecc = sqrt((temp1 + temp2) / (temp1 - temp2));

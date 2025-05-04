@@ -54,8 +54,8 @@ void HomogeneousTextureDistance::loadParameters(const char ** params) {
 }
 
 double HomogeneousTextureDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    HomogeneousTexture * homogeneousTextureDescriptor1 = static_cast<HomogeneousTexture *>(descriptor1);
-    HomogeneousTexture * homogeneousTextureDescriptor2 = static_cast<HomogeneousTexture *>(descriptor2);
+    const auto homogeneousTextureDescriptor1 = static_cast<HomogeneousTexture *>(descriptor1);
+    const auto homogeneousTextureDescriptor2 = static_cast<HomogeneousTexture *>(descriptor2);
 
     // Load parameters    
     try {
@@ -84,16 +84,16 @@ double HomogeneousTextureDistance::getDistance(Descriptor * descriptor1, Descrip
     double temp_distance = 0.0;
     double distance = 0.0;
 
-    double wdc = 0.28;
-    double wstd = 0.22;
+    const double wdc = 0.28;
+    const double wstd = 0.22;
 
     distance =  (wdc  * fabs(fRefFeature[0] - fQueryFeature[0]));
     distance += (wstd * fabs(fRefFeature[1] - fQueryFeature[1]));
 
-    int flag = homogeneousTextureDescriptor1->GetHomogeneousTextureFeatureFlag() * homogeneousTextureDescriptor2->GetHomogeneousTextureFeatureFlag();
+    const int flag = homogeneousTextureDescriptor1->GetHomogeneousTextureFeatureFlag() * homogeneousTextureDescriptor2->GetHomogeneousTextureFeatureFlag();
 
-    double wm[RadialDivision] = { 0.42,1.00,1.00,0.08,1.00 };
-    double wd[RadialDivision] = { 0.32,1.00,1.00,1.00,1.00 };
+    const double wm[RadialDivision] = { 0.42,1.00,1.00,0.08,1.00 };
+    const double wd[RadialDivision] = { 0.32,1.00,1.00,1.00,1.00 };
 
 
     // ROTATION INVARIANT
@@ -232,34 +232,34 @@ double HomogeneousTextureDistance::getDistance(Descriptor * descriptor1, Descrip
 }
 
 void HomogeneousTextureDistance::Dequantization(int * integerFeature, float * floatFeature) {
-    double dcmin = 0.0;
-    double dcmax = 255.0;
+    const double dcmin = 0.0;
+    const double dcmax = 255.0;
 
-    double stdmin = 1.309462;
-    double stdmax = 109.476530;
+    const double stdmin = 1.309462;
+    const double stdmax = 109.476530;
 
-    double mmax[5][6] = { 
+    const double mmax[5][6] = { 
     { 18.392888,18.014313,18.002143,18.083845,18.046575,17.962099 },
     { 19.368960,18.628248,18.682786,19.785603,18.714615,18.879544 },
     { 20.816939,19.093605,20.837982,20.488190,20.763511,19.262577 },
     { 22.298871,20.316787,20.659550,21.463502,20.159304,20.280403 },
     { 21.516125,19.954733,20.381041,22.129800,20.184864,19.999331 } };
 
-    double mmin[5][6] = { 
+    const double mmin[5][6] = { 
     { 6.549734, 8.886816, 8.885367, 6.155831, 8.810013, 8.888925 },
     { 6.999376, 7.859269, 7.592031, 6.754764, 7.807377, 7.635503 },
     { 8.299334, 8.067422, 7.955684, 7.939576, 8.518458, 8.672599 },
     { 9.933642, 9.732479, 9.725933, 9.802238,10.076958,10.428015 },
     { 11.704927,11.690975,11.896972,11.996963,11.977944,11.944282 } };
 
-    double dmax[5][6] = { 
+    const double dmax[5][6] = { 
     { 21.099482,20.749788,20.786944,20.847705,20.772294,20.747129 },
     { 22.658359,21.334119,21.283285,22.621111,21.773690,21.702166 },
     { 24.317046,21.618960,24.396872,23.797967,24.329333,21.688523 },
     { 25.638742,24.102725,22.687910,25.216958,22.334769,22.234942 },
     { 24.692990,22.978804,23.891302,25.244315,24.281915,22.699811 } };
 
-    double dmin[5][6] = { 
+    const double dmin[5][6] = { 
     { 9.052970,11.754891,11.781252, 8.649997,11.674788,11.738701 },
     { 9.275178,10.386329,10.066189, 8.914539,10.292868,10.152977 },
     { 10.368594,10.196313,10.211122,10.112823,10.648101,10.801070 },
@@ -293,17 +293,17 @@ void HomogeneousTextureDistance::Dequantization(int * integerFeature, float * fl
 void HomogeneousTextureDistance::Normalization(float * feature) {
     int n, m;
 
-    double dcnorm  = 122.331353;
-    double stdnorm = 51.314701;
+    const double dcnorm  = 122.331353;
+    const double stdnorm = 51.314701;
 
-    double mmean[RadialDivision][AngularDivision] = { 
+    const double mmean[RadialDivision][AngularDivision] = { 
     { 13.948462, 15.067986, 15.077915, 13.865536, 15.031283, 15.145633 },
     { 15.557970, 15.172251, 15.357618, 15.166167, 15.414601, 15.414378 },
     { 17.212408, 16.173027, 16.742651, 16.913837, 16.911480, 16.582123 },
     { 17.911104, 16.761711, 17.065447, 17.867548, 17.250889, 17.050728 },
     { 17.942741, 16.891190, 17.101770, 18.032434, 17.295305, 17.202160 } };
 
-    double dmean[RadialDivision][AngularDivision] = { 
+    const double dmean[RadialDivision][AngularDivision] = { 
     { 16.544933, 17.845844, 17.849176, 16.484509, 17.803377, 17.928810 },
     { 18.054886, 17.617800, 17.862095, 17.627794, 17.935352, 17.887453 },
     { 19.771456, 18.512341, 19.240444, 19.410559, 19.373478, 18.962496 },

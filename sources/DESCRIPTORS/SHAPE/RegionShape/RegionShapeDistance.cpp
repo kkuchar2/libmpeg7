@@ -19,8 +19,8 @@ double RegionShapeDistance::getDistance(Descriptor * descriptor1, Descriptor * d
         ----------------------------------------------------------------------------  */
 
 
-    RegionShape * regionShapeDescriptor1 = static_cast<RegionShape *>(descriptor1);
-    RegionShape * regionShapeDescriptor2 = static_cast<RegionShape *>(descriptor2);
+    const auto regionShapeDescriptor1 = static_cast<RegionShape *>(descriptor1);
+    const auto regionShapeDescriptor2 = static_cast<RegionShape *>(descriptor2);
 
     double distance = 0;
 

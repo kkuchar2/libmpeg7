@@ -48,8 +48,8 @@ void ScalableColorDistance::loadParameters(const char ** params) {
 }
 
 double ScalableColorDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    ScalableColor * scalableColorDescriptor1 = static_cast<ScalableColor *>(descriptor1);
-    ScalableColor * scalableColorDescriptor2 = static_cast<ScalableColor *>(descriptor2);
+    const auto scalableColorDescriptor1 = static_cast<ScalableColor *>(descriptor1);
+    const auto scalableColorDescriptor2 = static_cast<ScalableColor *>(descriptor2);
 
     // ----------------- LOAD PARAMETERS ------------------------------------------------
 
@@ -95,8 +95,8 @@ double ScalableColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     // ------------------- CALCULATE DISTANCE ---------------------------------------------
 
     // Prepare full histograms for 256 coefficients (filled with zeros)
-    int * histogram1 = (int *) calloc(256, sizeof(int));
-    int * histogram2 = (int *) calloc(256, sizeof(int));
+    const auto histogram1 = (int *) calloc(256, sizeof(int));
+    const auto histogram2 = (int *) calloc(256, sizeof(int));
 
     // Fill histograms (only specified coefficient count in parameters will be added)
     for (unsigned int i = 0; i < numberOfCoefficients; i++) {

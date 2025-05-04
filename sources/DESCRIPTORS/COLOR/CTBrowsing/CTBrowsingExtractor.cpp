@@ -14,8 +14,8 @@ Descriptor * CTBrowsingExtractor::extract(Image & image, const char ** params) {
     }
     
     // Get image inforamtion
-    int imageWidth  = image.getWidth();
-    int imageHeight = image.getHeight();
+    const int imageWidth  = image.getWidth();
+    const int imageHeight = image.getHeight();
 
     // Discarding array
     unsigned char ** p_mask = allocateDiscardingArrayMemory(imageHeight, imageWidth);
@@ -36,7 +36,7 @@ Descriptor * CTBrowsingExtractor::extract(Image & image, const char ** params) {
     perc_ill(XYZ, p_mask, imageWidth, imageHeight, &pix, &piy);
 
     // Convert (xs, ys) to (us vs) according to CIE (7)
-    int * ctemperature = new(int);
+    const auto ctemperature = new(int);
 
     convert_xy2temp(pix, piy, ctemperature);
 
@@ -62,7 +62,7 @@ Descriptor * CTBrowsingExtractor::extract(Image & image, const char ** params) {
 
 unsigned char ** CTBrowsingExtractor::allocateDiscardingArrayMemory(int height, int width) {
     // Allocate memory for rows:
-    unsigned char ** mem = (unsigned char **) malloc(height * sizeof(unsigned char *));
+    const auto mem = (unsigned char **) malloc(height * sizeof(unsigned char *));
 
     // Allocate memory for cols:
     for (int i = 0; i < height; i++) {
@@ -73,7 +73,7 @@ unsigned char ** CTBrowsingExtractor::allocateDiscardingArrayMemory(int height, 
 
 double ** CTBrowsingExtractor::allocateXYZ(int height, int width) {
     // Allocate memory for rows
-    double	** mem = (double **) malloc(height * sizeof(double *));
+    const auto mem = (double **) malloc(height * sizeof(double *));
 
     // Allocate memory for cols
     for (int i = 0; i < height; i++) {
@@ -130,7 +130,7 @@ void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, int i
     double txyz[3];
 
     long lowlevel_pix_cnt  = 0;
-    double lowlevelpercent = 0.05; // Threshold for pixel discarding (typical value: 5 %)
+    const double lowlevelpercent = 0.05; // Threshold for pixel discarding (typical value: 5 %)
 
     // Get rid of low luminance pixels, (3)
     for (int i = 0; i < imageHeight; i++) {
@@ -156,8 +156,8 @@ void CTBrowsingExtractor::perc_ill(double ** XYZ, unsigned char ** p_mask, int i
     int loop_cnt = 0;   // Counting averaging loop iterations
     long pix_cnt;	    // Number of pixels, which are not discarded (in documentation equal to "rows x cols" in equation
     int flag = 1;	    // Flag for indicating, whenever current threshold is equal to previous one, what ends averaging loop
-    double f = 3.0;	    // Multiplier for the colour component average value to obtain threshold above which pixels are discarded (typical value is 3 - subjective experiments)   
-    int iterations = 5; // Number of averaging loop iterations (typical number is in range from 4 to 8, maximum happened to be 20)
+    const double f = 3.0;	    // Multiplier for the colour component average value to obtain threshold above which pixels are discarded (typical value is 3 - subjective experiments)   
+    const int iterations = 5; // Number of averaging loop iterations (typical number is in range from 4 to 8, maximum happened to be 20)
     double	p_th[3] = { 0.0, 0.0, 0.0 }; // Previous threshold for threshold comparison
     
                                          

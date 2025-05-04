@@ -98,11 +98,11 @@ Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) 
       - it is better for human perception of color luminosity
       - there is no need to use redundant gray conversion method, because OpenCV does it already.  */
 
-    unsigned char * pImage = image.getGray(GRAYSCALE_AVERAGE);
+    const unsigned char * pImage = image.getGray(GRAYSCALE_AVERAGE);
     unsigned char size = 1;
 
-    int imageWidth  = image.getWidth();
-    int imageHeight = image.getHeight();
+    const int imageWidth  = image.getWidth();
+    const int imageHeight = image.getHeight();
 
     m_mass = 0;
 
@@ -177,27 +177,27 @@ Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) 
 }
 
 double RegionShapeExtractor::GetReal(int p, int r, double dx, double dy) {
-    int x = (int) dx;
-    int y = (int) dy;
+    const int x = (int) dx;
+    const int y = (int) dy;
 
-    double ix = dx - x;
-    double iy = dy - y;
+    const double ix = dx - x;
+    const double iy = dy - y;
 
-    double x1 = m_pBasisR[p][r][x][y]     + (m_pBasisR[p][r][x + 1][y]     - m_pBasisR[p][r][x][y])     * ix;
-    double x2 = m_pBasisR[p][r][x][y + 1] + (m_pBasisR[p][r][x + 1][y + 1] - m_pBasisR[p][r][x][y + 1]) * ix;
+    const double x1 = m_pBasisR[p][r][x][y]     + (m_pBasisR[p][r][x + 1][y]     - m_pBasisR[p][r][x][y])     * ix;
+    const double x2 = m_pBasisR[p][r][x][y + 1] + (m_pBasisR[p][r][x + 1][y + 1] - m_pBasisR[p][r][x][y + 1]) * ix;
 
     return (x1 + (x2 - x1) * iy);
 }
 
 double RegionShapeExtractor::GetImg(int p, int r, double dx, double dy) {
-    int x = (int) dx;
-    int y = (int) dy;
+    const int x = (int) dx;
+    const int y = (int) dy;
 
-    double ix = dx - x;
-    double iy = dy - y;
+    const double ix = dx - x;
+    const double iy = dy - y;
 
-    double x1 = m_pBasisI[p][r][x][y]     + (m_pBasisI[p][r][x + 1][y]     - m_pBasisI[p][r][x][y])     * ix;
-    double x2 = m_pBasisI[p][r][x][y + 1] + (m_pBasisI[p][r][x + 1][y + 1] - m_pBasisI[p][r][x][y + 1]) * ix;
+    const double x1 = m_pBasisI[p][r][x][y]     + (m_pBasisI[p][r][x + 1][y]     - m_pBasisI[p][r][x][y])     * ix;
+    const double x2 = m_pBasisI[p][r][x][y + 1] + (m_pBasisI[p][r][x + 1][y + 1] - m_pBasisI[p][r][x][y + 1]) * ix;
 
     return (x1 + (x2 - x1) * iy);
 }

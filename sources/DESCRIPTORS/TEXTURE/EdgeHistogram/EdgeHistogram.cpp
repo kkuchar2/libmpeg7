@@ -24,7 +24,7 @@ char EdgeHistogram::getEdgeHistogramElement(int index) {
 
 void EdgeHistogram::readFromXML(XMLElement * descriptorElement) {
     /* Load BinCounts element */
-    XMLElement * p_BinCounts = descriptorElement->FirstChildElement("BinCounts");
+    const XMLElement * p_BinCounts = descriptorElement->FirstChildElement("BinCounts");
 
     if (p_BinCounts == nullptr) {
         throw EDGE_HIST_XML_BINCOUNTS_MISSING;

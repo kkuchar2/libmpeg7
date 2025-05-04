@@ -43,11 +43,11 @@ void TextureBrowsing::loadParameters(const char ** params) {
 }
 
 void TextureBrowsing::readFromXML(XMLElement * descriptorElement) {
-    XMLElement * p_Regularity = nullptr;
-    XMLElement * p_Direction1 = nullptr;
-    XMLElement * p_Scale1     = nullptr;
-    XMLElement * p_Direction2 = nullptr;
-    XMLElement * p_Scale2     = nullptr;
+    const XMLElement * p_Regularity = nullptr;
+    const XMLElement * p_Direction1 = nullptr;
+    const XMLElement * p_Scale1     = nullptr;
+    const XMLElement * p_Direction2 = nullptr;
+    const XMLElement * p_Scale2     = nullptr;
 
     // Load xml elements
     for (XMLElement * child = descriptorElement->FirstChildElement(); child != nullptr; child = child->NextSiblingElement()) {
@@ -85,9 +85,9 @@ void TextureBrowsing::readFromXML(XMLElement * descriptorElement) {
     // Load values
     m_Browsing_Component = new int[5];
 
-    std::string xmlRegularity = p_Regularity->GetText();
-    std::string xmlDirection1 = p_Direction1->GetText();
-    std::string xmlScale1     = p_Scale1->GetText();
+    const std::string xmlRegularity = p_Regularity->GetText();
+    const std::string xmlDirection1 = p_Direction1->GetText();
+    const std::string xmlScale1     = p_Scale1->GetText();
 
     m_Browsing_Component[0] = 
         !xmlRegularity.compare("irregular")             ? 1 :
@@ -111,7 +111,7 @@ void TextureBrowsing::readFromXML(XMLElement * descriptorElement) {
         !xmlScale1.compare("very coarse")               ? 4 : -1;
 
     if (p_Direction2 != nullptr) {
-        std::string xmlDirection2 = p_Direction2->GetText();
+        const std::string xmlDirection2 = p_Direction2->GetText();
 
         m_ComponentNumberFlag = 1;
 
@@ -124,7 +124,7 @@ void TextureBrowsing::readFromXML(XMLElement * descriptorElement) {
             !xmlDirection2.compare("120 degree")        ? 5 :
             !xmlDirection2.compare("150 degree")        ? 6 : -1;
 
-        std::string xmlScale2 = p_Scale2->GetText();
+        const std::string xmlScale2 = p_Scale2->GetText();
 
         m_Browsing_Component[4] =
             !xmlScale2.compare("fine")                  ? 1 :

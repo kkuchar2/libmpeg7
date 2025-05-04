@@ -47,13 +47,13 @@ std::string CTBrowsing::generateXML() {
 
 void CTBrowsing::readFromXML(XMLElement * descriptorElement) {
     // Load Browsing Category
-    XMLElement * xmlBrowsingCategoryElement = descriptorElement->FirstChildElement("BrowsingCategory");
+    const XMLElement * xmlBrowsingCategoryElement = descriptorElement->FirstChildElement("BrowsingCategory");
 
     if (xmlBrowsingCategoryElement == nullptr) {
         throw CT_BROWSING_BROWSING_CATEGORY_NOT_FOUND;
     }
 
-    std::string xmlBrowsingCategory = xmlBrowsingCategoryElement->GetText();
+    const std::string xmlBrowsingCategory = xmlBrowsingCategoryElement->GetText();
 
     ctBrowsingComponent = new int[2];
 
@@ -63,7 +63,7 @@ void CTBrowsing::readFromXML(XMLElement * descriptorElement) {
                              xmlBrowsingCategory.compare("cool")     == 0 ? 3 : throw CT_BROWSING_UNRECOGNIZED_CATEGORY;
 
     // Load SubRangeIndex 
-    XMLElement * xmlSubRangeIndexElement = descriptorElement->FirstChildElement("SubRangeIndex");
+    const XMLElement * xmlSubRangeIndexElement = descriptorElement->FirstChildElement("SubRangeIndex");
 
     if (xmlSubRangeIndexElement == nullptr) {
         throw CT_BROWSING_SUBRANGE_IDX_NOT_FOUND;

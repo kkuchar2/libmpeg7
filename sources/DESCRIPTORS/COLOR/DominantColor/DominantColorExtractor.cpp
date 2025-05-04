@@ -14,14 +14,14 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
     }
 
     // Get image information
-    int imageWidth     = image.getWidth();
-    int imageHeight    = image.getHeight();
-    int imageSize      = image.getSize();
-    int imageTotalSize = image.getTotalSize();
-    bool transparencyPresent = image.getTransparencyPresent();
+    const int imageWidth     = image.getWidth();
+    const int imageHeight    = image.getHeight();
+    const int imageSize      = image.getSize();
+    const int imageTotalSize = image.getTotalSize();
+    const bool transparencyPresent = image.getTransparencyPresent();
 
-    float agglomeratingFactor = static_cast<float>(DSTMIN);
-    float splittingFactor     = static_cast<float>(SPLITTING_FACTOR);
+    const float agglomeratingFactor = static_cast<float>(DSTMIN);
+    const float splittingFactor     = static_cast<float>(SPLITTING_FACTOR);
 
     dominantColorWeights    = new float[DESCRIPTOR_SIZE];
     dominantColorCentroids  = new float * [DESCRIPTOR_SIZE];
@@ -43,7 +43,7 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
     }
 
     // Get image data and convert RGB to LUV
-    unsigned char * RGB = image.getRGB();
+    const unsigned char * RGB = image.getRGB();
     LUV = new float[imageTotalSize]; 
     rgb2luv(image, LUV);
     delete[] RGB;
@@ -52,7 +52,7 @@ Descriptor * DominantColorExtractor::extract(Image & image, const char ** params
     unsigned char * alphaChannelBuffer = transparencyPresent ? image.getChannel_A() : nullptr;
 
     // Apply GLA algorithm and split color bins
-    int *  pixelsClusters = new int[imageSize];
+    const auto pixelsClusters = new int[imageSize];
     double totalDistortion = FLT_MAX;
     double newDistortion;
     double distortionChange = 1.0;
@@ -233,7 +233,7 @@ void DominantColorExtractor::RecalculateCentroids(int * pixelsClusters, float * 
         pAlpha = &alphaChannelBuffer[currentPixelIndex];
 
         if (!alphaChannelBuffer || *pAlpha) {
-            int nearestColorCluster = pixelsClusters[currentPixelIndex]; // Get nearest color cluster for current pixel
+            const int nearestColorCluster = pixelsClusters[currentPixelIndex]; // Get nearest color cluster for current pixel
 
             // Each centroid gets weight as number of pixels assigned to it:
             dominantColorWeights[nearestColorCluster]++;
@@ -363,7 +363,7 @@ void DominantColorExtractor::Split(int * pixelsClusters, float *imageData, int i
     }
 
     // Split cluster with highest distortion;
-    double perturbanceVector[3] {
+    const double perturbanceVector[3] {
         factor * sqrt(d1s[jmax]),
         factor * sqrt(d2s[jmax]),
         factor * sqrt(d3s[jmax])
@@ -454,11 +454,11 @@ void DominantColorExtractor::Agglom(double distthr) {
 
 int DominantColorExtractor::GetSpatialCoherency(float * ColorData, int dim, int N, float ** col_float, unsigned char * alphaChannelBuffer, int imageWidth, int imageHeight) {
     double CM = .0;
-    int NeighborRange = 1;
-    float SimColorAllow = static_cast<float>(sqrt(DSTMIN));
+    const int NeighborRange = 1;
+    const float SimColorAllow = static_cast<float>(sqrt(DSTMIN));
     unsigned char *pAlpha;
 
-    bool * IVisit = new bool[imageWidth * imageHeight];
+    const auto IVisit = new bool[imageWidth * imageHeight];
 
     for (int x = 0; x < imageWidth * imageHeight; x++) {
         pAlpha = &alphaChannelBuffer[x];
@@ -480,7 +480,7 @@ int DominantColorExtractor::GetSpatialCoherency(float * ColorData, int dim, int 
 
     for (int i = 0; i < N; i++) {
         unsigned int Corres_Pixels = 0;
-        double Coherency = GetCoherencyWithColorAllow(ColorData, dim, IVisit, col_float[i][0], col_float[i][1], col_float[i][2],
+        const double Coherency = GetCoherencyWithColorAllow(ColorData, dim, IVisit, col_float[i][0], col_float[i][1], col_float[i][2],
                                                       SimColorAllow, NeighborRange, &Corres_Pixels, imageWidth, imageHeight);
         CM += Coherency * (double) Corres_Pixels / (double) (All_Pixels);
     }
@@ -496,9 +496,9 @@ double DominantColorExtractor::GetCoherencyWithColorAllow(float * ColorData, int
     double Coherency = 0.0;
     int count, i, j;
 
-    int width  = imageWidth;
-    int height = imageHeight;
-    int ISize  = width * height * dim;
+    const int width  = imageWidth;
+    const int height = imageHeight;
+    const int ISize  = width * height * dim;
 
     for (count = 0; count < ISize; count += dim) {
         i = (count / dim) % width; //width
@@ -523,14 +523,14 @@ double DominantColorExtractor::GetCoherencyWithColorAllow(float * ColorData, int
 
                     if (!((i == x) && (j == y))) {
 
-                        int Index = (y * width + x) * dim;
+                        const int Index = (y * width + x) * dim;
 
                         if ((Index >= 0) && (Index < ISize)) {
-                            float l2 = ColorData[Index];
-                            float u2 = ColorData[Index + 1];
-                            float v2 = ColorData[Index + 2];
+                            const float l2 = ColorData[Index];
+                            const float u2 = ColorData[Index + 1];
+                            const float v2 = ColorData[Index + 2];
 
-                            double distance = sqrt(sqr(l - l2) + sqr(u - u2) + sqr(v - v2));
+                            const double distance = sqrt(sqr(l - l2) + sqr(u - u2) + sqr(v - v2));
 
                             if (distance < Allow) {
                                 nSameNeighbor++;
@@ -575,21 +575,21 @@ void DominantColorExtractor::rgb2yuv(int r, int g, int b, int & y, int & u, int 
 
 void DominantColorExtractor::rgb2xyz(Image &image, double * XYZ) {
     // Get RGB data from the image
-    unsigned char * RGB = image.getRGB();
+    const unsigned char * RGB = image.getRGB();
     if (!RGB) {
         return;
     }
     
     int width = image.getWidth();
     int height = image.getHeight();
-    int imageSize = image.getSize();
+    const int imageSize = image.getSize();
     
     int i = 0;
     double r, g, b;
 
     // Process all pixels in the image
     for (int i = 0; i < imageSize; i++) {
-        int rgbIndex = i * 3;
+        const int rgbIndex = i * 3;
         
         // In our implementation, RGB is stored as R,G,B
         r = rgb_pow_table[RGB[rgbIndex]];       // R
@@ -654,7 +654,7 @@ void DominantColorExtractor::xyz2luv(double * XYZ, float * LUV, int size) {
 }
 
 void DominantColorExtractor::rgb2luv(Image &image, float * LUV) {
-    double * XYZ = new double[image.getSize() * 3];
+    const auto XYZ = new double[image.getSize() * 3];
     rgb2xyz(image, XYZ);
     xyz2luv(XYZ, LUV, image.getSize() * 3);
     delete XYZ;

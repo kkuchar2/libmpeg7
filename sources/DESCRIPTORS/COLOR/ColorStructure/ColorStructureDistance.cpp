@@ -3,8 +3,8 @@
 ColorStructureDistance::ColorStructureDistance() = default;
 
 double ColorStructureDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    ColorStructure * colorStructureDescriptor1 = static_cast<ColorStructure *>(descriptor1);
-    ColorStructure * colorStructureDescriptor2 = static_cast<ColorStructure *>(descriptor2);
+    const auto colorStructureDescriptor1 = static_cast<ColorStructure *>(descriptor1);
+    const auto colorStructureDescriptor2 = static_cast<ColorStructure *>(descriptor2);
 
     // Check size equality
     if (colorStructureDescriptor1->GetSize() != colorStructureDescriptor2->GetSize()) {

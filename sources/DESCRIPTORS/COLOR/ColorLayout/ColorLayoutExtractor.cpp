@@ -57,10 +57,10 @@ void ColorLayoutExtractor::CreateSmallImage(Image & image, short small_img[3][64
     /* Original image is being partitioned into 64 blocks */
 
     // Get image information:
-    bool transparencyPresent = image.getTransparencyPresent();
-    int imageWidth           = image.getWidth();
-    int imageHeight          = image.getHeight();
-    int imageSize            = image.getSize();
+    const bool transparencyPresent = image.getTransparencyPresent();
+    const int imageWidth           = image.getWidth();
+    const int imageHeight          = image.getHeight();
+    const int imageSize            = image.getSize();
 
     int i, j, k;
     int x, y;
@@ -77,18 +77,18 @@ void ColorLayoutExtractor::CreateSmallImage(Image & image, short small_img[3][64
     }
 
     // Upsampling for small pictures (less than 8 x 8 pixels) to avoid floating point exception (XM)    
-    int rep_width  = (imageWidth  < 8) ? 7 : 0;
-    int rep_height = (imageHeight < 8) ? 7 : 0;
+    const int rep_width  = (imageWidth  < 8) ? 7 : 0;
+    const int rep_height = (imageHeight < 8) ? 7 : 0;
 
-    int width  = (imageWidth   < 8) ? 8 * imageWidth : imageWidth;
-    int height = (imageHeight  < 8) ? 8 * imageHeight : imageHeight;
+    const int width  = (imageWidth   < 8) ? 8 * imageWidth : imageWidth;
+    const int height = (imageHeight  < 8) ? 8 * imageHeight : imageHeight;
 
     // Get image data
-    unsigned char * pR = image.getChannel_R();
-    unsigned char * pG = image.getChannel_G();
-    unsigned char * pB = image.getChannel_B();
+    const unsigned char * pR = image.getChannel_R();
+    const unsigned char * pG = image.getChannel_G();
+    const unsigned char * pB = image.getChannel_B();
     // if image has alpha channel, get it:
-    unsigned char * pA = transparencyPresent ? new unsigned char[imageSize] : nullptr;
+    const unsigned char * pA = transparencyPresent ? new unsigned char[imageSize] : nullptr;
 
     /* Modify the code to use new operation to alloc memory for 3D array (XM)
 

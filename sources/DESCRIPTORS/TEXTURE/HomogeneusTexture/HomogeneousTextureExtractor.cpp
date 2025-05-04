@@ -15,9 +15,9 @@ Descriptor * HomogeneousTextureExtractor::extract(Image & image, const char ** p
     }
 
     // Get image information
-    int imageWidth = image.getWidth();
-    int imageHeight = image.getHeight();
-    bool transparencyPresent = image.getTransparencyPresent();
+    const int imageWidth = image.getWidth();
+    const int imageHeight = image.getHeight();
+    const bool transparencyPresent = image.getTransparencyPresent();
 
     // Check size
     if (imageWidth < 128 || imageHeight < 128) {
@@ -66,7 +66,7 @@ Descriptor * HomogeneousTextureExtractor::extract(Image & image, const char ** p
     }
 
     // Get deviation layer flag (used as parameter)
-    int flag = descriptor->GetHomogeneousTextureFeatureFlag();
+    const int flag = descriptor->GetHomogeneousTextureFeatureFlag();
 
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 6; j++) {
@@ -269,9 +269,9 @@ void HomogeneousTextureExtractor::FeatureExtraction(unsigned char * image, int i
 // (KK) Criterion leads design
 void HomogeneousTextureExtractor::vatomdesign() {
     int	i, k;
-    int vshft[6] = { 90, 60, 30, 0, -30, -60 };
+    const int vshft[6] = { 90, 60, 30, 0, -30, -60 };
 
-    double(*buf) = new double[3 * 180];
+    const auto buf = new double[3 * 180];
 
     double a, x, cnt;
 
@@ -298,11 +298,11 @@ void HomogeneousTextureExtractor::vatomdesign() {
 void HomogeneousTextureExtractor::hatomdesign() {
     int i, k, size2;
 
-    int	shift2[5] = { 2, 5, 11, 23, 47 };
+    const int	shift2[5] = { 2, 5, 11, 23, 47 };
 
-    double(*data)[3 * 128] = new double[5][3 * 128];
+    const auto data = new double[5][3 * 128];
 
-    double BW[5] = { 2, 4, 8, 16, 32 };
+    const double BW[5] = { 2, 4, 8, 16, 32 };
 
     double par[5];
 
@@ -339,9 +339,9 @@ void HomogeneousTextureExtractor::hatomdesign() {
 // (KK) Second level extraction
 void HomogeneousTextureExtractor::SecondLevelExtraction(unsigned char * imagedata, int image_height, int image_width) {
     int	i;
-    unsigned char(*cin)[imsize] = new unsigned char[imsize][imsize];
+    const auto cin = new unsigned char[imsize][imsize];
 
-    double(*fin)[Nray] = new double[Nview][Nray];
+    const auto fin = new double[Nview][Nray];
 
     double count = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0;
 

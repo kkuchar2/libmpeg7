@@ -148,7 +148,7 @@ void Image::load(const char* filename, LoadMode load_mode) {
 
 unsigned char * Image::getChannel_R() {
     // Image size is pixel count in an image (width * height)
-    unsigned char * rChannel = new unsigned char[imageSize];
+    const auto rChannel = new unsigned char[imageSize];
     
     if (!imageData) {
         return nullptr;
@@ -183,7 +183,7 @@ unsigned char * Image::getChannel_R() {
 }
 
 unsigned char * Image::getChannel_G() {
-    unsigned char * gChannel = new unsigned char[imageSize];
+    const auto gChannel = new unsigned char[imageSize];
 
     if (!imageData) {
         return nullptr;
@@ -218,7 +218,7 @@ unsigned char * Image::getChannel_G() {
 }
 
 unsigned char * Image::getChannel_B() {
-    unsigned char * bChannel = new unsigned char[imageSize];
+    const auto bChannel = new unsigned char[imageSize];
 
     if (!imageData) {
         return nullptr;
@@ -313,7 +313,7 @@ unsigned char * Image::getGray() {
 }
 
 unsigned char * Image::getGray(GrayscaleMode mode) {
-    unsigned char * grayChannel = new unsigned char[imageSize];
+    auto grayChannel = new unsigned char[imageSize];
     
     if (!imageData) {
         return nullptr;
@@ -334,18 +334,18 @@ unsigned char * Image::getGray(GrayscaleMode mode) {
         else if (channels == 3) { // RGB
             for (int i = 0; i < imageSize; i++) {
                 // Using luminosity method (0.299R + 0.587G + 0.114B)
-                unsigned char r = imageData[i * 3];
-                unsigned char g = imageData[i * 3 + 1];
-                unsigned char b = imageData[i * 3 + 2];
+                const unsigned char r = imageData[i * 3];
+                const unsigned char g = imageData[i * 3 + 1];
+                const unsigned char b = imageData[i * 3 + 2];
                 grayChannel[i] = static_cast<unsigned char>(0.299 * r + 0.587 * g + 0.114 * b);
             }
         }
         else if (channels == 4) { // RGBA
             for (int i = 0; i < imageSize; i++) {
                 // Using luminosity method (0.299R + 0.587G + 0.114B)
-                unsigned char r = imageData[i * 4];
-                unsigned char g = imageData[i * 4 + 1];
-                unsigned char b = imageData[i * 4 + 2];
+                const unsigned char r = imageData[i * 4];
+                const unsigned char g = imageData[i * 4 + 1];
+                const unsigned char b = imageData[i * 4 + 2];
                 grayChannel[i] = static_cast<unsigned char>(0.299 * r + 0.587 * g + 0.114 * b);
             }
         }
@@ -353,17 +353,17 @@ unsigned char * Image::getGray(GrayscaleMode mode) {
     else if (mode == GRAYSCALE_AVERAGE) {
         if (channels == 4) { // RGBA
             for (int i = 0; i < imageSize; i++) {
-                unsigned char r = imageData[i * 4];
-                unsigned char g = imageData[i * 4 + 1];
-                unsigned char b = imageData[i * 4 + 2];
+                const unsigned char r = imageData[i * 4];
+                const unsigned char g = imageData[i * 4 + 1];
+                const unsigned char b = imageData[i * 4 + 2];
                 grayChannel[i] = static_cast<unsigned char>((r + g + b) / 3);
             }
         }
         else if (channels == 3) { // RGB
             for (int i = 0; i < imageSize; i++) {
-                unsigned char r = imageData[i * 3];
-                unsigned char g = imageData[i * 3 + 1];
-                unsigned char b = imageData[i * 3 + 2];
+                const unsigned char r = imageData[i * 3];
+                const unsigned char g = imageData[i * 3 + 1];
+                const unsigned char b = imageData[i * 3 + 2];
                 grayChannel[i] = static_cast<unsigned char>((r + g + b) / 3);
             }
         }
@@ -405,7 +405,7 @@ unsigned char * Image::getRGB() {
     else if (channels == 2) { // GrayAlpha
         RGB = new unsigned char[imageSize * 3];
         for (int i = 0; i < imageSize; i++) {
-            unsigned char gray = imageData[2 * i];
+            const unsigned char gray = imageData[2 * i];
             // Fill R, G, and B with the same gray value
             RGB[3 * i] = gray;
             RGB[3 * i + 1] = gray;
@@ -415,7 +415,7 @@ unsigned char * Image::getRGB() {
     else if (channels == 1) { // Gray
         RGB = new unsigned char[imageSize * 3];
         for (int i = 0; i < imageSize; i++) {
-            unsigned char gray = imageData[i];
+            const unsigned char gray = imageData[i];
             // Fill R, G, and B with the same gray value
             RGB[3 * i] = gray;
             RGB[3 * i + 1] = gray;
@@ -449,8 +449,8 @@ unsigned char * Image::getRGBA() {
     else if (channels == 2) { // GrayAlpha -> RGBA
         RGBA = new unsigned char[imageSize * 4];
         for (int i = 0; i < imageSize; i++) {
-            unsigned char gray = imageData[2 * i];
-            unsigned char alpha = imageData[2 * i + 1];
+            const unsigned char gray = imageData[2 * i];
+            const unsigned char alpha = imageData[2 * i + 1];
             // Fill R, G, and B with the same gray value
             RGBA[4 * i] = gray;
             RGBA[4 * i + 1] = gray;
@@ -461,7 +461,7 @@ unsigned char * Image::getRGBA() {
     else if (channels == 1) { // Gray -> RGBA
         RGBA = new unsigned char[imageSize * 4];
         for (int i = 0; i < imageSize; i++) {
-            unsigned char gray = imageData[i];
+            const unsigned char gray = imageData[i];
             // Fill R, G, and B with the same gray value and A with 255 (fully opaque)
             RGBA[4 * i] = gray;
             RGBA[4 * i + 1] = gray;

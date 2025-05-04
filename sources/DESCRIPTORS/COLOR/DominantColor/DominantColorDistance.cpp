@@ -71,8 +71,8 @@ void DominantColorDistance::loadParameters(const char ** params) {
 }
 
 double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    DominantColor * dominantColorDescriptor1 = static_cast<DominantColor *>(descriptor1);
-    DominantColor * dominantColorDescriptor2 = static_cast<DominantColor *>(descriptor2);
+    const auto dominantColorDescriptor1 = static_cast<DominantColor *>(descriptor1);
+    const auto dominantColorDescriptor2 = static_cast<DominantColor *>(descriptor2);
 
     // ******************* LOAD PARAMETERS **********************************
 
@@ -88,16 +88,16 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     // ******************* GET DATA **********************************
 
     // Descriptor sizes
-    int N1 = dominantColorDescriptor1->getResultDescriptorSize();
-    int N2 = dominantColorDescriptor2->getResultDescriptorSize();
+    const int N1 = dominantColorDescriptor1->getResultDescriptorSize();
+    const int N2 = dominantColorDescriptor2->getResultDescriptorSize();
 
     // Dominant colors
     int ** dominantColors1 = dominantColorDescriptor1->getResultDominantColors();
     int ** dominantColors2 = dominantColorDescriptor2->getResultDominantColors();
 
     // Percentage values
-    int * percentages1 = dominantColorDescriptor1->getResultPercentages();
-    int * percentages2 = dominantColorDescriptor2->getResultPercentages();
+    const int * percentages1 = dominantColorDescriptor1->getResultPercentages();
+    const int * percentages2 = dominantColorDescriptor2->getResultPercentages();
 
     // ***************************** DISANCE CALCULATION **********************************
 
@@ -106,11 +106,11 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     // ******************* COLOR CALCULATION **********************************
     double total;
     // N1 and N2 are color counts in each descriptor   
-    float * per1_float = new float[N1];
-    float * per2_float = new float[N2];
+    const auto per1_float = new float[N1];
+    const auto per2_float = new float[N2];
 
-    float ** color1_float = new float * [N1];
-    float ** color2_float = new float * [N2];
+    const auto color1_float = new float * [N1];
+    const auto color2_float = new float * [N2];
 
     for (int i = 0; i < N1; ++i) {
         color1_float[i] = new float[3];
@@ -210,7 +210,7 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
         delete[] vars2;
     }
     else {
-        double Td = sqrt((double) Td2);
+        const double Td = sqrt((double) Td2);
 
         dmax = 1.2 * Td;
 
@@ -240,7 +240,7 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
         libmpeg7pw 0.0001003*100000000 = 10300.0, which is a big difference */
         
         // (KK) Fix:
-        double FABS_EPS = 1.0e-7; // seems to be reasonable
+        const double FABS_EPS = 1.0e-7; // seems to be reasonable
 
         if (dist > FABS_EPS) {
             dist = sqrt(fabs(dist));
@@ -277,12 +277,12 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     /* otherwise */
     // ******************* OPTIONAL SPATIAL COHERENCY CALCULATION **********************************
     if ((sc1 != 0) && (sc2 != 0)) {
-        float fsc1 = static_cast<float>(sc1) / static_cast<float>(31.0);
-        float fsc2 = static_cast<float>(sc2) / static_cast<float>(31.0);
+        const float fsc1 = static_cast<float>(sc1) / static_cast<float>(31.0);
+        const float fsc2 = static_cast<float>(sc2) / static_cast<float>(31.0);
         dist = 0.3 * dist * fabs(fsc1 - fsc2) + 0.7 * dist;
     }
 
-    double distance = 100000000.0 * dist;
+    const double distance = 100000000.0 * dist;
 
     return distance;
 }

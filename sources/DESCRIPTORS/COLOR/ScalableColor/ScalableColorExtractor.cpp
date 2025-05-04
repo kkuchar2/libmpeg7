@@ -13,18 +13,18 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
     }
 
     /* Calculate histogram in HSV color space */
-    int * histogram = new int[256] {0};
+    const auto histogram = new int[256] {0};
 
-    int imageHeight = image.getHeight();
-    int imageWidth  = image.getWidth();
-    int imageSize   = image.getSize();
+    const int imageHeight = image.getHeight();
+    const int imageWidth  = image.getWidth();
+    const int imageSize   = image.getSize();
 
-    unsigned char * rgb = image.getRGB();
+    const unsigned char * rgb = image.getRGB();
 
     // Quantization parameters:
-    int hue_quant = 16;
-    int sat_quant = 4;
-    int val_quant = 4;
+    const int hue_quant = 16;
+    const int sat_quant = 4;
+    const int val_quant = 4;
 
     // test - loop over all pixels and save their value s to local file:
     FILE * file = fopen("test.txt", "w");
@@ -39,7 +39,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
 
     for (int i = 0; i < imageSize; i++) {
         // Calculate quantized hsv values for current pixel
-        int * hsv_quantized = rgb2hsv(rgb[3 * i], rgb[3 * i + 1], rgb[3 * i + 2], hue_quant, sat_quant, val_quant);
+        const int * hsv_quantized = rgb2hsv(rgb[3 * i], rgb[3 * i + 1], rgb[3 * i + 2], hue_quant, sat_quant, val_quant);
 
         // Calculating histogram index
         histogram[hsv_quantized[2] * 4 * 16 + hsv_quantized[1] * 16 + hsv_quantized[0]]++;
@@ -50,7 +50,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
     delete[] rgb;
 
     /* Cut to 11 bit precision */
-    int factor = 0x7ff;  // 11
+    const int factor = 0x7ff;  // 11
     double binaryValue;
     int integerBinaryValue;
 
@@ -87,7 +87,7 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
     /* Haar transform */
     int matrix[16][16];
     int i, j, sum, dif, x1, y1, x2, y2;
-    int tablae = 255;
+    const int tablae = 255;
 
     for (int i = 0; i < hue_quant * sat_quant * val_quant; ++i) {
         matrix[i % (hue_quant)][i / (hue_quant)] = histogram[i];
@@ -112,9 +112,9 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
 
     int index;
 
-    int max_color = 256;
+    const int max_color = 256;
 
-    int * histogram_out = new int[max_color];
+    const auto histogram_out = new int[max_color];
 
     for (j = 0; j < 256; ++j) {
         index = sorttab[j];
@@ -146,8 +146,8 @@ Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params
     max_bits_pro_bin = 0;
     anzkof = 0;
 
-    int bitsDisc  = descriptor->getNumberOfBitplanesDiscarded();
-    int coeffNumb = descriptor->getNumberOfCoefficients();
+    const int bitsDisc  = descriptor->getNumberOfBitplanesDiscarded();
+    const int coeffNumb = descriptor->getNumberOfCoefficients();
 
     if (bitsDisc > 0) {
         int wert, wert1;
@@ -294,7 +294,7 @@ int * ScalableColorExtractor::rgb2hsv(int r, int g, int b, int hue_quant, int sa
             h = 0.0;
     }
 
-    int * HSV = new int[3];
+    const auto HSV = new int[3];
 
     HSV[0] = ((static_cast<int> (h / 6 * 255)) * hue_quant) / 256;
     HSV[1] = (s * sat_quant) / 256;

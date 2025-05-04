@@ -1,7 +1,7 @@
 #include "Mpeg7.h"
 
 const char * message(int error);
-const char * message(std::string xml);
+const char * message(const std::string &xml);
 const char * message(double distance);
 
 const char * mainExtraction(DescriptorType & descriptorType, Image & image, const char ** params);
@@ -200,18 +200,17 @@ void freeResultPointer(char * ptr) {
 }
 
 const char * message(int error) {
-    std::string msg_str = std::to_string(error);
+    const std::string msg_str = std::to_string(error);
 
-    char * msg = new char[msg_str.size() + 1];
+    const auto msg = new char[msg_str.size() + 1];
     strcpy(msg, msg_str.c_str());
 
     return msg;
 }
 
-const char * message(std::string xml) {
-    char * msg = new char[xml.size() + 1];
+const char * message(const std::string &xml) {
+    const auto msg = new char[xml.size() + 1];
     strcpy(msg, xml.c_str());
-
     return msg;
 }
 
@@ -219,9 +218,9 @@ const char * message(double distance) {
     std::stringstream msg_str_stream;
     msg_str_stream << std::fixed << std::setprecision(17) << distance;
 
-    std::string msg_str = msg_str_stream.str();
+    const std::string msg_str = msg_str_stream.str();
 
-    char * msg = new char[msg_str.size() + 1];
+    const auto msg = new char[msg_str.size() + 1];
     strcpy(msg, msg_str.c_str());
 
     return msg;

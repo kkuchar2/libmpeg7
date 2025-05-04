@@ -3,8 +3,8 @@
 ColorLayoutDistance::ColorLayoutDistance() = default;
 
 double ColorLayoutDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    ColorLayout * colorLayoutDescriptor1 = static_cast<ColorLayout *>(descriptor1);
-    ColorLayout * colorLayoutDescriptor2 = static_cast<ColorLayout *>(descriptor2);
+    const auto colorLayoutDescriptor1 = static_cast<ColorLayout *>(descriptor1);
+    const auto colorLayoutDescriptor2 = static_cast<ColorLayout *>(descriptor2);
 
     int NY1, NY2, NC1, NC2, NY, NC;
 

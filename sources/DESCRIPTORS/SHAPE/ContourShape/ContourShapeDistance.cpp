@@ -10,10 +10,10 @@ ContourShapeDistance::ContourShapeDistance() {
 }
 
 double ContourShapeDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    ContourShape * contourShapeDescriptor1 = static_cast<ContourShape *>(descriptor1);
-    ContourShape * contourShapeDescriptor2 = static_cast<ContourShape *>(descriptor2);
+    const auto contourShapeDescriptor1 = static_cast<ContourShape *>(descriptor1);
+    const auto contourShapeDescriptor2 = static_cast<ContourShape *>(descriptor2);
 
-    double distance = getDistance(contourShapeDescriptor1, contourShapeDescriptor2, params);
+    const double distance = getDistance(contourShapeDescriptor1, contourShapeDescriptor2, params);
 
     if (distance == DBL_MAX) {
         throw CONT_SHAPE_DISTANCE_ERROR;

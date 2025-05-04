@@ -128,7 +128,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptor
     env->ReleaseStringUTFChars(imgURL, imgPath);    
     
     // c) Release parameters - from JNI env and from C
-    int param_len = env->GetArrayLength(parameters);
+    const int param_len = env->GetArrayLength(parameters);
 
     // from env
     if (param_len != 0) {
@@ -178,7 +178,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromDa
     desType = descriptorType;
 
     // Parse image data
-    jsize data_len = env->GetArrayLength(data);
+    const jsize data_len = env->GetArrayLength(data);
 
     unsigned char * imgData = getImageBuffer(env, data, data_len);
 
@@ -206,7 +206,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_extractDescriptorFromDa
     delete[] imgData;
 
     // c) Release parameters - from JNI env and from C
-    int param_len = env->GetArrayLength(parameters);
+    const int param_len = env->GetArrayLength(parameters);
 
     // from env
     if (param_len != 0) {
@@ -280,7 +280,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
     env->ReleaseStringUTFChars(xml2, xml2_str);
 
     // c) Release parameters - from JNI env and from C
-    int param_len = env->GetArrayLength(parameters);
+    const int param_len = env->GetArrayLength(parameters);
 
     // from env
     if (param_len != 0) {
@@ -297,7 +297,7 @@ JNIEXPORT jstring JNICALL Java_com_mpeg7_bridge_libmpeg7_calculateDistance
 }
 
 jstring createJniMessage(JNIEnv * env, const char * message) {
-    jstring jniMessage = env->NewStringUTF(message);
+    const jstring jniMessage = env->NewStringUTF(message);
     delete[] message;
     return jniMessage;
 }
@@ -305,7 +305,7 @@ jstring createJniMessage(JNIEnv * env, const char * message) {
 const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
     const char ** params = nullptr;
 
-    int stringCount = env->GetArrayLength(parameters);
+    const int stringCount = env->GetArrayLength(parameters);
 
     // 1. Parameters size = 0
     if (stringCount == 0) {
@@ -314,7 +314,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
     }
     // 2, 3 - Parameters size = 1
     else if (stringCount == 1) {
-        jstring string = (jstring) env->GetObjectArrayElement(parameters, 0);
+        const auto string = (jstring) env->GetObjectArrayElement(parameters, 0);
 
         // 2. Single value NULL
         if (string == nullptr) {
@@ -333,7 +333,7 @@ const char ** getParameters(JNIEnv * env, jobjectArray parameters) {
         params = new const char * [stringCount + 1];
 
         for (int i = 0; i < stringCount; i++) {
-            jstring string = (jstring) env->GetObjectArrayElement(parameters, i);
+            const auto string = (jstring) env->GetObjectArrayElement(parameters, i);
 
             // Check if NULL
             if (string == nullptr) {
@@ -354,7 +354,7 @@ unsigned char * getImageBuffer(JNIEnv * env, jbyteArray data, int size) {
     jbyte * jniBufferPtr = env->GetByteArrayElements(data, (jboolean *) nullptr);
 
     // Copy values to C array
-    unsigned char * imgBuffer = new unsigned char[size];
+    const auto imgBuffer = new unsigned char[size];
 
     int i = 0;
 

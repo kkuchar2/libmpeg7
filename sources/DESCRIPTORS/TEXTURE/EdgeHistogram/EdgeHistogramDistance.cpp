@@ -3,8 +3,8 @@
 EdgeHistogramDistance::EdgeHistogramDistance() = default;
 
 double EdgeHistogramDistance::getDistance(Descriptor * descriptor1, Descriptor * descriptor2, const char ** params) {
-    EdgeHistogram * edgeHistogramDescriptor1 = static_cast<EdgeHistogram *>(descriptor1);
-    EdgeHistogram * edgeHistogramDescriptor2 = static_cast<EdgeHistogram *>(descriptor2);
+    const auto edgeHistogramDescriptor1 = static_cast<EdgeHistogram *>(descriptor1);
+    const auto edgeHistogramDescriptor2 = static_cast<EdgeHistogram *>(descriptor2);
 
     double Total_EdgeHist_Ref[150];       // Local(80)+ Global(5)+Semi_Global(65) 
     double Total_EdgeHist_Query[150];

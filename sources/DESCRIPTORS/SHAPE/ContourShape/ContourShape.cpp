@@ -198,7 +198,7 @@ std::string ContourShape::generateXML() {
 }
 
 void ContourShape::SetNumberOfPeaks(unsigned char cPeaks) {
-    unsigned char cOldPeaks = descriptorPeaksCount;
+    const unsigned char cOldPeaks = descriptorPeaksCount;
 
     // Only 5 bits used so mask out rest
 
@@ -232,7 +232,7 @@ void ContourShape::SetHighestPeakY(unsigned short iHigh) {
 }
 
 void ContourShape::SetPeak(unsigned char cIndex, unsigned short iX, unsigned short iY) {
-    unsigned char cOffset = cIndex * 2;
+    const unsigned char cOffset = cIndex * 2;
 
     if (cIndex < descriptorPeaksCount) {
         descriptorPeaks[cOffset] = iX;
@@ -262,7 +262,7 @@ unsigned char ContourShape::GetNumberOfPeaks() const {
 }
 
 void ContourShape::GetPeak(unsigned char cIndex, unsigned short & iX, unsigned short & iY) {
-    unsigned char cOffset = cIndex * 2;
+    const unsigned char cOffset = cIndex * 2;
 
     if (cIndex < descriptorPeaksCount) {
         iX = descriptorPeaks[cOffset];

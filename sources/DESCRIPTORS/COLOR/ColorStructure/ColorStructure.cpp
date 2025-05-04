@@ -129,7 +129,7 @@ void ColorStructure::readFromXML(XMLElement * descriptorElement) {
     }
 
     /* Load data */
-    XMLElement * p_Values = descriptorElement->FirstChildElement("Values");
+    const XMLElement * p_Values = descriptorElement->FirstChildElement("Values");
 
     if (p_Values == nullptr) {
         throw COL_STRUCT_VALUES_NODE_NOT_FOUND;
