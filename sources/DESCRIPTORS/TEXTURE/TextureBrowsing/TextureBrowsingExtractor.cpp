@@ -7,13 +7,7 @@ TextureBrowsingExtractor::TextureBrowsingExtractor() {
 
 /* ----- EXTRACTION ----- */
 Descriptor * TextureBrowsingExtractor::extract(Image & image, const char ** params) {
-    // Load parameters (layer)
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     // 2. Get image data
     const int imageHeight = image.getHeight();
@@ -39,7 +33,7 @@ Descriptor * TextureBrowsingExtractor::extract(Image & image, const char ** para
         if (aChannel) {
             delete[] aChannel;
         }
-        throw exception;
+        throw;
     }
 
     // 4. Fill image matrix with image data
@@ -58,7 +52,7 @@ Descriptor * TextureBrowsingExtractor::extract(Image & image, const char ** para
         if (aChannel) {
             delete[] aChannel;
         }
-        throw exception;
+        throw;
     }
 
     delete[] grayImage;
@@ -220,7 +214,7 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, const int width, int
         if (temp_direction) {
             free(temp_direction);
         }
-        throw exception;
+        throw;
     }
 
     struct pbc_struct pbc;
@@ -244,7 +238,7 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, const int width, int
         pbcmain(&pbc, imgsize);
     }
     catch (ErrorCode exception) {
-        throw exception;
+        throw;
     }
 
     /* Extract regularity */
@@ -254,12 +248,12 @@ void TextureBrowsingExtractor::PBC_Extraction(Matrix * img, const int width, int
     pbc_out[1] = pbc.element[1];        // DIRECTION 1
     pbc_out[3] = pbc.element[3];        // DIRECTION 2
     pbc_out[2] = pbc.element[0];        // SCALE 1
-    pbc_out[4] = pbc.element[2];        // SCALE 2  
+    pbc_out[4] = pbc.element[2];        // SCALE 2
 
 }
 
 void TextureBrowsingExtractor::cleaupMainVariables(const int orientation, const int scale, double  * temp_proj, double ** rowProjections, double ** columnProjections, float ** histo,
-                         Matrix * FilteredImageBuffer[4][6], Matrix * Gr, Matrix * Gi, Matrix * Tmp_1, Matrix * Tmp_2, Matrix * F_1, Matrix * F_2, Matrix * G_real, Matrix * G_imag, 
+                         Matrix * FilteredImageBuffer[4][6], Matrix * Gr, Matrix * Gi, Matrix * Tmp_1, Matrix * Tmp_2, Matrix * F_1, Matrix * F_2, Matrix * G_real, Matrix * G_imag,
                          Matrix * F_real, Matrix * F_imag, Matrix * IMG, Matrix * IMG_imag, Matrix * temp_FilteredImage) {
     free(temp_proj);
 
@@ -374,7 +368,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
     for (i = 0; i < orientation * scale; i++) {
         columnProjections[i] = static_cast<double *>(malloc(ProjectionSize * sizeof(double)));
     }
-    /* (KK) Allocate all the ImageHeaders, imageData and Matrices. 
+    /* (KK) Allocate all the ImageHeaders, imageData and Matrices.
     Newly created images are all initialized to 0 by default */
 
     try {
@@ -395,7 +389,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
             FreeMatrix(IMG);
         }
 
-        throw exception;
+        throw;
     }
 
     r1 = img->width + border;
@@ -488,7 +482,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
         FreeMatrix(G_real);
         FreeMatrix(G_imag);
 
-        throw exception; 
+        throw;
     }
 
     histo = static_cast<float **>(malloc(scale * sizeof(float *)));
@@ -509,7 +503,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
         }
     }
 
-    /* 
+    /*
     -----------------------------------------------------------
     (KK) ALLOCATIONS END
     End of allocations, it's time to calculate                  */
@@ -606,7 +600,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
         }
     }
 
-    /* (KK) 
+    /* (KK)
     Identify final directions.
     Two directions with the two histogram-peaks of highest contrast are chosen (end of page 281 I guess) */
     d_direction = DominantDirection(histo);
@@ -649,7 +643,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
 
     free(d_direction);
 
-    /* (KK) After operations made above we have two values 
+    /* (KK) After operations made above we have two values
     stored in 'temp_direction' array (which here is called 'pbc')
     declared in method PBC_Extraction.
 
@@ -659,7 +653,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
     [regularity, direction1, scale1, direction2, scale2]  */
 
 
-    /* (KK) PROJECTIONS COMPUTATION 
+    /* (KK) PROJECTIONS COMPUTATION
     Compute projections of rotated filtered images.
     As far as I see, all projections rows and cols are being written to seperate file (for later usage I guess) */
     for (s = 0; s < scale; s++) {
@@ -703,7 +697,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
                                     FilteredImageBuffer, Gr, Gi, Tmp_1, Tmp_2, F_1, F_2, G_real, G_imag,
                                     F_real, F_imag, IMG, IMG_imag, temp_FilteredImage);
                 // Throw level higher
-                throw exception;
+                throw;
             }
 
             // Extract projections rows
@@ -719,7 +713,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
             #if defined(_WIN32) || defined(_WIN64) // Windows
                 struct stat info;
                 // If directory does not exist
-                if (stat(directory_name.c_str(), &info) != 0) { 
+                if (stat(directory_name.c_str(), &info) != 0) {
                     std::string command = "mkdir " +  directory_name;
                     system(command.c_str());
                 }
@@ -738,7 +732,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
                 // Cleanup
                 cleaupMainVariables(orientation, scale, temp_proj, rowProjections, columnProjections, histo,
                                     FilteredImageBuffer, Gr, Gi, Tmp_1, Tmp_2, F_1, F_2, G_real, G_imag,
-                                    F_real, F_imag, IMG, IMG_imag, temp_FilteredImage);                    
+                                    F_real, F_imag, IMG, IMG_imag, temp_FilteredImage);
                 // Throw level higher
                 throw TEXT_BROWSING_CANNOT_OPEN_FILE;
             }
@@ -767,7 +761,7 @@ int TextureBrowsingExtractor::GaborFeature(Matrix * img, int side, double Ul, do
                                     FilteredImageBuffer, Gr, Gi, Tmp_1, Tmp_2, F_1, F_2, G_real, G_imag,
                                     F_real, F_imag, IMG, IMG_imag, temp_FilteredImage);
                 // Throw level higher
-                throw exception;
+                throw;
             }
 
             // Extract projections columns
@@ -1130,7 +1124,7 @@ void TextureBrowsingExtractor::ComputeProjection(Matrix * inputImage, const int 
         sum_pixel = 0.0;
 
         for (l = 0; l < ysize; l++) {
-            dummy = 0; 
+            dummy = 0;
             if (sqrt(pow(j - xcenter, 2) + pow(l - ycenter, 2)) <= 127.0) {
                 if (l >= inputImage->height || j >= inputImage->width) {
                     throw TEXT_BROWS_PROJECTION_COMPUTATION_ERROR;
@@ -1161,7 +1155,7 @@ void TextureBrowsingExtractor::pbcmain(struct pbc_struct * pbc, const int size) 
         ProjectionAnalysis(c5, 2, column_credit, pbc, img_size);
     }
     catch (ErrorCode exception) {
-        throw exception;
+        throw;
     }
 
     image_credit = row_credit[2] + column_credit[2];
@@ -1308,7 +1302,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, const int p
     // For each filtered image W_mn(x,y) (4.3.2.1.4 Computation of the scale, Projection)
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 6; j++) {
-            /* PROJECTION READ FROM FILE        
+            /* PROJECTION READ FROM FILE
             Choose projection files names based on projection type currently calculated
             for corresponding scale and orientation (i, j) */
             if (proj_type == 1) {
@@ -1326,7 +1320,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, const int p
                 FreeMatrixInteger(Proj_Candi_Posi, 24);
                 FreeMatrixFloat(Proj_Candi_Valu, 24);
                 FreeMatrixFloat(contrast, 4);
-                throw TEXT_BROWS_FILE_READ_ERROR; 
+                throw TEXT_BROWS_FILE_READ_ERROR;
             }
 
             /* Read projection file to A array */
@@ -1335,7 +1329,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, const int p
 
             /* PROJECTION READ END */
 
-            /* (KK) 
+            /* (KK)
             Autocorreclation of Radon transform (which projections aready went through before) */
             leng_B = RadonAutocorrelation(A, img_size, &B);
 
@@ -1383,7 +1377,7 @@ void TextureBrowsingExtractor::ProjectionAnalysis(char * image_name, const int p
                 }
             }
 
-            free(Peak); 
+            free(Peak);
             free(PeakI);
             free(B);
             Candi_Avail = 0;
@@ -1529,14 +1523,14 @@ float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B
     /*
     (KK)
     Method calculating contrast for current projection
-    (4.3.2.1.4 Peak detection) 
-    
-    This is note from documentation: 
+    (4.3.2.1.4 Peak detection)
+
+    This is note from documentation:
 
     For detected peaks and valleys , their position and magnitude are recorded.
     M - number of peaks   ( which is here 'num_peak)
     N - number of valleys ( which is here 'count' )
-    
+
     p_posi and p_magn are positions and magnitudes of peak points (here: only magnitude passed as argument as 'Peak')
     v_posi and v_magn are positions and magnitudes of valley points (here: 'index_valley', 'valley_value') */
 
@@ -1574,11 +1568,11 @@ float TextureBrowsingExtractor::ComputeProjectionContrast(double * B, int leng_B
     meanp /= num_peak;
 
     // Free memory
-    free(index_valley); 
+    free(index_valley);
     free(valley_value);
 
     // (KK) return contrast (mean p_magn - mean v_magn
-    return (meanp - meanv); 
+    return (meanp - meanv);
 }
 
 void TextureBrowsingExtractor::peak_summary(float * dis_peak, float * var_dis, int * PeakI, float * Peak, const int size_peak) {
@@ -1657,17 +1651,17 @@ int TextureBrowsingExtractor::cand_cluster(float ** candi, const int size_in, co
             maxcount = 0;
 
             for (i = 0; i < newN; i++) {
-                if (maxcount < count[i]) { 
-                    maxcount = count[i]; domi_num = i; 
+                if (maxcount < count[i]) {
+                    maxcount = count[i]; domi_num = i;
                 }
             }
 
             *pick_num = 0;
 
             for (i = 0; i < size_in; i++) {
-                if (cluster[i] == domi_num) { 
-                    y[(*pick_num)] = i; 
-                    (*pick_num)++; 
+                if (cluster[i] == domi_num) {
+                    y[(*pick_num)] = i;
+                    (*pick_num)++;
                 }
             }
         }
@@ -1688,8 +1682,8 @@ int TextureBrowsingExtractor::agglom(float ** candi, int * label, const int N, c
         }
     }
 
-    for (i = 0; i < Nlabel; i++) { 
-        label[i] = i; count[i] = 1; 
+    for (i = 0; i < Nlabel; i++) {
+        label[i] = i; count[i] = 1;
     }
 
     dist = AllocateMatrixFloat(Nlabel, Nlabel);
@@ -1701,10 +1695,10 @@ int TextureBrowsingExtractor::agglom(float ** candi, int * label, const int N, c
             dist[i][j] = EuclideanVectorDistance(labelcf[i], labelcf[j], N);
             dist[j][i] = dist[i][j];
 
-            if (dist[i][j] < mindist) { 
+            if (dist[i][j] < mindist) {
                 mindist = dist[i][j];
                 mini = i;
-                minj = j; 
+                minj = j;
             }
         }
     }
@@ -1767,7 +1761,7 @@ int TextureBrowsingExtractor::agglom(float ** candi, int * label, const int N, c
         for (i = 0; i < newNlabel - 1; i++) {
             for (j = i + 1; j < newNlabel; j++) {
                 if (dist[i][j] < mindist) {
-                    mindist = dist[i][j]; mini = i; minj = j; 
+                    mindist = dist[i][j]; mini = i; minj = j;
                 }
             }
         }
@@ -1824,12 +1818,12 @@ void TextureBrowsingExtractor::proj_credit_modi(int ** candidate, const int size
             }
         }
 
-        value[0] = static_cast<float>(1.0); 
-        value[1] = static_cast<float>(0.5); 
+        value[0] = static_cast<float>(1.0);
+        value[1] = static_cast<float>(0.5);
         value[2] = static_cast<float>(0.2);
 
-        pbc_class[0] = 0; 
-        pbc_class[1] = 0; 
+        pbc_class[0] = 0;
+        pbc_class[1] = 0;
         pbc_class[2] = 0;
 
         for (i = 0; i < 4; i++) {
@@ -1968,7 +1962,7 @@ void TextureBrowsingExtractor::sing_map(int ** inpair, const int size_in, int * 
     }
     else {
         if (type == 1 && inpair[0][1] == 0 && inpair[size_in - 1][1] == 5) {
-            sing[0] = 1; 
+            sing[0] = 1;
             sing[size_in - 1] = 1;
 
             if (size_in > 2) {
@@ -1984,11 +1978,11 @@ void TextureBrowsingExtractor::sing_map(int ** inpair, const int size_in, int * 
         }
         else {
             if (size_in == 2) {
-                if (inpair[0][1] == inpair[1][1] - 1) { 
-                    sing[0] = 1; sing[1] = 1; 
+                if (inpair[0][1] == inpair[1][1] - 1) {
+                    sing[0] = 1; sing[1] = 1;
                 }
-                else { 
-                    sing[0] = 2; sing[1] = 2; 
+                else {
+                    sing[0] = 2; sing[1] = 2;
                 }
             }
             else {

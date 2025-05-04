@@ -77,13 +77,9 @@ double DominantColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     // ******************* LOAD PARAMETERS **********************************
 
     /* Quantization and color space support was not implemented (project requirements) 
-       For distance calculation only VariancePresent and SpatialCoherency parameters are used. */  
-    try {
-        loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+       For distance calculation only VariancePresent and SpatialCoherency parameters are used. */
+
+    loadParameters(params);
 
     // ******************* GET DATA **********************************
 

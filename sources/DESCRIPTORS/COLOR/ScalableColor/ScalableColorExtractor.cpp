@@ -5,12 +5,7 @@ ScalableColorExtractor::ScalableColorExtractor() {
 }
 
 Descriptor * ScalableColorExtractor::extract(Image & image, const char ** params) {
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     /* Calculate histogram in HSV color space */
     const auto histogram = new int[256] {0};

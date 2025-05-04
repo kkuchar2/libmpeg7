@@ -5,13 +5,7 @@ DominantColorExtractor::DominantColorExtractor(): currentColorNumber(0) {
 }
 
 Descriptor * DominantColorExtractor::extract(Image & image, const char ** params) {
-    // Load parameters
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     // Get image information
     const int imageWidth     = image.getWidth();

@@ -5,13 +5,7 @@ CTBrowsingExtractor::CTBrowsingExtractor() {
 }
 
 Descriptor * CTBrowsingExtractor::extract(Image & image, const char ** params) {
-    // Load parameters
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
     
     // Get image inforamtion
     const int imageWidth  = image.getWidth();

@@ -5,13 +5,7 @@ ColorStructureExtractor::ColorStructureExtractor(): targetSize(0) {
 }
 
 Descriptor * ColorStructureExtractor::extract(Image & image, const char ** params) {
-    // Load parameters
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     // Get image information
     const int imageWidth  = image.getWidth();
@@ -157,7 +151,7 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
         UnifyBins(Norm, descriptor->GetTargetSize());
     }
     catch (ErrorCode exception) {
-        throw exception;
+        throw;
     }
 
     // Quantize the Bin Amplitude
@@ -165,7 +159,7 @@ Descriptor * ColorStructureExtractor::extract(Image & image, const char ** param
         QuantAmplNonLinear(Norm);
     }
     catch (ErrorCode exception) {
-        throw exception;
+        throw;
     }
 
     return descriptor;
@@ -292,7 +286,7 @@ int ColorStructureExtractor::UnifyBins(const unsigned long Norm, const int targe
     }
     catch (ErrorCode exception) {
         delete[] pBin; // Cleanup (KK)
-        throw exception;
+        throw;
     }
 
     // Unify
@@ -305,7 +299,7 @@ int ColorStructureExtractor::UnifyBins(const unsigned long Norm, const int targe
             // Memory allocation failed, cleanup first
             delete[] pBin;
             // Throw exception one level higher
-            throw exception;
+            throw;
         }
         pBin[iTargBin] += descriptor->GetElement(iOrigBin);
     }

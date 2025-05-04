@@ -104,13 +104,7 @@ std::string RegionShape::generateXML() {
 	for (i = 0; i < ART_ANGULAR; i++) {
 		for (j = 0; j < ART_RADIAL; j++) {
 			if (i != 0 || j != 0) {
-                try {
-                    V[n++] = GetElement(i, j);
-                }
-                // Wrong element access
-                catch (ErrorCode exception) { 
-                    throw exception;
-                }
+				V[n++] = GetElement(i, j);
 			}
 		}
 	}

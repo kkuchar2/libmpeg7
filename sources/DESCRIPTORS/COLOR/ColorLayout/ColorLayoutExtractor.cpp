@@ -4,14 +4,8 @@ ColorLayoutExtractor::ColorLayoutExtractor() {
 	descriptor = new ColorLayout();
 }
 
-Descriptor * ColorLayoutExtractor::extract(Image & image, const char ** params) {  
-    /* Load parameters */
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+Descriptor * ColorLayoutExtractor::extract(Image & image, const char ** params) {
+	descriptor->loadParameters(params);
 
     /* Create small image */
 	short small_img[3][64];

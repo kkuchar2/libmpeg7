@@ -5,12 +5,7 @@ ContourShapeExtractor::ContourShapeExtractor() {
 }
 
 Descriptor * ContourShapeExtractor::extract(Image & image, const char ** params) {
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     const int CONTOUR_SIZE = 500;
 

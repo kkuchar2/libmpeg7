@@ -60,12 +60,8 @@ double ScalableColorDistance::getDistance(Descriptor * descriptor1, Descriptor *
     
     Parameter "NumberOfBitplanesDiscarded was not used in XM by default 
     (it was different option RecHistogram value in code) */
-    try {
-        loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+
+    loadParameters(params);
 
     // ------------------ SIZE CHECK -----------------------------------------------------
 

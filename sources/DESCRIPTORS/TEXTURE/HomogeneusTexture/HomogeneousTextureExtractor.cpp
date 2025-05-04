@@ -6,13 +6,7 @@ HomogeneousTextureExtractor::HomogeneousTextureExtractor(): timage{}, inimage{},
 
 // Top level extraction
 Descriptor * HomogeneousTextureExtractor::extract(Image & image, const char ** params) {
-    // Load parameters
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     // Get image information
     const int imageWidth = image.getWidth();
@@ -41,7 +35,7 @@ Descriptor * HomogeneousTextureExtractor::extract(Image & image, const char ** p
             if (aChannel) {
                 delete[] aChannel;
             }
-            throw exception;
+            throw;
         }
     }
     // Extract feature

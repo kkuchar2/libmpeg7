@@ -5,13 +5,7 @@ RegionShapeExtractor::RegionShapeExtractor(): m_mass(0), m_centerX(0), m_centerY
 }
 
 Descriptor * RegionShapeExtractor::extract(Image & image, const char ** params) {
-    // Load parameters
-    try {
-        descriptor->loadParameters(params);
-    }
-    catch (ErrorCode exception) {
-        throw exception;
-    }
+    descriptor->loadParameters(params);
 
     /* Generate basis LUT */
     double angle, temp, radius;
