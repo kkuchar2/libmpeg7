@@ -40,6 +40,31 @@ jobs:
     - name: Build
       run: cmake --build ${{ github.workspace }}/build --config ${{ env.BUILD_TYPE }}
 
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: libmpeg7-ubuntu-${{ env.BUILD_TYPE }}
+        path: |
+          build/libmpeg7*
+          build/mpeg7_app
+
+  run-descriptors:
+    name: Run MPEG-7 Descriptors
+    needs: build-release
+    runs-on: ubuntu-22.04
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: libmpeg7-ubuntu-Release
+        path: build
+        
+    - name: Set execute permissions
+      run: chmod +x build/mpeg7_app
+        
     - name: Run MPEG-7 descriptors on lenna.png
       run: |
         echo "Running MPEG-7 descriptors on lenna.png"
@@ -49,11 +74,3 @@ jobs:
           ./build/mpeg7_app $i resources/lenna.png
           echo ""
         done
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: libmpeg7-ubuntu-${{ env.BUILD_TYPE }}
-        path: |
-          build/libmpeg7*
-          build/mpeg7_app
