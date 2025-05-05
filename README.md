@@ -69,10 +69,14 @@ After a successful build, the libraries and executables can be found in:
 
 ### Command Line Application
 
-The library comes with a command-line application (`mpeg7_app`) that allows you to extract descriptors from images:
+The library comes with a command-line application (`mpeg7_app`) that allows you to extract descriptors from images and calculate distances between descriptors.
+
+#### Extracting Descriptors
+
+To extract a descriptor from an image:
 
 ```bash
-./build/x64/Release/mpeg7_app <descriptor_type> <image_path> [param_name param_value ...]
+./build/x64/Release/mpeg7_app extract <descriptor_type> <image_path> [param_name param_value ...]
 ```
 
 Where:
@@ -92,8 +96,27 @@ Where:
 
 Example:
 ```bash
-./build/x64/Release/mpeg7_app 3 image.jpg NumberOfYCoeff 64 NumberOfCCoeff 64
+./build/x64/Release/mpeg7_app extract 3 image.jpg NumberOfYCoeff 64 NumberOfCCoeff 64
 ```
+
+#### Calculating Distances
+
+To calculate the distance between two descriptors stored in XML files:
+
+```bash
+./build/x64/Release/mpeg7_app distance <xml_file1> <xml_file2> [param_name param_value ...]
+```
+
+Where:
+- `<xml_file1>` and `<xml_file2>` are paths to XML files containing MPEG-7 descriptors
+- Optional parameter name-value pairs can be provided depending on the descriptor type
+
+Example:
+```bash
+./build/x64/Release/mpeg7_app distance descriptor1.xml descriptor2.xml
+```
+
+This command compares the two descriptors and outputs the distance (similarity measure) between them. Lower distance values indicate greater similarity between the descriptors.
 
 ### Library Integration
 

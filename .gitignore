@@ -2,5 +2,6 @@ venv
 build
 cmake-build-debug
 .idea
+.vscode
 /text_brows_tmp/
 /test.txt
