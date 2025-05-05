@@ -17,7 +17,7 @@ The library implements the following MPEG-7 visual descriptors:
 - **Scalable Color** - A color histogram encoded using the Haar transform for scalable representation
 - **Color Layout** - Captures the spatial distribution of colors in an image
 - **Color Structure** - Identifies localized color distributions using a structuring element
-- **CT Browsing** - Color-Texture browsing descriptor
+- **CT Browsing** - Describes color temperature information in an image
 
 ### Texture Descriptors
 - **Homogeneous Texture** - Characterizes texture regions in an image using frequency domain statistics
