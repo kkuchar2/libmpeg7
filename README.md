@@ -11,20 +11,20 @@ MPEG-7 is a multimedia content description standard that provides a rich set of 
 The library implements the following MPEG-7 visual descriptors:
 
 ### Color Descriptors
-- **Dominant Color (ID: 1)** - Provides a compact description of the representative colors in an image or region
-- **Scalable Color (ID: 2)** - A color histogram encoded using the Haar transform for scalable representation
-- **Color Layout (ID: 3)** - Captures the spatial distribution of colors in an image
-- **Color Structure (ID: 4)** - Identifies localized color distributions using a structuring element
-- **CT Browsing (ID: 5)** - Color-Texture browsing descriptor
+- **Dominant Color** - Provides a compact description of the representative colors in an image or region
+- **Scalable Color** - A color histogram encoded using the Haar transform for scalable representation
+- **Color Layout** - Captures the spatial distribution of colors in an image
+- **Color Structure** - Identifies localized color distributions using a structuring element
+- **CT Browsing** - Color-Texture browsing descriptor
 
 ### Texture Descriptors
-- **Homogeneous Texture (ID: 6)** - Characterizes texture regions in an image using frequency domain statistics
-- **Texture Browsing (ID: 7)** - Browsing type descriptor for texture
-- **Edge Histogram (ID: 8)** - Represents the spatial distribution of edges in an image
+- **Homogeneous Texture** - Characterizes texture regions in an image using frequency domain statistics
+- **Texture Browsing** - Browsing type descriptor for texture
+- **Edge Histogram** - Represents the spatial distribution of edges in an image
 
 ### Shape Descriptors
-- **Region Shape (ID: 9)** - Describes shapes using Angular Radial Transform (ART)
-- **Contour Shape (ID: 10)** - Describes shape contours using curvature scale-space representation
+- **Region Shape** - Describes shapes using Angular Radial Transform (ART)
+- **Contour Shape** - Describes shape contours using curvature scale-space representation
 
 Each descriptor can be configured with specific parameters to adjust its behavior. The descriptor IDs can be used with the command line application and API calls to specify which descriptor to extract.
 
@@ -48,14 +48,16 @@ cd libmpeg7
 chmod +x build.sh
 
 # Build both debug and release versions
-./build.sh
+./build.sh -all
 ```
 
 The build script supports the following commands:
 
-- `./build.sh` - Builds both debug and release versions
-- `./build.sh debug` - Builds only the debug version
-- `./build.sh release` - Builds only the release version
+- `./build.sh -all` - Builds both debug and release versions
+- `./build.sh -dbg` - Builds only the debug version
+- `./build.sh -rel` - Builds only the release version
+- `./build.sh -c` - Cleans the project (removes build directories)
+- `./build.sh -h` - Shows the help message
 
 After a successful build, the libraries and executables can be found in:
 - Debug version: `build/x64/Debug/` or `build/x32/Debug/` (depending on your architecture)
@@ -73,16 +75,16 @@ The library comes with a command-line application (`mpeg7_app`) that allows you 
 
 Where:
 - `<descriptor_type>` is a number from 1 to 10 representing the descriptor type:
-  1. Dominant Color
-  2. Scalable Color
-  3. Color Layout
-  4. Color Structure
-  5. CT Browsing
-  6. Homogeneous Texture
-  7. Texture Browsing
-  8. Edge Histogram
-  9. Region Shape
-  10. Contour Shape
+  - 1: Dominant Color
+  - 2: Scalable Color
+  - 3: Color Layout
+  - 4: Color Structure
+  - 5: CT Browsing
+  - 6: Homogeneous Texture
+  - 7: Texture Browsing
+  - 8: Edge Histogram
+  - 9: Region Shape
+  - 10: Contour Shape
 - `<image_path>` is the path to the image file
 - Optional parameter name-value pairs can be provided depending on the descriptor type
 
@@ -124,12 +126,7 @@ To use the JNI interface:
 
 ## Reporting Issues
 
-If you encounter any errors or issues while using the library, please create an issue in this GitHub repository. When reporting issues, please include:
-
-1. Your operating system and compiler version
-2. The command or code that triggered the error
-3. Full error message or stack trace if available
-4. Steps to reproduce the issue
+If you encounter any errors or issues while using the library, please create an issue in this GitHub repository
 
 ## Author
 
