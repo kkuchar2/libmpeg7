@@ -1,7 +1,8 @@
 # libmpeg7
 
 Library implementation of MPEG-7 digital image descriptors calculation and comparison algorithms. This project was created as part of an engineer's degree thesis.
-As of now, after many years I'm trying to make it somewhat working again.
+As of now, after many years I'm trying to make it somewhat working again. As this was originally a project to incorporate old MPEG7 library in new code, there are many 
+parts (especially algorithms) that were directly copied as-is from that library. I might or might not refactor it with new implementation.
 
 ## About MPEG-7
 
