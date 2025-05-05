@@ -40,6 +40,16 @@ jobs:
     - name: Build
       run: cmake --build ${{ github.workspace }}/build --config ${{ env.BUILD_TYPE }}
 
+    - name: Run MPEG-7 descriptors on lenna.png
+      run: |
+        echo "Running MPEG-7 descriptors on lenna.png"
+        cd ${{ github.workspace }}
+        for i in {1..10}; do
+          echo "### Running descriptor $i ###"
+          ./build/mpeg7_app $i resources/lenna.png
+          echo ""
+        done
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
