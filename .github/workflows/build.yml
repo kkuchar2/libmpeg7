@@ -71,6 +71,6 @@ jobs:
         cd ${{ github.workspace }}
         for i in {1..10}; do
           echo "### Running descriptor $i ###"
-          ./build/mpeg7_app $i resources/lenna.png
+          ./build/mpeg7_app extract $i resources/lenna.png
           echo ""
         done
